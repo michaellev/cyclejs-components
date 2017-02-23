@@ -1,0 +1,46 @@
+{
+  "name": "cyclejs-components",
+  "version": "0.0.0",
+  "description": "Cycle.js Components",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyclejs-community/cyclejs-components.git"
+  },
+  "keywords": [
+    "cycle",
+    "cyclejs",
+    "cycle.js",
+    "components",
+    "widgets",
+    "ui",
+    "elements"
+  ],
+  "author": "Shahar Or <mightyiampresence@gmail.com> (mightyiam)",
+  "contributors": [
+    "Shahar Or <mightyiampresence@gmail.com> (mightyiam)",
+    "Yarom Shoval <yarom.adi@gmail.com> (yarom82)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyclejs-community/cyclejs-components/issues"
+  },
+  "homepage": "https://github.com/cyclejs-community/cyclejs-components#readme",
+  "devDependencies": {
+    "@cycle/run": "^1.0.0",
+    "source-map-loader": "^0.1.6",
+    "ts-loader": "^2.0.1",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1",
+    "xstream": "^10.2.0"
+  },
+  "dependencies": {
+    "@cycle/dom": "^15.0.0",
+    "@cycle/isolate": "^2.0.0"
+  }
+}

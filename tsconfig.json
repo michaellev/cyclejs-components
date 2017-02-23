@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "lib": [
+      "ES2017",
+      "DOM"
+    ],
+    "target": "ES2017"
+  },
+  "formatCodeOptions": {
+    "indexSize": 2,
+    "tabSize": 2
+  }
+}
