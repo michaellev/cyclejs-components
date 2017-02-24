@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "webpack && git diff-files --quiet docs/lib/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   "homepage": "https://github.com/cyclejs-community/cyclejs-components#readme",
   "devDependencies": {
     "@cycle/run": "^1.0.0",
+    "husky": "^0.13.1",
     "source-map-loader": "^0.1.6",
     "ts-loader": "^2.0.1",
     "typescript": "^2.2.1",
