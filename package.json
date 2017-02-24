@@ -10,7 +10,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cyclejs-community/cyclejs-components.git"
+    "url": "git+https://github.com/mightyiam/cyclejs-web-components.git",
+    "homepage": "https://github.com/mightyiam/cyclejs-web-components"
   },
   "keywords": [
     "cycle",
@@ -28,9 +29,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cyclejs-community/cyclejs-components/issues"
+    "url": "https://github.com/mightyiam/cyclejs-web-components/issues"
   },
-  "homepage": "https://github.com/cyclejs-community/cyclejs-components#readme",
+  "homepage": "https://mightyiam.github.io/cyclejs-web-components/",
   "devDependencies": {
     "@cycle/run": "^1.0.0",
     "husky": "^0.13.1",
