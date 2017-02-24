@@ -1,24 +1,60 @@
-import { DOMSource, makeDOMDriver, h1, section } from '@cycle/dom'
+import { DOMSource, makeDOMDriver, h1, section, menu, ul, li, a } from '@cycle/dom'
 import { run } from '@cycle/run'
-import * as componentDocs from './component-documentations'
+import componentDocs from './component-documentations'
 import xs from 'xstream'
 import { ComponentDocumentation } from './types'
 import { DOMComponent } from '../../src/types'
 import ComponentDocComponent from './component-doc-component'
 
-document.title = 'Cycle.js Components Documentation'
+const title = 'Cycle.js Web Components Documentation'
+document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
-  const sinks = Object.values(componentDocs)
-  .map((doc: ComponentDocumentation) => ComponentDocComponent(Object.assign({}, doc, { DOM: sources.DOM })))
+  const domSource = sources.DOM
+  const componentDocComponents = componentDocs.map((doc: ComponentDocumentation) => {
+    const sources = Object.assign({}, doc, { DOM: domSource })
+    return ComponentDocComponent(sources)
+  })
 
-  const vdom$ = xs.combine(...(sinks.map(sink => sink.DOM)))
-    .map((vdoms) => {
-      return section({}, [
-        h1('Cycle.js Components Documentation'),
-        ...vdoms
-      ])
-    })
+  const vdom$ = xs.combine(
+    ...(componentDocComponents.map(component => component.DOM))
+  ).map((vdoms) => {
+    return section(
+      {
+        style: {
+          display: 'flex'
+        }
+      },
+      [
+        section(
+          [
+            ...vdoms
+          ]
+        ),
+        menu(
+          {
+            style: {
+              order: '-1',
+              flexBasis: '20%'
+            }
+          },
+          [
+            h1(title),
+            ul([
+              ...(componentDocs.map(doc => li(a(
+                {
+                  attrs: {
+                    href: '#' + doc.id
+                  }
+                },
+                doc.name
+              ))))
+            ])
+          ]
+        )
+      ]
+    )
+  })
 
   return {
     DOM: vdom$
