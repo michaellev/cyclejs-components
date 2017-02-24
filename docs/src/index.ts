@@ -63,6 +63,9 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
   }
 }
 
+const container = document.createElement('div')
+document.body.appendChild(container)
+
 run(main, {
-  DOM: makeDOMDriver(document.body)
+  DOM: makeDOMDriver(container)
 })
