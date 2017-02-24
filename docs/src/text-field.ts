@@ -5,6 +5,7 @@ const textFieldDoc: ComponentDocumentation = {
   name: 'text field',
   id: 'text-field',
   varName: 'TextField',
-  Demo
+  properties: [
+  ]
 }
 export default textFieldDoc
