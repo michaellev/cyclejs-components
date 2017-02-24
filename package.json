@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "precommit": "webpack && git diff-files --quiet docs/lib/bundle.js"
+    "precommit": "webpack && git diff --quiet docs/lib/bundle.js"
   },
   "repository": {
     "type": "git",
