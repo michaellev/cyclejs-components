@@ -1,10 +1,10 @@
 const { resolve } = require('path')
 
 const config = {
-  entry: './doc/src/index.ts',
+  entry: './docs/src/index.ts',
   output: {
     filename: 'bundle.js',
-    path: resolve(__dirname, 'doc', 'lib')
+    path: resolve(__dirname, 'docs', 'lib')
   },
   resolve: {
     extensions: [ '.ts', '.js' ]
