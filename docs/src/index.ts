@@ -5,6 +5,7 @@ import xs from 'xstream'
 import { ComponentDocumentation } from './types'
 import { DOMComponent } from '../../src/types'
 import ComponentDocComponent from './component-doc-component'
+import forkmeRibbon from './forkme-ribbon'
 
 const title = 'Cycle.js Web Components Documentation'
 document.title = title
@@ -51,7 +52,8 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
               ))))
             ])
           ]
-        )
+        ),
+        forkmeRibbon
       ]
     )
   })

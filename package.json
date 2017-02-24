@@ -34,6 +34,7 @@
   "devDependencies": {
     "@cycle/run": "^1.0.0",
     "husky": "^0.13.1",
+    "snabbdom-virtualize": "^0.6.0",
     "source-map-loader": "^0.1.6",
     "ts-loader": "^2.0.1",
     "typescript": "^2.2.1",
