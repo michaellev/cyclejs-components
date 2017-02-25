@@ -15,7 +15,7 @@ const ComponentDocComponent: DOMComponent = (sources: inputSources) => {
     .map(prop => prop.Documentation({DOM: sources.DOM}))
   const vdom$ = xs.combine(
     ...(propDocSinks.map(sink => sink.DOM))
-  ).map((propDocVnodes) => dl([
+  ).map((propDocVnodes) => ([
     dt(
       {
         attrs: { id: sources.id }

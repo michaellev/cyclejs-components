@@ -1,4 +1,4 @@
-import { DOMSource, makeDOMDriver, h1, section, menu, ul, li, a } from '@cycle/dom'
+import { DOMSource, makeDOMDriver, h1, section, menu, dl, ul, li, a } from '@cycle/dom'
 import { run } from '@cycle/run'
 import componentDocs from './component-documentations'
 import xs from 'xstream'
@@ -12,14 +12,14 @@ document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
   const domSource = sources.DOM
-  const componentDocComponents = componentDocs.map((doc: ComponentDocumentation) => {
+  const componentDocComponents = componentDocs.map((doc) => {
     const sources = Object.assign({}, doc, { DOM: domSource })
     return ComponentDocComponent(sources)
   })
 
   const vdom$ = xs.combine(
     ...(componentDocComponents.map(component => component.DOM))
-  ).map((vdoms) => {
+  ).map((componentDocComponentVdom) => {
     return section(
       {
         style: {
@@ -27,9 +27,9 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
         }
       },
       [
-        section(
+        dl(
           [
-            ...vdoms
+            ...[].concat.apply([], componentDocComponentVdom)
           ]
         ),
         menu(

@@ -4,12 +4,12 @@ import { VNode } from 'snabbdom/vnode'
 
 export interface DOMComponent {
   (
-    sources?: {
-      DOM?: DOMSource,
+    sources: {
+      DOM: DOMSource,
       [x: string]: any
     }
   ): {
-    DOM: Stream<VNode>,
+    DOM: Stream<VNode | VNode[]>,
     [x: string]: any
   }
 }
