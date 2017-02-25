@@ -12,14 +12,14 @@ const ButtonDoc: ComponentDocumentation = {
       description: 'children of the button element',
       type: 'source',
       TSType: 'Stream<[VNode]>',
-      Documentation: ChildrenSource
+      Demo: ChildrenSource
     },
     {
       name: 'presses',
       description: 'emitted on button clicks',
       type: 'sink',
       TSType: 'Stream<Symbol>',
-      Documentation: PressesSink
+      Demo: PressesSink
     }
   ]
 }

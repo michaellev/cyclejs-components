@@ -5,7 +5,7 @@ export interface PropertyDocumentation {
   description?: string
   TSType: string
   type: 'source' | 'sink'
-  Documentation: DOMComponent
+  Demo: DOMComponent
 }
 
 export interface ComponentDocumentation {

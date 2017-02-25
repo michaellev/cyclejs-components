@@ -1,7 +1,6 @@
-import { DOMSource, section, h2, h3, dl, dt, dd, pre } from '@cycle/dom'
+import { DOMSource, dl, dt, dd, pre } from '@cycle/dom'
 import { DOMComponent } from '../../src/types'
-import { ComponentDocumentation, PropertyDocumentation } from './types'
-import { VNode } from 'snabbdom/vnode'
+import { ComponentDocumentation } from './types'
 import xs from 'xstream'
 
 const packageName = 'cycle-web-components'
@@ -11,11 +10,12 @@ interface inputSources extends ComponentDocumentation {
 }
 
 const ComponentDocComponent: DOMComponent = (sources: inputSources) => {
-  const propDocSinks = sources.properties
-    .map(prop => prop.Documentation({DOM: sources.DOM}))
+  const propDemoSinks = sources.properties
+    .map(propDoc => propDoc.Demo({DOM: sources.DOM}))
+
   const vdom$ = xs.combine(
-    ...(propDocSinks.map(sink => sink.DOM))
-  ).map((propDocVnodes) => ([
+    ...(propDemoSinks.map(sink => sink.DOM))
+  ).map((propDemoVnodes) => ([
     dt(
       {
         attrs: { id: sources.id }
@@ -41,7 +41,7 @@ const ComponentDocComponent: DOMComponent = (sources: inputSources) => {
         ]),
         dt('Properties'),
         dd([
-          dl([].concat.apply([], propDocVnodes.map((vnode, i) => {
+          dl([].concat.apply([], propDemoVnodes.map((vnode, i) => {
             const prop = sources.properties[i]
             return [
               dt(prop.name),
