@@ -9,9 +9,14 @@ interface inputSources {
   children: Stream<VNode[]>
 }
 
+interface outputSinks {
+  DOM: Stream<VNode>,
+  presses: Stream<Symbol>
+}
+
 export const press = Symbol('Button.press')
 
-const Button: DOMComponent = (sources: inputSources ) => {
+const Button: DOMComponent = (sources: inputSources ) : outputSinks => {
   const presses$ = sources.DOM
     .select('button')
     .events('click')

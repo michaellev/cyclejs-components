@@ -1,5 +1,5 @@
 import xs from 'xstream'
-import { DOMSource, section, label, pre, h3, h4 } from '@cycle/dom'
+import { DOMSource, section, label } from '@cycle/dom'
 import { DOMComponent } from '../../../../src/types'
 import TextField from '../../../../src/text-field'
 import Button from '../../../../src/button'

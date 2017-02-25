@@ -1,6 +1,6 @@
 import { ComponentDocumentation } from '../types'
-// import PressesSink from './properties/presses'
-import ChildrenSource from './properties/children'
+import PressesSink from './properties/presses-sink'
+import ChildrenSource from './properties/children-source'
 
 const ButtonDoc: ComponentDocumentation = {
   name: 'button',
@@ -11,15 +11,16 @@ const ButtonDoc: ComponentDocumentation = {
       name: 'children',
       description: 'children of the button element',
       type: 'source',
-      TSType: '[VNode]',
+      TSType: 'Stream<[VNode]>',
       Documentation: ChildrenSource
     },
-    // {
-      // name: 'presses',
-      // type: 'sink',
-      // description: '',
-      // Documentation: PressesSink
-    // }
+    {
+      name: 'presses',
+      description: 'emitted on button clicks',
+      type: 'sink',
+      TSType: 'Stream<Symbol>',
+      Documentation: PressesSink
+    }
   ]
 }
 export default ButtonDoc
