@@ -17,7 +17,7 @@ const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   ).map(([buttonVNode, pressCount]) => (
     section([
       label(`press count:`),
-      pre(pressCount),
+      pre(pressCount.toString()),
       buttonVNode
     ])
   ))
