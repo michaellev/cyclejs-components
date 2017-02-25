@@ -1,6 +1,6 @@
 import { DOMComponent } from '../../src/types'
 
-interface Property {
+export interface PropertyDocumentation {
   name: string
   description?: string
   TSType: string
@@ -12,5 +12,5 @@ export interface ComponentDocumentation {
   name: string,
   id: string,
   varName: string,
-  properties: Property[]
+  properties: PropertyDocumentation[]
 }

@@ -9,6 +9,7 @@ const ButtonDoc: ComponentDocumentation = {
   properties: [
     {
       name: 'children',
+      description: 'children of the button element',
       type: 'source',
       TSType: '[VNode]',
       Documentation: LabelSource

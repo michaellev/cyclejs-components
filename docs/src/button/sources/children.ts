@@ -18,8 +18,8 @@ const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
     childrenTextField.DOM
   ).map(([buttonVNode, childrenTextFieldVNode]) => (
     section([
-      label('set the children of the button:'),
-      childrenTextField,
+      label('input:'),
+      childrenTextFieldVNode,
       label('result:'),
       buttonVNode
     ])
