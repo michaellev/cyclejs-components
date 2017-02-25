@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noUnusedLocals": true,
     "sourceMap": true,
     "strictNullChecks": true,
     "module": "commonjs",
