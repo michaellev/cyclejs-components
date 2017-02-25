@@ -1,6 +1,6 @@
 import { ComponentDocumentation } from '../types'
-// import PressesSink from './sinks/presses'
-import LabelSource from './sources/children'
+// import PressesSink from './properties/presses'
+import ChildrenSource from './properties/children'
 
 const ButtonDoc: ComponentDocumentation = {
   name: 'button',
@@ -12,7 +12,7 @@ const ButtonDoc: ComponentDocumentation = {
       description: 'children of the button element',
       type: 'source',
       TSType: '[VNode]',
-      Documentation: LabelSource
+      Documentation: ChildrenSource
     },
     // {
       // name: 'presses',
