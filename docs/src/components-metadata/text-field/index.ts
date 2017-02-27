@@ -1,4 +1,4 @@
-import { ComponentDocumentation } from '../types'
+import { ComponentDocumentation } from '../../types'
 
 const textFieldDoc: ComponentDocumentation = {
   name: 'text field',

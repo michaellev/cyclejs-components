@@ -1,9 +1,9 @@
 import { DOMSource, makeDOMDriver, h1, section, menu, dl, ul, li, a } from '@cycle/dom'
 import { run } from '@cycle/run'
-import componentDocs from './component-documentations'
+import componentsMetadata from './components-metadata'
 import xs from 'xstream'
 import { DOMComponent } from '../../src/types'
-import ComponentDocComponent from './component-doc-component'
+import ComponentDocumentation from './components/component-documentation'
 import forkmeRibbon from './forkme-ribbon'
 
 const title = 'Cycle.js Web Components Documentation'
@@ -11,9 +11,9 @@ document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
   const domSource = sources.DOM
-  const componentDocComponents = componentDocs.map((doc) => {
+  const componentDocComponents = componentsMetadata.map((doc) => {
     const sources = Object.assign({}, doc, { DOM: domSource })
-    return ComponentDocComponent(sources)
+    return ComponentDocumentation(sources)
   })
 
   const vdom$ = xs.combine(
@@ -41,7 +41,7 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
           [
             h1(title),
             ul([
-              ...(componentDocs.map(doc => li(a(
+              ...(componentsMetadata.map(doc => li(a(
                 {
                   attrs: {
                     href: '#' + doc.id

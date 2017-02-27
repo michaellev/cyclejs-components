@@ -1,4 +1,4 @@
-import { ComponentDocumentation } from '../types'
+import { ComponentDocumentation } from '../../types'
 import PressesSink from './properties/presses-sink'
 import ChildrenSource from './properties/children-source'
 

@@ -1,6 +1,6 @@
 import { DOMSource, dl, dt, dd, pre } from '@cycle/dom'
-import { DOMComponent } from '../../src/types'
-import { ComponentDocumentation } from './types'
+import { DOMComponent } from '../../../src/types'
+import { ComponentDocumentation } from '../types'
 import xs from 'xstream'
 
 const packageName = 'cycle-web-components'
