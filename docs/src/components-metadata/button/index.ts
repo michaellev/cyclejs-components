@@ -1,8 +1,8 @@
-import { ComponentDocumentation } from '../../types'
+import { ComponentMetadata } from '../../types'
 import PressesSink from './properties/presses-sink'
 import ChildrenSource from './properties/children-source'
 
-const ButtonDoc: ComponentDocumentation = {
+export default {
   name: 'button',
   id: 'button',
   varName: 'Button',
@@ -22,5 +22,4 @@ const ButtonDoc: ComponentDocumentation = {
       Demo: PressesSink
     }
   ]
-}
-export default ButtonDoc
+} as ComponentMetadata

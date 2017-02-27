@@ -1,6 +1,6 @@
 import { DOMComponent } from '../../src/types'
 
-export interface PropertyDocumentation {
+export interface PropertyMetadata {
   name: string
   description?: string
   TSType: string
@@ -8,9 +8,9 @@ export interface PropertyDocumentation {
   Demo: DOMComponent
 }
 
-export interface ComponentDocumentation {
+export interface ComponentMetadata {
   name: string,
   id: string,
   varName: string,
-  properties: PropertyDocumentation[]
+  properties: PropertyMetadata[]
 }

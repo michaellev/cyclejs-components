@@ -1,6 +1,6 @@
-import { ComponentDocumentation } from '../../types'
+import { ComponentMetadata } from '../../types'
 
-const textFieldDoc: ComponentDocumentation = {
+export default {
   name: 'text field',
   id: 'text-field',
   varName: 'TextField',
@@ -18,5 +18,4 @@ const textFieldDoc: ComponentDocumentation = {
       // TSType: 'Stream<string>'
     // },
   ]
-}
-export default textFieldDoc
+} as ComponentMetadata

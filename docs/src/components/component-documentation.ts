@@ -1,15 +1,15 @@
 import { DOMSource, dl, dt, dd, pre } from '@cycle/dom'
 import { DOMComponent } from '../../../src/types'
-import { ComponentDocumentation } from '../types'
+import { ComponentMetadata } from '../types'
 import xs from 'xstream'
 
 const packageName = 'cycle-web-components'
 
-interface inputSources extends ComponentDocumentation {
+interface inputSources extends ComponentMetadata {
   DOM: DOMSource
 }
 
-const ComponentDocComponent: DOMComponent = (sources: inputSources) => {
+const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
   const propDemoSinks = sources.properties
     .map(propDoc => propDoc.Demo({DOM: sources.DOM}))
 
@@ -68,4 +68,4 @@ const ComponentDocComponent: DOMComponent = (sources: inputSources) => {
   }
 }
 
-export default ComponentDocComponent
+export default ComponentDocumentation
