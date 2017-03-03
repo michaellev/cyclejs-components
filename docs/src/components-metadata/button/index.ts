@@ -11,7 +11,7 @@ export default {
       name: 'children',
       description: 'children of the button element',
       type: 'source',
-      TSType: 'Stream<[VNode]>',
+      TSType: 'Stream<[VNode] | string>',
       Demo: ChildrenSource
     },
     {

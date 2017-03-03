@@ -1,4 +1,4 @@
-import { default as xs, Stream } from 'xstream'
+import { Stream } from 'xstream'
 import { button, DOMSource } from '@cycle/dom'
 import isolate from '@cycle/isolate'
 import { DOMComponent } from './types'
@@ -6,7 +6,7 @@ import { VNode } from 'snabbdom/vnode'
 
 interface inputSources {
   DOM: DOMSource,
-  children: Stream<VNode[]>
+  children: Stream<VNode[] | string>
 }
 
 interface outputSinks {
@@ -22,9 +22,7 @@ const Button: DOMComponent = (sources: inputSources ) : outputSinks => {
     .events('click')
     .mapTo(press)
 
-  const children$ = sources.children || xs.of(['DEFAULT'])
-
-  const vnode$ = children$.map(children => button(children))
+  const vnode$ = sources.children.map((children: VNode[] | string) => button(children))
 
   const sinks = {
     DOM: vnode$,
@@ -34,4 +32,4 @@ const Button: DOMComponent = (sources: inputSources ) : outputSinks => {
   return sinks
 }
 
-export default (sources) => isolate(Button)(sources)
+export default (sources: inputSources) => isolate(Button)(sources)

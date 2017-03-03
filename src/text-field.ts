@@ -28,4 +28,4 @@ const TextField: DOMComponent = (sources: inputSources ) => {
   return sinks
 }
 
-export default (sources) => isolate(TextField)(sources)
+export default (sources: inputSources) => isolate(TextField)(sources)

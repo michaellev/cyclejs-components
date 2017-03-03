@@ -9,7 +9,7 @@ const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
     children: xs.of('Increment')
   })
 
-  const pressCount$ = button.presses.fold(curr => curr + 1, 0)
+  const pressCount$ = button.presses.fold((curr: number) => curr + 1, 0)
 
   const vnode$ = xs.combine(
     button.DOM,
