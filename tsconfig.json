@@ -5,6 +5,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "module": "commonjs",
+    "noImplicitAny": true,
     "lib": [
       "ES2017",
       "DOM"
