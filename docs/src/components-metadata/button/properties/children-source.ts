@@ -11,7 +11,7 @@ const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   })
   const button = Button({
     DOM: sources.DOM,
-    children: childrenTextField.value.map(value => eval(value))
+    children: childrenTextField.value.map((value: string) => eval(value))
   })
   const vnode$ = xs.combine(
     button.DOM,
