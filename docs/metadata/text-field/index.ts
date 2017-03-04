@@ -1,6 +1,6 @@
 import { ComponentMetadata } from '../../types'
-import valueSource from './properties/value-source'
-import valueSink from './properties/value-sink'
+import valueSourceDemo from './demos/sources/value'
+import valueSinkDemo from './demos/sinks/value'
 import { p, code } from '@cycle/dom'
 
 export default {
@@ -13,14 +13,14 @@ export default {
       description: p(['Sets the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
       type: 'source',
       TSType: 'Stream<string>',
-      Demo: valueSource
+      Demo: valueSourceDemo
     },
     {
       name: 'value',
       description: p(['Emits the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
       type: 'sink',
       TSType: 'Stream<string>',
-      Demo: valueSink
+      Demo: valueSinkDemo
     },
   ]
 } as ComponentMetadata

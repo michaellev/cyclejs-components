@@ -1,6 +1,6 @@
 import { ComponentMetadata } from '../../types'
-import PressesSink from './properties/presses-sink'
-import ChildrenSource from './properties/children-source'
+import PressesSinkDemo from './demos/sinks/presses'
+import ChildrenSourceDemo from './demos/sources/children'
 import { p, code } from '@cycle/dom'
 
 export default {
@@ -13,14 +13,14 @@ export default {
       description: p(['Sets the children of the ', code('button'), ' element']),
       type: 'source',
       TSType: 'Stream<VNode[] | string>',
-      Demo: ChildrenSource
+      Demo: ChildrenSourceDemo
     },
     {
       name: 'presses',
       description: p('Emitted on clicks'),
       type: 'sink',
       TSType: 'Stream<Symbol>',
-      Demo: PressesSink
+      Demo: PressesSinkDemo
     }
   ]
 } as ComponentMetadata

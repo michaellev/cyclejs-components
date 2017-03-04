@@ -1,8 +1,8 @@
 import xs from 'xstream'
 import { DOMSource, section, label } from '@cycle/dom'
-import { DOMComponent } from '../../../../lib/types'
-import TextField from '../../../../lib/text-field'
-import Button from '../../../../lib/button'
+import { DOMComponent } from '../../../../../lib/types'
+import TextField from '../../../../../lib/text-field'
+import Button from '../../../../../lib/button'
 
 const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   const childrenTextField = TextField({

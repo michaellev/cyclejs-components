@@ -1,7 +1,7 @@
 import xs from 'xstream'
 import { DOMSource, section, label, code, br } from '@cycle/dom'
-import { DOMComponent } from '../../../../lib/types'
-import Checkbox from '../../../../lib/checkbox'
+import { DOMComponent } from '../../../../../lib/types'
+import Checkbox from '../../../../../lib/checkbox'
 
 const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   const checkbox = Checkbox({

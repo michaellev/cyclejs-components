@@ -1,6 +1,6 @@
 import { ComponentMetadata } from '../../types'
-import CheckedSinkDemo from './properties/checked-sink'
-import CheckedSourceDemo from './properties/checked-source'
+import CheckedSinkDemo from './demos/sinks/checked'
+import CheckedSourceDemo from './demos/sources/checked'
 import { p, code } from '@cycle/dom'
 
 export default {
