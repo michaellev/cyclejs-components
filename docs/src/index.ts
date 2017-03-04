@@ -1,6 +1,6 @@
 import { DOMSource, makeDOMDriver, h1, section, menu, dl, ul, li, a } from '@cycle/dom'
 import { run } from '@cycle/run'
-import componentsMetadata from './components-metadata'
+import metadatas from './metadata'
 import xs from 'xstream'
 import { DOMComponent } from '../../src/types'
 import ComponentDocumentation from './components/component-documentation'
@@ -11,8 +11,8 @@ document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
   const domSource = sources.DOM
-  const componentDocComponents = componentsMetadata.map((doc) => {
-    const sources = Object.assign({}, doc, { DOM: domSource })
+  const componentDocComponents = metadatas.map((metadata) => {
+    const sources = Object.assign({}, metadata, { DOM: domSource })
     return ComponentDocumentation(sources)
   })
 
@@ -41,13 +41,13 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
           [
             h1(title),
             ul([
-              ...(componentsMetadata.map(doc => li(a(
+              ...(metadatas.map(metadata => li(a(
                 {
                   attrs: {
-                    href: '#' + doc.id
+                    href: '#' + metadata.id
                   }
                 },
-                doc.name
+                metadata.name
               ))))
             ])
           ]
