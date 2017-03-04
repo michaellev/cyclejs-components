@@ -12,7 +12,7 @@ interface inputSources {
 
 const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
   const propDemoSinks = sources.metadata.properties
-    .map(propDoc => propDoc.Demo({DOM: sources.DOM}))
+    .map(propMetadata => propMetadata.Demo({DOM: sources.DOM}))
 
   const vdom$ = xs.combine(
     ...(propDemoSinks.map(sink => sink.DOM))
