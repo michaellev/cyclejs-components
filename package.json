@@ -4,8 +4,9 @@
   "description": "Cycle.js Components",
   "main": "lib/index.js",
   "scripts": {
+    "docs": "webpack",
     "dev": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run docs",
     "precommit": "webpack && git diff --quiet docs/lib/bundle.js"
   },
   "repository": {
