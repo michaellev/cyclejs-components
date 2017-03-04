@@ -11,7 +11,7 @@ document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
   const componentDocComponents = metadatas.map((metadata) => {
-    return ComponentDocumentation({ DOM: sources.DOM, metadata })
+    return ComponentDocumentation({ DOM: sources.DOM, metadata: xs.of(metadata) })
   })
 
   const vdom$ = xs.combine(
