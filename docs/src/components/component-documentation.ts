@@ -1,4 +1,4 @@
-import { DOMSource, dl, dt, dd, pre } from '@cycle/dom'
+import { DOMSource, dl, dt, dd, code } from '@cycle/dom'
 import { DOMComponent } from '../../../src/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
@@ -33,12 +33,12 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
             dd([
               dl([
                 dt('ES2015'),
-                dd(pre(
+                dd(code(
                   { class: { importExample: true } },
                   `import { ${metadata.varName} } from '${packageName}'`
                 )),
                 dt('CommonJS'),
-                dd(pre(
+                dd(code(
                 { class: { importExample: true } },
                 `const { ${metadata.varName} } = require('${packageName}')`
                 ))
@@ -56,7 +56,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
                       dt('direction'),
                       dd(prop.type),
                       dt('type'),
-                      dd(prop.TSType),
+                      dd(code(prop.TSType)),
                       ...(vnode ? [dt('demo'), dd(vnode)] : [])
                     ])
                   )
