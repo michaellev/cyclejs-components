@@ -3,7 +3,9 @@ import { DOMComponent } from '../../../src/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
 
-const packageName = 'cycle-web-components'
+
+declare const require: any
+const { main: packageName } = require('../../../package.json')
 
 interface inputSources {
   metadata: Stream<ComponentMetadata>
