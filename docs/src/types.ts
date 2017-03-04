@@ -5,7 +5,7 @@ export interface PropertyMetadata {
   description?: string
   TSType: string
   type: 'source' | 'sink'
-  Demo: DOMComponent
+  Demo?: DOMComponent
 }
 
 export interface ComponentMetadata {

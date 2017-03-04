@@ -2,7 +2,6 @@ import { DOMSource, dl, dt, dd, pre } from '@cycle/dom'
 import { DOMComponent } from '../../../src/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
-import { VNode } from 'snabbdom/vnode'
 
 const packageName = 'cycle-web-components'
 
@@ -14,8 +13,8 @@ interface inputSources {
 const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
   const vnode$ = sources.metadata
     .map((metadata) => {
-      const propDemoVnode$s: Stream<VNode | VNode[]>[] = metadata.properties
-        .map(propMetadata => propMetadata.Demo({ DOM: sources.DOM }).DOM)
+      const propDemoVnode$s = metadata.properties
+        .map(propMetadata => propMetadata.Demo ? propMetadata.Demo({ DOM: sources.DOM }).DOM : xs.of(undefined))
 
       return xs.combine(
         ...propDemoVnode$s
@@ -56,8 +55,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
                       dd(prop.type),
                       dt('type'),
                       dd(prop.TSType),
-                      dt('demo'),
-                      dd(vnode)
+                      ...(vnode ? [dt('demo'), dd(vnode)] : [])
                     ])
                   )
                 ]
