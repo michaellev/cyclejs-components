@@ -1,9 +1,9 @@
-import TextField from './text-field'
-import Button from './button'
-import Checkbox from './checkbox'
+import textField from './text-field'
+import button from './button'
+import checkbox from './checkbox'
 
 export default [
-  TextField,
-  Button,
-  Checkbox
+  textField,
+  button,
+  checkbox,
 ]
