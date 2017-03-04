@@ -6,6 +6,8 @@
     "strictNullChecks": true,
     "module": "commonjs",
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "lib": [
       "ES2017",
       "DOM"
