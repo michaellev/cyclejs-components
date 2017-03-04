@@ -1,7 +1,7 @@
 import xs from 'xstream'
 import { DOMSource, section, label, pre } from '@cycle/dom'
-import { DOMComponent } from '../../../../../src/types'
-import Button from '../../../../../src/button'
+import { DOMComponent } from '../../../../lib/types'
+import Button from '../../../../lib/button'
 
 const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   const button = Button({

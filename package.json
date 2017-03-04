@@ -7,7 +7,7 @@
     "docs": "webpack",
     "dev": "webpack-dev-server",
     "test": "npm run docs",
-    "pre-commit": "webpack && git diff --quiet docs/lib/bundle.js"
+    "pre-commit": "webpack && git diff --quiet docs/bundle.js"
   },
   "pre-commit": [
     "pre-commit"
