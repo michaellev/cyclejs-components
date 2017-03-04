@@ -5,7 +5,7 @@ import { default as xs, Stream } from 'xstream'
 
 
 declare const require: any
-const { main: packageName } = require('../../../package.json')
+const { name: packageName } = require('../../../package.json')
 
 interface inputSources {
   metadata: Stream<ComponentMetadata>
