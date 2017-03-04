@@ -7,11 +7,11 @@ import Button from '../../../../../src/button'
 const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
   const childrenTextField = TextField({
     DOM: sources.DOM,
-    value: xs.of("['banana']")
+    value: xs.of("some value")
   })
   const button = Button({
     DOM: sources.DOM,
-    children: childrenTextField.value.map((value: string) => eval(value))
+    children: childrenTextField.value.map((value: string) => value)
   })
   const vnode$ = xs.combine(
     button.DOM,
