@@ -5,12 +5,13 @@ import xs from 'xstream'
 
 const packageName = 'cycle-web-components'
 
-interface inputSources extends ComponentMetadata {
+interface inputSources {
+  metadata: ComponentMetadata
   DOM: DOMSource
 }
 
 const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
-  const propDemoSinks = sources.properties
+  const propDemoSinks = sources.metadata.properties
     .map(propDoc => propDoc.Demo({DOM: sources.DOM}))
 
   const vdom$ = xs.combine(
@@ -18,9 +19,9 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
   ).map((propDemoVnodes) => ([
     dt(
       {
-        attrs: { id: sources.id }
+        attrs: { id: sources.metadata.id }
       },
-      sources.name
+      sources.metadata.name
     ),
     dd([
       dl([
@@ -30,19 +31,19 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
             dt('ES2015'),
             dd(pre(
               { class: { importExample: true } },
-              `import { ${sources.varName} } from '${packageName}'`
+              `import { ${sources.metadata.varName} } from '${packageName}'`
             )),
             dt('CommonJS'),
             dd(pre(
             { class: { importExample: true } },
-            `const { ${sources.varName} } = require('${packageName}')`
+            `const { ${sources.metadata.varName} } = require('${packageName}')`
             ))
           ]),
         ]),
         dt('Properties'),
         dd([
           dl([].concat.apply([], propDemoVnodes.map((vnode, i) => {
-            const prop = sources.properties[i]
+            const prop = sources.metadata.properties[i]
             return [
               dt(prop.name),
               dd(

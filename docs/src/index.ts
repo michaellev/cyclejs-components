@@ -10,10 +10,8 @@ const title = 'Cycle.js Web Components Documentation'
 document.title = title
 
 const main: DOMComponent = (sources: { DOM: DOMSource }) => {
-  const domSource = sources.DOM
   const componentDocComponents = metadatas.map((metadata) => {
-    const sources = Object.assign({}, metadata, { DOM: domSource })
-    return ComponentDocumentation(sources)
+    return ComponentDocumentation({ DOM: sources.DOM, metadata })
   })
 
   const vdom$ = xs.combine(
