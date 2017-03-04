@@ -52,7 +52,8 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
                   dt(prop.name),
                   dd(
                     dl([
-                      ...(prop.description ? [dt('description'), dd(prop.description)] : []),
+                      dt('description'),
+                      dd(prop.description),
                       dt('direction'),
                       dd(prop.type),
                       dt('type'),

@@ -1,8 +1,9 @@
 import { DOMComponent } from '../lib/types'
+import { VNode } from 'snabbdom/vnode'
 
 export interface PropertyMetadata {
   name: string
-  description?: string
+  description: VNode
   TSType: string
   type: 'source' | 'sink'
   Demo?: DOMComponent

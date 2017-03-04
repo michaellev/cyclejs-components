@@ -1,6 +1,7 @@
 import { ComponentMetadata } from '../../types'
 import valueSource from './properties/value-source'
 import valueSink from './properties/value-sink'
+import { p, code } from '@cycle/dom'
 
 export default {
   name: 'text field',
@@ -9,14 +10,14 @@ export default {
   properties: [
     {
       name: 'value',
-      description: 'sets the value of the input DOM element attribute',
+      description: p(['Sets the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
       type: 'source',
       TSType: 'Stream<string>',
       Demo: valueSource
     },
     {
       name: 'value',
-      description: 'value of the input DOM element property',
+      description: p(['Emits the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
       type: 'sink',
       TSType: 'Stream<string>',
       Demo: valueSink
