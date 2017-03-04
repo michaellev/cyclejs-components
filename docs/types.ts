@@ -1,4 +1,4 @@
-import { DOMComponent } from '../../src/types'
+import { DOMComponent } from '../lib/types'
 
 export interface PropertyMetadata {
   name: string

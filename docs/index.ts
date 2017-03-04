@@ -2,7 +2,7 @@ import { DOMSource, makeDOMDriver, h1, section, menu, dl, ul, li, a } from '@cyc
 import { run } from '@cycle/run'
 import metadatas from './metadata'
 import xs from 'xstream'
-import { DOMComponent } from '../../src/types'
+import { DOMComponent } from '../lib/types'
 import ComponentDocumentation from './components/component-documentation'
 import forkmeRibbon from './forkme-ribbon'
 

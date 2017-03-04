@@ -1,11 +1,11 @@
 import { DOMSource, dl, dt, dd, code } from '@cycle/dom'
-import { DOMComponent } from '../../../src/types'
+import { DOMComponent } from '../../lib/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
 
 
 declare const require: any
-const { name: packageName } = require('../../../package.json')
+const { name: packageName } = require('../../package.json')
 
 interface inputSources {
   metadata: Stream<ComponentMetadata>

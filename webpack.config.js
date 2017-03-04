@@ -2,10 +2,10 @@ const { resolve } = require('path')
 const fail = require('webpack-fail-plugin')
 
 const config = {
-  entry: './docs/src/index.ts',
+  entry: './docs/index.ts',
   output: {
     filename: 'bundle.js',
-    path: resolve(__dirname, 'docs', 'lib')
+    path: resolve(__dirname, 'docs')
   },
   resolve: {
     extensions: [ '.ts', '.js' ]
