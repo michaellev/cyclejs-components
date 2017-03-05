@@ -1,7 +1,8 @@
 import { DOMSource, dl, dt, dd, code } from '@cycle/dom'
 import { DOMComponent } from '../../lib/types'
-import { ComponentMetadata } from '../types'
+import { ComponentMetadata, PropertyMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
+import { VNode } from 'snabbdom/vnode'
 
 
 declare const require: any
@@ -53,24 +54,11 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
               'Properties'
             ),
             dd([
-              dl([].concat.apply([], propDemoVnodes.map((vnode, i) => {
-                const prop = metadata.properties[i]
+              dl([].concat.apply([], metadata.properties.map((propertyMetadata, i) => {
+                const demoVnode = propDemoVnodes[i]
                 return [
-                  dt(code(prop.name)),
-                  dd(
-                    dl([
-                      dt('description'),
-                      dd(prop.description),
-                      dt('direction'),
-                      dd(
-                        { class: { tag: true } },
-                        prop.type
-                      ),
-                      dt('type'),
-                      dd(code(prop.TSType)),
-                      ...(vnode ? [dt('demo'), dd(vnode)] : [])
-                    ])
-                  )
+                  dt(propertyMetadata.name),
+                  dd(mkPropertyDocVnode(propertyMetadata, demoVnode))
                 ]
               })))
             ])
@@ -83,5 +71,22 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
     DOM: vnode$
   }
 }
+
+const mkPropertyDocVnode = (propertyMetadata: PropertyMetadata, demoVnode: VNode) => (
+  dl([
+    dt('name'),
+    dd(code(propertyMetadata.name)),
+    dt('description'),
+    dd(propertyMetadata.description),
+    dt('direction'),
+    dd(
+      { class: { tag: true } },
+      propertyMetadata.type
+    ),
+    dt('type'),
+    dd(code(propertyMetadata.TSType)),
+    ...(demoVnode ? [dt('demo'), dd(demoVnode)] : [])
+  ])
+)
 
 export default ComponentDocumentation
