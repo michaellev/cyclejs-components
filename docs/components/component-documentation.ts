@@ -30,7 +30,10 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
         ),
         dd([
           dl([
-            dt('Importing'),
+            dt(
+              { class: { title: true, 'is-3': true } },
+              'Importing'
+            ),
             dd([
               dl([
                 dt('ECMAScript'),
@@ -45,7 +48,10 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
                 ))
               ]),
             ]),
-            dt('Properties'),
+            dt(
+              { class: { title: true, 'is-3': true } },
+              'Properties'
+            ),
             dd([
               dl([].concat.apply([], propDemoVnodes.map((vnode, i) => {
                 const prop = metadata.properties[i]
