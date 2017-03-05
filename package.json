@@ -1,7 +1,7 @@
 {
   "name": "cyclejs-web-components",
   "version": "0.0.0",
-  "description": "Cycle.js Components",
+  "description": "Cycle.js web components",
   "main": "lib/index.js",
   "scripts": {
     "docs": "webpack",
