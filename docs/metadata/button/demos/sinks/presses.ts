@@ -1,5 +1,5 @@
 import xs from 'xstream'
-import { DOMSource, section, label, pre } from '@cycle/dom'
+import { DOMSource, section, label, code, br } from '@cycle/dom'
 import { DOMComponent } from '../../../../../lib/types'
 import Button from '../../../../../lib/button'
 
@@ -16,9 +16,10 @@ const Demo: DOMComponent = (sources: { DOM: DOMSource }) => {
     pressCount$
   ).map(([buttonVNode, pressCount]) => (
     section([
-      label(`press count:`),
-      pre(pressCount.toString()),
-      buttonVNode
+      buttonVNode,
+      br(),
+      label(`press count: `),
+      code(pressCount.toString())
     ])
   ))
 
