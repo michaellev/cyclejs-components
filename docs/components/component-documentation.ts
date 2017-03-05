@@ -1,8 +1,9 @@
-import { DOMSource, div, dl, dt, dd, code } from '@cycle/dom'
+import { DOMSource, div, dl, dt, dd, code, ul, li, a, span } from '@cycle/dom'
 import { DOMComponent } from '../../lib/types'
-import { ComponentMetadata, PropertyMetadata } from '../types'
+import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
-import { VNode } from 'snabbdom/vnode'
+import PropertyDoc from './property-documentation'
+// import { VNode } from 'snabbdom/vnode'
 
 
 declare const require: any
@@ -13,80 +14,101 @@ interface Sources {
   DOM: DOMSource
 }
 
-const ComponentDocumentation: DOMComponent = (sources: Sources) => {
-  const vnode$ = sources.metadata
-    .map((metadata) => {
-      const propDemoVnode$s = metadata.properties
-        .map(propMetadata => propMetadata.Demo ? propMetadata.Demo({ DOM: sources.DOM }).DOM : xs.of(undefined))
+const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sources) => {
+  const rMetadata$ = metadata$.remember()
+  const tabClick$ = DOM.select('.tabs a').events('click')
 
-      return xs.combine(
-        ...propDemoVnode$s
-      ).map((propDemoVnodes) => div([
-        dt(
-          {
-            class: { title: true, 'is-2': true, name: true},
-            attrs: { id: metadata.id }
-          },
-          metadata.name
-        ),
-        dd([
-          dl([
-            dt(
-              { class: { title: true, 'is-3': true } },
-              'Importing'
-            ),
-            dd([
-              dl([
-                dt('ECMAScript'),
-                dd(code(
-                  { class: { importExample: true } },
-                  `import { ${metadata.varName} } from '${packageName}'`
-                )),
-                dt('CommonJS'),
-                dd(code(
+  const selectedPropertyI$ = tabClick$.map(tabClick => (
+    parseInt(<string>((<HTMLAnchorElement>tabClick.currentTarget).dataset.i))
+  )).startWith(0)
+
+  const selectedProperty$ = xs.combine(
+    rMetadata$,
+    selectedPropertyI$
+  ).map(([
+    metadata,
+    selectedPropertyI
+  ]) => metadata.properties[selectedPropertyI])
+
+  const { DOM: propertyDocVnode$ } = PropertyDoc({ DOM, propertyMetadata: selectedProperty$ })
+
+  const vnode$ = xs.combine(
+    rMetadata$,
+    selectedPropertyI$,
+    propertyDocVnode$,
+  ).map(([
+    metadata,
+    selectedPropertyI,
+    propertyDocVnode,
+  ]) => (
+    div([
+      dt(
+        {
+          class: { title: true, 'is-2': true, name: true},
+        },
+        metadata.name
+      ),
+      dd([
+        dl([
+          dt(
+            { class: { title: true, 'is-3': true } },
+            'Importing'
+          ),
+          dd([
+            dl([
+              dt('ECMAScript'),
+              dd(code(
                 { class: { importExample: true } },
-                `const { ${metadata.varName} } = require('${packageName}')`
-                ))
-              ]),
+                `import { ${metadata.varName} } from '${packageName}'`
+              )),
+              dt('CommonJS'),
+              dd(code(
+              { class: { importExample: true } },
+              `const { ${metadata.varName} } = require('${packageName}')`
+              ))
             ]),
-            dt(
-              { class: { title: true, 'is-3': true } },
-              'Properties'
+          ]),
+          dt(
+            { class: { title: true, 'is-3': true } },
+            'Properties'
+          ),
+          dd([
+            div(
+              { class: { tabs: true, 'is-medium': true } },
+              ul(
+                metadata.properties.map((propertyMetadata, i) => (
+                  li(
+                    { class: { 'is-active': i === selectedPropertyI } },
+                    a(
+                      { dataset: { i: String(i) } },
+                      [
+                        propertyMetadata.name,
+                        span(
+                          {
+                            class: {
+                              tag: true,
+                              'is-medium': true,
+                              [propertyMetadata.type]: true
+                            }
+                          },
+                          propertyMetadata.type
+                        )
+                      ]
+                    )
+                  )
+                ))
+              )
             ),
-            dd([
-              dl([].concat.apply([], metadata.properties.map((propertyMetadata, i) => {
-                const demoVnode = propDemoVnodes[i]
-                return [
-                  dt(propertyMetadata.name),
-                  dd(mkPropertyDocVnode(propertyMetadata, demoVnode))
-                ]
-              })))
-            ])
+            propertyDocVnode
           ])
         ])
-      ]))
-    }).flatten()
+      ])
+    ])
+  ))
 
   return {
     DOM: vnode$
   }
 }
-
-const mkPropertyDocVnode = (propertyMetadata: PropertyMetadata, demoVnode: VNode) => (
-  dl([
-    dt('name'),
-    dd(code(propertyMetadata.name)),
-    dt('description'),
-    dd(propertyMetadata.description),
-    dt('direction'),
-    dd(
-      { class: { tag: true } },
-      propertyMetadata.type
-    ),
-    dt('type'),
-    dd(code(propertyMetadata.TSType)),
-    ...(demoVnode ? [dt('demo'), dd(demoVnode)] : [])
-  ])
-)
 
 export default ComponentDocumentation
