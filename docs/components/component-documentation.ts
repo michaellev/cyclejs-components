@@ -49,7 +49,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
               dl([].concat.apply([], propDemoVnodes.map((vnode, i) => {
                 const prop = metadata.properties[i]
                 return [
-                  dt(prop.name),
+                  dt(code(prop.name)),
                   dd(
                     dl([
                       dt('description'),
