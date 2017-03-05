@@ -1,4 +1,4 @@
-import { DOMSource, dl, dt, dd, code } from '@cycle/dom'
+import { DOMSource, div, dl, dt, dd, code } from '@cycle/dom'
 import { DOMComponent } from '../../lib/types'
 import { ComponentMetadata, PropertyMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
@@ -8,12 +8,12 @@ import { VNode } from 'snabbdom/vnode'
 declare const require: any
 const { name: packageName } = require('../../package.json')
 
-interface inputSources {
+interface Sources {
   metadata: Stream<ComponentMetadata>
   DOM: DOMSource
 }
 
-const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
+const ComponentDocumentation: DOMComponent = (sources: Sources) => {
   const vnode$ = sources.metadata
     .map((metadata) => {
       const propDemoVnode$s = metadata.properties
@@ -21,7 +21,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
 
       return xs.combine(
         ...propDemoVnode$s
-      ).map((propDemoVnodes) => ([
+      ).map((propDemoVnodes) => div([
         dt(
           {
             class: { title: true, 'is-2': true, name: true},
