@@ -32,7 +32,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
             dt('Importing'),
             dd([
               dl([
-                dt('ES2015'),
+                dt('ECMAScript'),
                 dd(code(
                   { class: { importExample: true } },
                   `import { ${metadata.varName} } from '${packageName}'`
