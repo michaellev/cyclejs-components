@@ -14,20 +14,30 @@ interface Sources {
 }
 
 export default ({ DOM, metadatas: metadatas$ }: Sources) => {
-  const componentDocs$ = metadatas$.map((metadatas) => (
-    metadatas.map(metadata => ComponentDoc({ DOM, metadata: xs.of(metadata) }))
-  ))
+  const menuClicks$ = DOM.select('.menu a').events('click')
+  const selectedName$ = menuClicks$.map(menuClick => (
+    (<HTMLAnchorElement>menuClick.target).textContent)
+  ).startWith('text field')
+  const selected$ = xs.combine(
+    selectedName$,
+    metadatas$,
+  ).map(([
+    selectedName,
+    metadatas
+  ]) => {
+    return metadatas.filter(metadata => metadata.name === selectedName)[0]
+  })
 
-  const componentDocsVdoms$ = componentDocs$.map((componentDocs) => (
-    xs.combine(...componentDocs.map(componentDoc => componentDoc.DOM)))
-  ).flatten()
+  const { DOM: componentDocVnode$ } = ComponentDoc({ DOM, metadata: selected$ })
 
   const vdom$ = xs.combine(
+    selectedName$,
     metadatas$,
-    componentDocsVdoms$,
+    componentDocVnode$,
   ).map(([
+    selectedName,
     metadatas,
-    componentDocsVdoms,
+    componentDocVnode,
   ]) => (
     section(
       { class: { section: true } },
@@ -44,9 +54,7 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
                 style: { order: '1' },
                 class: { column: true }
               },
-              [
-                ...[].concat.apply([], componentDocsVdoms)
-              ]
+              componentDocVnode
             ),
             aside(
               {
@@ -63,7 +71,7 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
                   [
                     ...(metadatas.map(metadata => li(a(
                       {
-                        class: { name: true },
+                        class: { name: true, 'is-active': metadata.name === selectedName },
                         attrs: {
                           href: '#' + metadata.id
                         }
