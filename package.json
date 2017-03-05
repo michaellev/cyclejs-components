@@ -6,11 +6,10 @@
   "scripts": {
     "docs": "webpack",
     "dev": "webpack-dev-server",
-    "test": "npm run docs",
-    "pre-commit": "webpack && git diff --quiet docs/bundle.js"
+    "test": "npm run docs"
   },
   "pre-commit": [
-    "pre-commit"
+    "test"
   ],
   "repository": {
     "type": "git",

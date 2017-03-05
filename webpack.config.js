@@ -5,7 +5,7 @@ const config = {
   entry: './docs/index.ts',
   output: {
     filename: 'bundle.js',
-    path: resolve(__dirname, 'docs')
+    path: resolve(__dirname, 'docs-build')
   },
   resolve: {
     extensions: [ '.ts', '.js' ]

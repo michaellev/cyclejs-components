@@ -3,4 +3,5 @@ docs/**/*.js
 docs/**/*.js.map
 lib/**/*.js
 lib/**/*.js.map
-!docs/bundle.js
+docs-build
+!docs-build/index.html
