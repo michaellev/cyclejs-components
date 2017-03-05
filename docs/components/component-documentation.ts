@@ -23,6 +23,7 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
       ).map((propDemoVnodes) => ([
         dt(
           {
+            class: { title: true, 'is-2': true, name: true},
             attrs: { id: metadata.id }
           },
           metadata.name
@@ -55,7 +56,10 @@ const ComponentDocumentation: DOMComponent = (sources: inputSources) => {
                       dt('description'),
                       dd(prop.description),
                       dt('direction'),
-                      dd(prop.type),
+                      dd(
+                        { class: { tag: true } },
+                        prop.type
+                      ),
                       dt('type'),
                       dd(code(prop.TSType)),
                       ...(vnode ? [dt('demo'), dd(vnode)] : [])

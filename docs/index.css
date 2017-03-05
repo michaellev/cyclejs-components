@@ -1,0 +1,3 @@
+@import '~bulma/css/bulma.css';
+
+.name:first-letter { text-transform: uppercase }

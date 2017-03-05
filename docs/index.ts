@@ -1,10 +1,12 @@
-import { DOMSource, makeDOMDriver, h1, section, menu, dl, ul, li, a } from '@cycle/dom'
+import { DOMSource, makeDOMDriver, h1, div, section, label, aside, dl, ul, li, a } from '@cycle/dom'
 import { run } from '@cycle/run'
 import metadatas from './metadata'
 import xs from 'xstream'
 import { DOMComponent } from '../lib/types'
 import ComponentDocumentation from './components/component-documentation'
 import forkmeRibbon from './forkme-ribbon'
+
+import './index.css'
 
 const title = 'Cycle.js Web Components Documentation'
 document.title = title
@@ -18,36 +20,54 @@ const main: DOMComponent = (sources: { DOM: DOMSource }) => {
     ...(componentDocComponents.map(component => component.DOM))
   ).map((componentDocComponentVdom) => {
     return section(
-      {
-        style: {
-          display: 'flex'
-        }
-      },
+      { class: { section: true } },
       [
-        dl(
-          [
-            ...[].concat.apply([], componentDocComponentVdom)
-          ]
+        h1(
+          { class: { title: true, 'is-1': true } },
+          title
         ),
-        menu(
-          {
-            style: {
-              order: '-1',
-              flexBasis: '20%'
-            }
-          },
+        div(
+          { class: { columns: true } },
           [
-            h1(title),
-            ul([
-              ...(metadatas.map(metadata => li(a(
-                {
-                  attrs: {
-                    href: '#' + metadata.id
-                  }
-                },
-                metadata.name
-              ))))
-            ])
+            div(
+              {
+                style: { order: '1' },
+                class: { column: true }
+              },
+              [
+                dl(
+                  [
+                    ...[].concat.apply([], componentDocComponentVdom)
+                  ]
+                ),
+              ]
+            ),
+            aside(
+              {
+                style: { order: '0' },
+                class: { column: true, 'is-narrow': true, menu: true }
+              },
+              [
+                label(
+                  { class: { 'menu-label': true } },
+                  'Components'
+                ),
+                ul(
+                  { class: { 'menu-list': true } },
+                  [
+                    ...(metadatas.map(metadata => li(a(
+                      {
+                        class: { name: true },
+                        attrs: {
+                          href: '#' + metadata.id
+                        }
+                      },
+                      metadata.name
+                    ))))
+                  ]
+                )
+              ]
+            ),
           ]
         ),
         forkmeRibbon
@@ -64,5 +84,5 @@ const container = document.createElement('div')
 document.body.appendChild(container)
 
 run(main, {
-  DOM: makeDOMDriver(container)
+  DOM: makeDOMDriver(document.body)
 })
