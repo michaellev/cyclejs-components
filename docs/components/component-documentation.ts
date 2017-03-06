@@ -1,10 +1,8 @@
-import { DOMSource, div, dl, dt, dd, code, ul, li, a, span } from '@cycle/dom'
+import { DOMSource, div, p, code, ul, li, a, span, header } from '@cycle/dom'
 import { DOMComponent } from '../../lib/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
 import PropertyDoc from './property-documentation'
-// import { VNode } from 'snabbdom/vnode'
-
 
 declare const require: any
 const { name: packageName } = require('../../package.json')
@@ -41,69 +39,68 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
     selectedPropertyI,
     propertyDocVnode,
   ]) => (
-    div([
-      dt(
-        {
-          class: { title: true, 'is-2': true, name: true},
-        },
-        metadata.name
-      ),
-      dd([
-        dl([
-          dt(
-            { class: { title: true, 'is-3': true } },
-            'Importing'
+    div(
+      { class: { content: true } },
+      [
+        header(
+          {
+            class: { title: true, 'is-2': true, name: true},
+          },
+          metadata.name
+        ),
+        header(
+          { class: { title: true, 'is-3': true } },
+          'Importing'
+        ),
+        header(
+          { class: { title: true, 'is-4': true } },
+          'ECMAScript'
+        ),
+        p(code(
+          { class: { importExample: true } },
+          `import { ${metadata.varName} } from '${packageName}'`
+        )),
+        header(
+          { class: { title: true, 'is-4': true } },
+          'CommonJS'
           ),
-          dd([
-            dl([
-              dt('ECMAScript'),
-              dd(code(
-                { class: { importExample: true } },
-                `import { ${metadata.varName} } from '${packageName}'`
-              )),
-              dt('CommonJS'),
-              dd(code(
-              { class: { importExample: true } },
-              `const { ${metadata.varName} } = require('${packageName}')`
-              ))
-            ]),
-          ]),
-          dt(
-            { class: { title: true, 'is-3': true } },
-            'Properties'
-          ),
-          dd([
-            div(
-              { class: { tabs: true, 'is-medium': true } },
-              ul(
-                metadata.properties.map((propertyMetadata, i) => (
-                  li(
-                    { class: { 'is-active': i === selectedPropertyI } },
-                    a(
-                      { dataset: { i: String(i) } },
-                      [
-                        propertyMetadata.name,
-                        span(
-                          {
-                            class: {
-                              tag: true,
-                              'is-medium': true,
-                              [propertyMetadata.type]: true
-                            }
-                          },
-                          propertyMetadata.type
-                        )
-                      ]
+        p(code(
+        { class: { importExample: true } },
+        `const { ${metadata.varName} } = require('${packageName}')`
+        )),
+        header(
+          { class: { title: true, 'is-3': true } },
+          'Properties'
+        ),
+        div(
+          { class: { tabs: true, 'is-medium': true } },
+          ul(
+            metadata.properties.map((propertyMetadata, i) => (
+              li(
+                { class: { 'is-active': i === selectedPropertyI } },
+                a(
+                  { dataset: { i: String(i) } },
+                  [
+                    propertyMetadata.name,
+                    span(
+                      {
+                        class: {
+                          tag: true,
+                          'is-medium': true,
+                          [propertyMetadata.type]: true
+                        }
+                      },
+                      propertyMetadata.type
                     )
-                  )
-                ))
+                  ]
+                )
               )
-            ),
-            propertyDocVnode
-          ])
-        ])
-      ])
-    ])
+            ))
+          )
+        ),
+        propertyDocVnode
+      ]
+    )
   ))
 
   return {
