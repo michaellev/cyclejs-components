@@ -23,7 +23,7 @@ const config = {
         loader: 'ts-loader'
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
           'style-loader',
           {
@@ -31,7 +31,8 @@ const config = {
             options: {
               sourceMap: true
             }
-          }
+          },
+          'sass-loader'
         ]
       }
     ]

@@ -4,7 +4,7 @@ import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
 import { ComponentMetadata } from '../types'
 
-import './index.css'
+import './index.scss'
 
 const { description: title } = require('../../package.json')
 
