@@ -34,7 +34,7 @@ export default ({ DOM, propertyMetadata: metadata$ }: Sources) => {
           ]
         ),
         metadata.description,
-        div(
+        demoVnode ? div(
           { class: { card: true, } },
           [
             header(
@@ -49,7 +49,7 @@ export default ({ DOM, propertyMetadata: metadata$ }: Sources) => {
               demoVnode
             )
           ]
-        ),
+        ) : undefined,
       ]
     )
   ))
