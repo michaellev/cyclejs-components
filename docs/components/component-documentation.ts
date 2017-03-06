@@ -28,7 +28,13 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
     selectedPropertyI
   ]) => metadata.properties[selectedPropertyI])
 
-  const { DOM: propertyDocVnode$ } = PropertyDoc({ DOM, propertyMetadata: selectedProperty$ })
+  const id$ = rMetadata$.map(metadata => metadata.id)
+
+  const { DOM: propertyDocVnode$ } = PropertyDoc({
+    DOM,
+    propertyMetadata: selectedProperty$,
+    componentId: id$
+  })
 
   const vnode$ = xs.combine(
     rMetadata$,

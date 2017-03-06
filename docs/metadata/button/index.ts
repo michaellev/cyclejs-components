@@ -13,14 +13,14 @@ export default {
       description: p(['Sets the children of the ', code('button'), ' element']),
       type: 'source',
       TSType: 'Stream<VNode[] | string>',
-      Demo: ChildrenSourceDemo
+      Demo: ChildrenSourceDemo,
     },
     {
       name: 'presses',
       description: p('Emitted on clicks'),
       type: 'sink',
       TSType: 'Stream<Symbol>',
-      Demo: PressesSinkDemo
+      Demo: PressesSinkDemo,
     }
   ]
 } as ComponentMetadata

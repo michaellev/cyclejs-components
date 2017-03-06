@@ -6,7 +6,7 @@ export interface PropertyMetadata {
   description: VNode
   TSType: string
   type: 'source' | 'sink'
-  Demo?: DOMComponent
+  Demo: DOMComponent
 }
 
 export interface ComponentMetadata {

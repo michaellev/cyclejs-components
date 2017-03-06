@@ -43,6 +43,7 @@
     "css-loader": "^0.26.2",
     "node-sass": "^4.5.0",
     "pre-commit": "^1.2.2",
+    "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.2",
     "snabbdom-virtualize": "^0.6.0",
     "source-map-loader": "^0.1.6",
