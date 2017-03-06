@@ -1,4 +1,4 @@
-import { DOMSource, dl, dt, dd, code } from '@cycle/dom'
+import { DOMSource, code, div, header, span } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import{ PropertyMetadata } from '../types'
 
@@ -20,20 +20,38 @@ export default ({ DOM, propertyMetadata: metadata$ }: Sources) => {
     metadata,
     demoVnode
   ]) => (
-    dl([
-      dt('name'),
-      dd(code(metadata.name)),
-      dt('description'),
-      dd(metadata.description),
-      dt('direction'),
-      dd(
-        { class: { tag: true } },
-        metadata.type
-      ),
-      dt('type'),
-      dd(code(metadata.TSType)),
-      ...(demoVnode ? [dt('demo'), dd(demoVnode)] : [])
-    ])
+    div(
+      { class: { content: true } },
+      [
+        header(
+          { class: { title: true, 'is-4': true } },
+          [
+            metadata.name,
+            code(
+              { class: { tag: true, 'is-medium': true } },
+              metadata.TSType
+            ),
+          ]
+        ),
+        metadata.description,
+        div(
+          { class: { card: true, } },
+          [
+            header(
+              { class: { 'card-header': true } },
+              span(
+                { class: { 'card-header-title': true } },
+                'Demo'
+              ),
+            ),
+            div(
+              { class: { 'card-content': true } },
+              demoVnode
+            )
+          ]
+        ),
+      ]
+    )
   ))
 
   return {
