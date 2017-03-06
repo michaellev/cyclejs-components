@@ -1,4 +1,4 @@
-import { DOMSource, h1, div, section, label, aside, ul, li, a, } from '@cycle/dom'
+import { DOMSource, body, section, div, header, label, aside, ul, li, a, } from '@cycle/dom'
 import ComponentDoc from './component-documentation'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
@@ -39,15 +39,18 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
     metadatas,
     componentDocVnode,
   ]) => (
-    section(
-      { class: { section: true } },
+    body(
+      { props: { id: '' } },
       [
-        h1(
-          { class: { title: true, 'is-1': true } },
-          title
+        section(
+          { class: { section: true } },
+          header(
+            { class: { 'has-text-centered': true, title: true, 'is-1': true } },
+            title
+          )
         ),
-        div(
-          { class: { columns: true } },
+        section(
+          { class: { section: true, columns: true } },
           [
             div(
               {
