@@ -40,7 +40,10 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
     propertyDocVnode,
   ]) => (
     div(
-      { class: { content: true } },
+      {
+        style: { order: '1' },
+        class: { content: true, column: true }
+      },
       [
         header(
           {
