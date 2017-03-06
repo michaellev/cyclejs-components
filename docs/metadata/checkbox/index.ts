@@ -11,15 +11,15 @@ export default {
     {
       name: 'checked',
       description: p(['Sets whether the ', code('checked'), ' attribute of the ', code('<input type="checkbox">'), ' element is present']),
-      type: 'source',
-      TSType: 'Stream<boolean>',
+      direction: 'source',
+      type: 'Stream<boolean>',
       Demo: CheckedSourceDemo,
     },
     {
       name: 'checked',
       description: p('A boolean emitted on toggle'),
-      type: 'sink',
-      TSType: 'Stream<boolean>',
+      direction: 'sink',
+      type: 'Stream<boolean>',
       Demo: CheckedSinkDemo,
     }
   ]

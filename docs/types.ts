@@ -4,8 +4,8 @@ import { VNode } from 'snabbdom/vnode'
 export interface PropertyMetadata {
   name: string
   description: VNode
-  TSType: string
-  type: 'source' | 'sink'
+  type: string
+  direction: 'source' | 'sink'
   Demo: DOMComponent
 }
 

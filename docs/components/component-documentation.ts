@@ -96,10 +96,10 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
                         class: {
                           tag: true,
                           'is-medium': true,
-                          [propertyMetadata.type]: true
+                          [propertyMetadata.direction]: true
                         }
                       },
-                      propertyMetadata.type
+                      propertyMetadata.direction
                     )
                   ]
                 )

@@ -11,15 +11,15 @@ export default {
     {
       name: 'value',
       description: p(['Sets the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
-      type: 'source',
-      TSType: 'Stream<string>',
+      direction: 'source',
+      type: 'Stream<string>',
       Demo: ValueSourceDemo,
     },
     {
       name: 'value',
       description: p(['Emits the value of the ', code('value'), ' attribute of the ', code('<input type="text">'), ' element']),
-      type: 'sink',
-      TSType: 'Stream<string>',
+      direction: 'sink',
+      type: 'Stream<string>',
       Demo: ValueSinkDemo,
     },
   ]

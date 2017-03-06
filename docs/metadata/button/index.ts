@@ -11,15 +11,15 @@ export default {
     {
       name: 'children',
       description: p(['Sets the children of the ', code('button'), ' element']),
-      type: 'source',
-      TSType: 'Stream<VNode[] | string>',
+      direction: 'source',
+      type: 'Stream<VNode[] | string>',
       Demo: ChildrenSourceDemo,
     },
     {
       name: 'presses',
       description: p('Emitted on clicks'),
-      type: 'sink',
-      TSType: 'Stream<Symbol>',
+      direction: 'sink',
+      type: 'Stream<Symbol>',
       Demo: PressesSinkDemo,
     }
   ]

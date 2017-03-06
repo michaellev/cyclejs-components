@@ -30,7 +30,7 @@ export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }:
             metadata.name,
             code(
               { class: { tag: true, 'is-medium': true } },
-              metadata.TSType
+              metadata.type
             ),
           ]
         ),
@@ -49,7 +49,7 @@ export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }:
             ),
             pre(
               { class: { box: true, } },
-              require(`!!raw-loader!../metadata/${componentId}/demos/${metadata.type}s/${metadata.name}`)
+              require(`!!raw-loader!../metadata/${componentId}/demos/${metadata.direction}s/${metadata.name}`)
             )
           ]
         ),
