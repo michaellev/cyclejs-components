@@ -1,5 +1,6 @@
 import { DOMSource, code, div, pre, header } from '@cycle/dom'
-import { Stream, default as xs } from 'xstream'
+import { Stream } from 'xstream'
+import sampleCombine from 'xstream/extra/sampleCombine'
 import{ PropertyMetadata } from '../types'
 
 interface Sources {
@@ -12,11 +13,10 @@ export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }:
   const rMetadata$ = metadata$.remember()
   const demoVnode$ = rMetadata$.map((metadata) => metadata.Demo({ DOM }).DOM).flatten()
 
-  const vnode$ = xs.combine(
-    rMetadata$,
+  const vnode$ = rMetadata$.compose(sampleCombine(
     componentId$,
-    demoVnode$,
-  ).map(([
+    demoVnode$
+  )).map(([
     metadata,
     componentId,
     demoVnode,
