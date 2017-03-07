@@ -6,7 +6,10 @@ export interface PropertyMetadata {
   description: VNode
   type: string
   direction: 'source' | 'sink'
-  Demo: DOMComponent
+  demo: {
+    Component: DOMComponent
+    source: string
+  }
 }
 
 export interface ComponentMetadata {

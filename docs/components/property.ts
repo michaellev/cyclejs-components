@@ -10,7 +10,7 @@ interface Sources {
 
 export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }: Sources) => {
   const rMetadata$ = metadata$.remember()
-  const demoVnode$ = rMetadata$.map((metadata) => metadata.Demo({ DOM }).DOM).flatten()
+  const demoVnode$ = rMetadata$.map((metadata) => metadata.demo.Component({ DOM }).DOM).flatten()
 
   const vnode$ = xs.combine(
     rMetadata$,
@@ -49,7 +49,7 @@ export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }:
             ),
             pre(
               { class: { box: true, } },
-              require(`!!raw-loader!../metadata/${componentId}/demos/${metadata.direction}s/${metadata.name}`)
+              metadata.demo.source
             )
           ]
         ),
