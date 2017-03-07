@@ -1,22 +1,21 @@
 import { Stream } from 'xstream'
 import { button, DOMSource } from '@cycle/dom'
 import isolate from '@cycle/isolate'
-import { DOMComponent } from './types'
 import { VNode } from 'snabbdom/vnode'
 
-interface inputSources {
+interface Sources {
   DOM: DOMSource,
   children: Stream<VNode[] | string>
 }
 
-interface outputSinks {
+interface Sinks {
   DOM: Stream<VNode>,
   presses: Stream<Symbol>
 }
 
 export const press = Symbol('Button.press')
 
-const Button: DOMComponent = (sources: inputSources ) : outputSinks => {
+const Button = (sources: Sources ) : Sinks => {
   const presses$ = sources.DOM
     .select('button')
     .events('click')
@@ -32,4 +31,4 @@ const Button: DOMComponent = (sources: inputSources ) : outputSinks => {
   return sinks
 }
 
-export default (sources: inputSources) => isolate(Button)(sources)
+export default (sources: Sources) => isolate(Button)(sources)

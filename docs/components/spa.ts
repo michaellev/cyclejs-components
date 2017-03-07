@@ -1,5 +1,5 @@
 import { DOMSource, body, section, header, label, aside, ul, li, a, } from '@cycle/dom'
-import ComponentDoc from './component-documentation'
+import Component from './component'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
 import { ComponentMetadata } from '../types'
@@ -28,16 +28,16 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
     return metadatas.filter(metadata => metadata.name === selectedName)[0]
   })
 
-  const { DOM: componentDocVnode$ } = ComponentDoc({ DOM, metadata: selected$ })
+  const { DOM: componentVnode$ } = Component({ DOM, metadata: selected$ })
 
   const vdom$ = xs.combine(
     selectedName$,
     metadatas$,
-    componentDocVnode$,
+    componentVnode$,
   ).map(([
     selectedName,
     metadatas,
-    componentDocVnode,
+    componentVnode,
   ]) => (
     body(
       { props: { id: '' } },
@@ -49,7 +49,7 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
         section(
           { class: { section: true, columns: true } },
           [
-            componentDocVnode,
+            componentVnode,
             aside(
               {
                 style: { order: '0' },

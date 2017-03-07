@@ -1,8 +1,7 @@
 import { DOMSource, div, p, code, ul, li, a, span, header } from '@cycle/dom'
-import { DOMComponent } from '../../lib/types'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
-import PropertyDoc from './property-documentation'
+import Property from './property'
 
 declare const require: any
 const { name: packageName } = require('../../package.json')
@@ -12,7 +11,7 @@ interface Sources {
   DOM: DOMSource
 }
 
-const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sources) => {
+export default ({ DOM, metadata: metadata$ }: Sources) => {
   const rMetadata$ = metadata$.remember()
   const tabClick$ = DOM.select('.tabs a').events('click')
 
@@ -30,7 +29,7 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
 
   const id$ = rMetadata$.map(metadata => metadata.id)
 
-  const { DOM: propertyDocVnode$ } = PropertyDoc({
+  const { DOM: propertyVnode$ } = Property({
     DOM,
     propertyMetadata: selectedProperty$,
     componentId: id$
@@ -39,11 +38,11 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
   const vnode$ = xs.combine(
     rMetadata$,
     selectedPropertyI$,
-    propertyDocVnode$,
+    propertyVnode$,
   ).map(([
     metadata,
     selectedPropertyI,
-    propertyDocVnode,
+    propertyVnode,
   ]) => (
     div(
       {
@@ -107,7 +106,7 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
             ))
           )
         ),
-        propertyDocVnode
+        propertyVnode
       ]
     )
   ))
@@ -116,5 +115,3 @@ const ComponentDocumentation: DOMComponent = ({ DOM, metadata: metadata$ }: Sour
     DOM: vnode$
   }
 }
-
-export default ComponentDocumentation

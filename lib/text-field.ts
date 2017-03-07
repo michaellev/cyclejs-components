@@ -1,14 +1,19 @@
 import { default as xs, Stream } from 'xstream'
 import { input, DOMSource } from '@cycle/dom'
 import isolate from '@cycle/isolate'
-import { DOMComponent } from './types'
+import { VNode } from 'snabbdom/vnode'
 
-interface inputSources {
+interface Sources {
   DOM: DOMSource,
   value?: Stream<string>
 }
 
-const TextField: DOMComponent = (sources: inputSources ) => {
+interface Sinks {
+  DOM: Stream<VNode>
+  value: Stream<string>
+}
+
+const TextField = (sources: Sources ): Sinks => {
   const domValue$ = sources.DOM
     .select('input')
     .events('input')
@@ -28,4 +33,4 @@ const TextField: DOMComponent = (sources: inputSources ) => {
   return sinks
 }
 
-export default (sources: inputSources) => isolate(TextField)(sources)
+export default (sources: Sources) => isolate(TextField)(sources)
