@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-const fail = require('webpack-fail-plugin')
 
 const config = {
   entry: './docs/index.ts',
@@ -44,10 +43,7 @@ const config = {
         ]
       }
     ]
-  },
-  plugins: [
-    fail
-  ]
+  }
 }
 
 module.exports = config
