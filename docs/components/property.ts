@@ -4,55 +4,55 @@ import{ PropertyMetadata } from '../types'
 
 interface Sources {
   DOM: DOMSource,
-  componentId: Stream<string>
-  propertyMetadata: Stream<PropertyMetadata>
+  property: Stream<PropertyMetadata | null>
 }
 
-export default ({ DOM, propertyMetadata: metadata$, componentId: componentId$ }: Sources) => {
-  const rMetadata$ = metadata$.remember()
-  const demoVnode$ = rMetadata$.map((metadata) => metadata.demo.Component({ DOM }).DOM).flatten()
+export default ({ DOM, property: property$ }: Sources) => {
+  const rProperty$ = property$.remember()
+  const demoVnode$ = rProperty$.map((property) => property && property.demo ? property.demo.Component({ DOM }).DOM : xs.of(null)).flatten()
 
   const vnode$ = xs.combine(
-    rMetadata$,
-    componentId$,
+    rProperty$,
     demoVnode$,
   ).map(([
-    metadata,
-    componentId,
+    property,
     demoVnode,
   ]) => (
-    div(
+    !property ? div(
+      { class: { notification: true } },
+      'Select a property.'
+    ) : div(
       { class: { content: true } },
       [
         header(
-          { class: { title: true, 'is-4': true } },
+          { class: { title: true, 'is-4': true, 'has-text-centered': true } },
           [
-            metadata.name,
+            property.name,
             code(
               { class: { tag: true, 'is-medium': true } },
-              metadata.type
+              property.type
             ),
           ]
         ),
-        metadata.description,
-        div(
-          { class: { box: true, } },
-          [
-            header(
-              { class: { 'title': true, 'is-5': true } },
-                'Demo'
-            ),
-            demoVnode,
-            header(
-              { class: { 'title': true, 'is-5': true } },
-                'Source code'
-            ),
-            pre(
-              { class: { box: true, } },
-              metadata.demo.source
-            )
-          ]
-        ),
+        property.description,
+        ...(!property.demo ? [] : [
+          header(
+            { class: { 'title': true, 'is-5': true } },
+              'Demo'
+          ),
+          div(
+            { class: { box: true } },
+            demoVnode
+          ),
+          header(
+            { class: { 'title': true, 'is-5': true } },
+              'Demo source code'
+          ),
+          pre(
+            { class: { box: true, } },
+            code(property.demo.source)
+          )
+        ])
       ]
     )
   ))

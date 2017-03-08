@@ -1,19 +1,25 @@
 import { Stream, default as xs } from 'xstream'
-import { input, DOMSource } from '@cycle/dom'
 import isolate from '@cycle/isolate'
+import { input, DOMSource } from '@cycle/dom'
 import { VNode } from 'snabbdom/vnode'
 
-interface Sources {
+export interface Sources {
   DOM: DOMSource
+  /**
+   * Sets whether it is checked.
+   */
   checked?: Stream<boolean>
 }
 
-interface Sinks {
+export interface Sinks {
   DOM: Stream<VNode>
+  /**
+   * Emits whether it is checked, on changes.
+   */
   checked: Stream<boolean>
 }
 
-const Checkbox = (sources: Sources ): Sinks => {
+export const Checkbox = (sources: Sources ): Sinks => {
   const checkedSource$ = sources.checked || xs.of(false)
 
   const domChecked$ = sources.DOM
@@ -34,4 +40,4 @@ const Checkbox = (sources: Sources ): Sinks => {
   }
 }
 
-export default (sources: Sources) => isolate(Checkbox)(sources)
+export default (sources: Sources): Sinks => isolate(Checkbox)(sources)

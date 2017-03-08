@@ -2,7 +2,7 @@ import { DOMSource, body, section, header, label, aside, ul, li, a, } from '@cyc
 import Component from './component'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
-import { ComponentMetadata } from '../types'
+import { Metadata } from '../types'
 
 import './index.scss'
 
@@ -10,33 +10,31 @@ const { description: title } = require('../../package.json')
 
 interface Sources {
   DOM: DOMSource
-  metadatas: Stream<ComponentMetadata[]>
+  metadata: Stream<Metadata>
 }
 
-export default ({ DOM, metadatas: metadatas$ }: Sources) => {
+export default ({ DOM, metadata: metadata$ }: Sources) => {
   const menuClicks$ = DOM.select('.menu a').events('click')
-  const selectedName$ = menuClicks$.map(menuClick => (
-    (<HTMLAnchorElement>menuClick.target).textContent)
-  ).startWith('text field')
-  const selected$ = xs.combine(
-    selectedName$,
-    metadatas$,
+  const componentId$ = menuClicks$.map(menuClick => (
+    <string | null>(<HTMLAnchorElement>menuClick.target).dataset.id)
+  ).startWith(null)
+  const component$ = xs.combine(
+    componentId$,
+    metadata$,
   ).map(([
-    selectedName,
-    metadatas
-  ]) => {
-    return metadatas.filter(metadata => metadata.name === selectedName)[0]
-  })
+    componentId,
+    metadata
+  ]) => componentId ? metadata[componentId] : null)
 
-  const { DOM: componentVnode$ } = Component({ DOM, metadata: selected$ })
+  const { DOM: componentVnode$ } = Component({ DOM, component: component$ })
 
   const vdom$ = xs.combine(
-    selectedName$,
-    metadatas$,
+    componentId$,
+    metadata$,
     componentVnode$,
   ).map(([
-    selectedName,
-    metadatas,
+    componentId,
+    metadata,
     componentVnode,
   ]) => (
     body(
@@ -63,14 +61,12 @@ export default ({ DOM, metadatas: metadatas$ }: Sources) => {
                 ul(
                   { class: { 'menu-list': true } },
                   [
-                    ...(metadatas.map(metadata => li(a(
+                    ...(Object.values(metadata).map(component => li(a(
                       {
-                        class: { name: true, 'is-active': metadata.name === selectedName },
-                        attrs: {
-                          href: '#' + metadata.id
-                        }
+                        class: { name: true, 'is-active': component.id === componentId },
+                        dataset: { id: component.id }
                       },
-                      metadata.name
+                      component.id
                     ))))
                   ]
                 )

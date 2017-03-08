@@ -1,20 +1,38 @@
 import { DOMComponent } from '../lib/types'
-import { VNode } from 'snabbdom/vnode'
 
-export interface PropertyMetadata {
-  name: string
-  description: VNode
-  type: string
-  direction: 'source' | 'sink'
-  demo: {
-    Component: DOMComponent
-    source: string
-  }
+export interface Metadata {
+  [id: string]: ComponentMetadata
 }
 
 export interface ComponentMetadata {
-  name: string,
-  id: string,
-  varName: string,
-  properties: PropertyMetadata[]
+  id: string
+  varName: string
+  properties: {
+    [id: string]: SourceMetadata | SinkMetadata
+  }
+}
+
+export interface PropertyMetadata {
+  id: string
+  name: string
+  parentId: string
+  path: string
+  description: string
+  type: string
+  direction: 'source' | 'sink',
+  demo?: Demo
+}
+
+export interface Demo {
+  id: string
+  Component: DOMComponent
+  source: string
+}
+
+interface SourceMetadata extends PropertyMetadata {
+  direction: 'source'
+}
+
+interface SinkMetadata extends PropertyMetadata {
+  direction: 'sink'
 }

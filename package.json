@@ -4,9 +4,11 @@
   "description": "Cycle.js web components",
   "main": "lib/index.js",
   "scripts": {
+    "lint-js": "standard",
+    "lint": "run-s lint-js",
     "docs": "webpack",
     "dev": "webpack-dev-server",
-    "test": "npm run docs"
+    "test": "run-s lint docs"
   },
   "pre-commit": [
     "test"
@@ -38,18 +40,23 @@
   "homepage": "https://mightyiam.github.io/cyclejs-web-components/",
   "devDependencies": {
     "@cycle/run": "^1.0.0",
+    "@types/clone": "^0.1.30",
     "@types/node": "^7.0.5",
     "bulma": "^0.3.2",
+    "clone": "^2.1.0",
     "css-loader": "^0.26.2",
     "node-sass": "^4.5.0",
+    "npm-run-all": "^4.0.2",
     "pre-commit": "^1.2.2",
     "raw-loader": "github:webpack-contrib/raw-loader#20854cab0e7307931d21ef54f744ac5a2df4c3ef",
     "sass-loader": "^6.0.2",
     "snabbdom-virtualize": "^0.6.0",
     "source-map-loader": "^0.1.6",
+    "standard": "^9.0.0",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.0.1",
     "typescript": "^2.2.1",
+    "uppercamelcase": "^1.1.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-fail-plugin": "^1.0.5"
