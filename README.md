@@ -41,6 +41,6 @@ https://github.com/mightyiam/cyclejs-web-components/issues/36
 1. The signature of a component is `(sources: Sources) => Sinks`
 1. Export the component’s `Sources` and the `Sinks` interfaces.
 1. Add a concise markdown description comment above each property of those.
-1. The default export is the `[isolate](https://cycle.js.org/api/isolate.html)`d component.
+1. The default export is the [`isolate`](https://cycle.js.org/api/isolate.html)d component.
 1. Add it to the `lib/index.ts`.
 1. Add one demo for each source and sink property (except `.DOM`) to `doc/demos`.
