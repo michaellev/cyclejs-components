@@ -49,8 +49,12 @@ const Spa = ({ DOM, metadata: metadata$, readmeHtml: readmeHtml$ }: Sources) => 
       { props: { id: '' } },
       [
         header(
-          { class: { 'section': true, 'has-text-centered': true, title: true, 'is-1': true } },
+          { class: { 'has-text-centered': true, title: true, 'is-1': true } },
           title
+        ),
+        header(
+          { class: { 'has-text-centered': true, subtitle: true } },
+         'Don’t be cynical. Be Cyclical.'
         ),
         nav(
           { class: { nav: true } },

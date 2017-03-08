@@ -6,7 +6,12 @@
 
 # Cycle.js web components
 
+<blockquote class="is-hidden-in-website">
+  Don’t be cynical—be cyclical.
+</blockquote>
+
 A set of web components for [Cycle.js](https://cycle.js.org).
+
 
 <blockquote class="is-hidden-in-website">
   Read this readme in the website and enjoy the documentation:  
@@ -19,8 +24,6 @@ A set of web components for [Cycle.js](https://cycle.js.org).
 * Written in TypeScript
 * Accurate, from-source-code-generated, documentation
 * Demo for every property
-
-Don’t be cynical—be cyclical.
 
 ## Development
 
