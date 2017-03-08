@@ -29,7 +29,12 @@ export const TextField = (sources: Sources ): Sinks => {
   const value$ = xs.merge(domValue$, inputValue$.endWhen(domValue$))
     .remember()
 
-  const vnode$ = value$.map(value => input({ value, attrs: { type: 'text', value } }))
+  const vnode$ = value$.map(value => (
+    input({
+      attrs: { type: 'text' },
+      props: { value }
+    })
+  ))
 
   const sinks = {
     DOM: vnode$,
