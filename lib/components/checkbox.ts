@@ -32,7 +32,12 @@ export const Checkbox = (sources: Sources ): Sinks => {
     domChecked$
   ).remember()
 
-  const vnode$ = checked$.map((checked) => input({ attrs: { type: 'checkbox', checked: checked } }))
+  const vnode$ = checked$.map((checked) => (
+    input({
+      attrs: { type: 'checkbox' },
+      props: { checked }
+    })
+  ))
 
   return {
     DOM: vnode$,
