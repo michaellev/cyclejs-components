@@ -2,6 +2,7 @@ import { DOMSource, div, p, code, ul, li, a, span, header } from '@cycle/dom'
 import { ComponentMetadata } from '../types'
 import { default as xs, Stream } from 'xstream'
 import Property from './property'
+import isolate from '@cycle/isolate'
 
 const packageName: string = require('../../package.json').name
 
@@ -10,7 +11,7 @@ interface Sources {
   DOM: DOMSource
 }
 
-export default ({ DOM, component: component$ }: Sources) => {
+const Component = ({ DOM, component: component$ }: Sources) => {
   const rComponent$ = component$.remember()
   const tabClick$ = DOM.select('.tabs a').events('click')
 
@@ -43,7 +44,7 @@ export default ({ DOM, component: component$ }: Sources) => {
     div(
       {
         style: { order: '1' },
-        class: { content: true, column: true }
+        class: { content: true, column: true, 'is-10': true }
       },
       !component ? div(
         { class: { notification: true } },
@@ -114,3 +115,5 @@ export default ({ DOM, component: component$ }: Sources) => {
     DOM: vnode$
   }
 }
+
+export default (sources: Sources) => isolate(Component)(sources)

@@ -1,13 +1,14 @@
 import { DOMSource, code, div, pre, header } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
-import{ PropertyMetadata } from '../types'
+import { PropertyMetadata } from '../types'
+import isolate from '@cycle/isolate'
 
 interface Sources {
   DOM: DOMSource,
   property: Stream<PropertyMetadata | null>
 }
 
-export default ({ DOM, property: property$ }: Sources) => {
+const Property = ({ DOM, property: property$ }: Sources) => {
   const rProperty$ = property$.remember()
   const demoVnode$ = rProperty$.map((property) => property && property.demo ? property.demo.Component({ DOM }).DOM : xs.of(null)).flatten()
 
@@ -61,3 +62,4 @@ export default ({ DOM, property: property$ }: Sources) => {
     DOM: vnode$
  }
 }
+export default (sources: Sources) => isolate(Property)(sources)

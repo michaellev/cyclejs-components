@@ -34,6 +34,14 @@ const config = {
           },
           'sass-loader'
         ]
+      },
+      {
+        test: /\.md$/,
+        use: [
+          'ent/decode',
+          'raw-loader',
+          'markdown-loader'
+        ]
       }
     ]
   },
