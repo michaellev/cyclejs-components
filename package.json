@@ -39,7 +39,7 @@
   },
   "homepage": "https://mightyiam.github.io/cyclejs-web-components/",
   "devDependencies": {
-    "@cycle/run": "^1.0.0",
+    "@cycle/run": "^3.0.0",
     "@types/clone": "^0.1.30",
     "@types/node": "^7.0.5",
     "bulma": "^0.3.2",
@@ -64,7 +64,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "@cycle/dom": "^15.0.0",
+    "@cycle/dom": "^16.0.0",
     "@cycle/isolate": "^2.0.0",
     "xstream": "^10.2.0"
   }
