@@ -1,4 +1,4 @@
-import { DOMSource, code, div, pre, header } from '@cycle/dom'
+import { DOMSource, span, code, div, pre, header } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { PropertyMetadata } from '../types'
 import isolate from '@cycle/isolate'
@@ -27,11 +27,23 @@ const Property = ({ DOM, property: property$ }: Sources) => {
       [
         header(
           { class: { title: true, 'is-4': true, 'has-text-centered': true } },
+          property.name,
+        ),
+        div(
+          { class: { level: true } },
           [
-            property.name,
-            code(
-              { class: { tag: true, 'is-medium': true } },
-              property.type
+            div(
+              { class: { 'level-item': true, } },
+              [
+                span(
+                  { class: { tag: true, 'is-medium': true } },
+                  code(property.type)
+                ),
+                span(
+                  { class: { tag: true, 'is-medium': true } },
+                  property.mandatory ? 'mandatory' : 'optional'
+                ),
+              ]
             ),
           ]
         ),
