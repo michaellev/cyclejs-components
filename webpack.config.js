@@ -12,6 +12,10 @@ const config = {
     extensions: [ '.ts', '.js' ]
   },
   devtool: 'inline-source-map',
+  devServer: {
+    publicPath: '/',
+    contentBase: publicPath
+  },
   module: {
     rules: [
       {
