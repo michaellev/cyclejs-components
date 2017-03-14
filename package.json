@@ -4,8 +4,9 @@
   "description": "Cycle.js web components",
   "main": "lib/index.js",
   "scripts": {
+    "lint-ts": "tslint --project tsconfig.json",
     "lint-js": "standard",
-    "lint": "run-s lint-js",
+    "lint": "run-p lint-ts lint-js",
     "docs": "webpack",
     "dev": "webpack-dev-server",
     "test": "run-s lint docs"
@@ -58,6 +59,8 @@
     "standard": "^9.0.0",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.0.1",
+    "tslint": "^4.5.1",
+    "tslint-config-standard": "^4.0.0",
     "typescript": "^2.2.1",
     "uppercamelcase": "^1.1.0",
     "webpack": "^2.2.1",
