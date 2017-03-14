@@ -44,6 +44,7 @@
     "@types/clone": "^0.1.30",
     "@types/node": "^7.0.5",
     "bulma": "^0.3.2",
+    "camelcase": "^4.0.0",
     "clone": "^2.1.0",
     "css-loader": "^0.26.2",
     "ent": "^2.2.0",

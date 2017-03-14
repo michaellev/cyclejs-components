@@ -2,6 +2,7 @@ node_modules
 docs/**/*.js
 !docs/metadata-loader.js
 docs/**/*.js.map
+!docs/demos-loader.js
 lib/**/*.js
 lib/**/*.js.map
 public
