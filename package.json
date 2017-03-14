@@ -9,7 +9,8 @@
     "lint": "run-p lint-ts lint-js",
     "docs": "webpack",
     "dev": "webpack-dev-server",
-    "test": "run-s lint docs"
+    "test": "run-s lint docs",
+    "transpile": "tsc"
   },
   "pre-commit": [
     "test"
