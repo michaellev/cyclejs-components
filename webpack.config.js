@@ -1,10 +1,12 @@
 const { resolve } = require('path')
 
+const publicPath = resolve(__dirname, 'public')
+
 const config = {
   entry: './docs/index.ts',
   output: {
     filename: 'bundle.js',
-    path: resolve(__dirname, 'docs-build')
+    path: publicPath
   },
   resolve: {
     extensions: [ '.ts', '.js' ]

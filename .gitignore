@@ -4,5 +4,5 @@ docs/**/*.js
 docs/**/*.js.map
 lib/**/*.js
 lib/**/*.js.map
-docs-build
-!docs-build/index.html
+public
+!public/index.html
