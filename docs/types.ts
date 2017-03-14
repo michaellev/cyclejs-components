@@ -37,3 +37,8 @@ interface SourceMetadata extends PropertyMetadata {
 interface SinkMetadata extends PropertyMetadata {
   direction: 'sink'
 }
+
+export interface RawHTMLPage {
+  name: string
+  html: string
+}

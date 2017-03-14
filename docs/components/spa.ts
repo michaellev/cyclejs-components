@@ -1,7 +1,7 @@
 import { DOMSource, body, nav, div, header, a } from '@cycle/dom'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
-import { Metadata } from '../types'
+import { Metadata, RawHTMLPage } from '../types'
 import Api from './api'
 import VirtualizeHtml from './virtualize-html'
 import { VNode } from 'snabbdom/vnode'
@@ -12,7 +12,7 @@ import './index.scss'
 const { description: title } = require('../../package.json')
 
 interface Sources {
-  readmeHtml: Stream<string>
+  rawHtmlPages: Stream<RawHTMLPage[]>
   DOM: DOMSource
   metadata: Stream<Metadata>
 }
@@ -23,28 +23,42 @@ interface Page {
   sources: { DOM: DOMSource, [x: string]: any }
 }
 
-const Spa = ({ DOM, metadata: metadata$, readmeHtml: readmeHtml$ }: Sources) => {
-  const nav$ = DOM.select('.nav .nav-item').events('click')
-    .map(navClick => ((navClick.currentTarget as HTMLAnchorElement).dataset.id as string))
-    .startWith('readme')
+const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources) => {
+  const nav$: Stream<number> = DOM.select('.nav .nav-item').events('click')
+    .map(navClick => (Number((navClick.currentTarget as HTMLAnchorElement).dataset.i)))
+    .startWith(0)
 
-  const pages: { [id: string]: Page } = {
-    readme: {
-      name: 'README',
-      Component: VirtualizeHtml,
-      sources: { DOM, html: readmeHtml$ }
-    },
-    api: {
+  const htmlPages$: Stream<Page[]> = rawHtmlPages$
+    .map((rawHtmlPages) => (
+      rawHtmlPages.map(({ name, html }) => ({
+        name,
+        Component: VirtualizeHtml,
+        sources:  { DOM, html: xs.of(html) }
+      }))
+    ))
+
+  const apiPage$: Stream<Page> = xs.of(
+    {
       name: 'API',
       Component: Api,
       sources: { DOM, metadata: metadata$ }
     }
-  }
+  )
 
-  const page$ = nav$.map(id => pages[id].Component(pages[id].sources))
+  const pages$: Stream<Page[]> = xs
+    .combine(
+      htmlPages$,
+      apiPage$
+    ).map(([htmlPages, apiPage]) => (
+      htmlPages.concat(apiPage)
+    ))
+
+  const page$ = xs
+    .combine(nav$, pages$)
+    .map(([i, pages]) => pages[i].Component(pages[i].sources))
 
   const pageVdom$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
-  const vdom$ = xs.combine(nav$, pageVdom$).map(([pageId, pageVnode]) => (
+  const vdom$ = xs.combine(nav$, pageVdom$, pages$).map(([pageI, pageVnode, pages]) => (
     body(
       { props: { id: '' } },
       [
@@ -61,11 +75,11 @@ const Spa = ({ DOM, metadata: metadata$, readmeHtml: readmeHtml$ }: Sources) => 
           [
             div(
               { class: { 'nav-center': true } },
-              Object.entries(pages).map(([id, { name }]) => (
+              pages.map(({ name }, i) => (
                 a(
                   {
-                    class: { 'nav-item': true, 'is-tab': true, 'is-active': id === pageId },
-                    dataset: { id }
+                    class: { 'nav-item': true, 'is-tab': true, 'is-active': i === pageI },
+                    dataset: { i: String(i) }
                   },
                   name
                 )
