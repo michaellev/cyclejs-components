@@ -16,7 +16,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
   const tabClick$ = DOM.select('.tabs a').events('click')
 
   const propertyId$ = tabClick$.map(tabClick => (
-    <string | null>((<HTMLAnchorElement>tabClick.currentTarget).dataset.id)
+    ((tabClick.currentTarget as HTMLAnchorElement).dataset.id) as string | null
   )).startWith(null)
 
   const property$ = xs.combine(
@@ -35,11 +35,11 @@ const Component = ({ DOM, component: component$ }: Sources) => {
   const vnode$ = xs.combine(
     rComponent$,
     propertyId$,
-    propertyVnode$,
+    propertyVnode$
   ).map(([
     component,
     propertyId,
-    propertyVnode,
+    propertyVnode
   ]) => (
     div(
       {
@@ -52,7 +52,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
       ) : [
         header(
           {
-            class: { title: true, 'is-2': true, name: true},
+            class: { title: true, 'is-2': true, name: true}
           },
           component.id
         ),

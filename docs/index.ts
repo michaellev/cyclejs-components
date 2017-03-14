@@ -1,4 +1,4 @@
-import { makeDOMDriver, } from '@cycle/dom'
+import { makeDOMDriver } from '@cycle/dom'
 import xs from 'xstream'
 import { run } from '@cycle/run'
 import metadata from './metadata'
@@ -11,5 +11,5 @@ document.title = description
 run(SPA, {
   DOM: makeDOMDriver(document.body),
   metadata: () => xs.of(metadata),
-  readmeHtml: () => xs.of(readmeHtml),
+  readmeHtml: () => xs.of(readmeHtml)
 })

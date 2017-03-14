@@ -17,7 +17,7 @@ export default (sources: { DOM: DOMSource }) => {
         'toggle me: ',
         checkboxVnode,
         ' checked: ',
-        code(String(checkboxChecked)),
+        code(String(checkboxChecked))
       ]
     )
   ))

@@ -23,7 +23,7 @@ export const TextField = (sources: Sources ): Sinks => {
   const domValue$ = sources.DOM
     .select('input')
     .events('input')
-    .map(event => (<HTMLInputElement>event.target).value)
+    .map(event => (event.target as HTMLInputElement).value)
 
   const inputValue$ = sources.value || xs.of('')
   const value$ = xs.merge(domValue$, inputValue$.endWhen(domValue$))

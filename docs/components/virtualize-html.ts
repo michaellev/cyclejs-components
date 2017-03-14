@@ -16,7 +16,7 @@ export default ({ DOM, html: html$ }: Sources) => (
         div(
           {
             props: { id: '' },
-            class: { column: true, content: true, 'is-8-desktop': true, 'is-outlined': true },
+            class: { column: true, content: true, 'is-8-desktop': true, 'is-outlined': true }
           },
           virtualizeString(html)
         )

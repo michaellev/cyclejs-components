@@ -17,14 +17,14 @@ export default (sources: { DOM: DOMSource }) => {
 
   const vnode$ = xs.combine(
     checkedButton.DOM,
-    checkbox.DOM,
+    checkbox.DOM
   ).map(([checkedButtonVnode, checkboxVnode]) => (
     div(
       { class: { content: true } },
       [
         checkedButtonVnode,
         ' result: ',
-        checkboxVnode,
+        checkboxVnode
       ]
     )
   ))

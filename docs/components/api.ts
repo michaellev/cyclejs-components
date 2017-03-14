@@ -1,4 +1,4 @@
-import { DOMSource, section, label, aside, ul, li, a, } from '@cycle/dom'
+import { DOMSource, section, label, aside, ul, li, a } from '@cycle/dom'
 import Component from './component'
 import { Stream, default as xs } from 'xstream'
 import { Metadata } from '../types'
@@ -12,11 +12,11 @@ interface Sources {
 const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   const menuClicks$ = DOM.select('.menu a').events('click')
   const componentId$ = menuClicks$.map(menuClick => (
-    <string | null>(<HTMLAnchorElement>menuClick.target).dataset.id)
+    (menuClick.target as HTMLAnchorElement).dataset.id as string | null)
   ).startWith(null)
   const component$ = xs.combine(
     componentId$,
-    metadata$,
+    metadata$
   ).map(([
     componentId,
     metadata
@@ -26,11 +26,11 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   const vnode$ = xs.combine(
     componentId$,
     metadata$,
-    componentVnode$,
+    componentVnode$
   ).map(([
     componentId,
     metadata,
-    componentVnode,
+    componentVnode
   ]) => (
     section(
       { class: { section: true, columns: true, 'is-centered': true } },
@@ -59,7 +59,7 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
               ]
             )
           ]
-        ),
+        )
       ]
     )
   ))

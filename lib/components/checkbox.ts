@@ -25,7 +25,7 @@ export const Checkbox = (sources: Sources ): Sinks => {
   const domChecked$ = sources.DOM
     .select('input')
     .events('change')
-    .map(event => (<HTMLInputElement>event.target).checked)
+    .map(event => (event.target as HTMLInputElement).checked)
 
   const checked$ = xs.merge(
     checkedSource$,

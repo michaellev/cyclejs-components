@@ -14,10 +14,10 @@ const Property = ({ DOM, property: property$ }: Sources) => {
 
   const vnode$ = xs.combine(
     rProperty$,
-    demoVnode$,
+    demoVnode$
   ).map(([
     property,
-    demoVnode,
+    demoVnode
   ]) => (
     !property ? div(
       { class: { notification: true } },
@@ -27,13 +27,13 @@ const Property = ({ DOM, property: property$ }: Sources) => {
       [
         header(
           { class: { title: true, 'is-4': true, 'has-text-centered': true } },
-          property.name,
+          property.name
         ),
         div(
           { class: { level: true } },
           [
             div(
-              { class: { 'level-item': true, } },
+              { class: { 'level-item': true } },
               [
                 span(
                   { class: { tag: true, 'is-medium': true } },
@@ -42,9 +42,9 @@ const Property = ({ DOM, property: property$ }: Sources) => {
                 span(
                   { class: { tag: true, 'is-medium': true } },
                   property.mandatory ? 'mandatory' : 'optional'
-                ),
+                )
               ]
-            ),
+            )
           ]
         ),
         property.description,
@@ -62,7 +62,7 @@ const Property = ({ DOM, property: property$ }: Sources) => {
               'Demo source code'
           ),
           pre(
-            { class: { box: true, } },
+            { class: { box: true } },
             code(property.demo.source)
           )
         ])
@@ -72,6 +72,6 @@ const Property = ({ DOM, property: property$ }: Sources) => {
 
   return {
     DOM: vnode$
- }
+  }
 }
 export default (sources: Sources) => isolate(Property)(sources)

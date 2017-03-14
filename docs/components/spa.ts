@@ -1,4 +1,4 @@
-import { DOMSource, body, nav, div, header, a, } from '@cycle/dom'
+import { DOMSource, body, nav, div, header, a } from '@cycle/dom'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
 import { Metadata } from '../types'
@@ -25,21 +25,21 @@ interface Page {
 
 const Spa = ({ DOM, metadata: metadata$, readmeHtml: readmeHtml$ }: Sources) => {
   const nav$ = DOM.select('.nav .nav-item').events('click')
-    .map(navClick => (<string>(<HTMLAnchorElement>navClick.currentTarget).dataset.id))
+    .map(navClick => ((navClick.currentTarget as HTMLAnchorElement).dataset.id as string))
     .startWith('readme')
 
-    const pages: { [id: string]: Page } = {
-      readme: {
-        name: 'README',
-        Component: VirtualizeHtml,
-        sources: { DOM, html: readmeHtml$ }
-      },
-      api: {
-        name: 'API',
-        Component: Api,
-        sources: { DOM, metadata: metadata$ }
-      }
+  const pages: { [id: string]: Page } = {
+    readme: {
+      name: 'README',
+      Component: VirtualizeHtml,
+      sources: { DOM, html: readmeHtml$ }
+    },
+    api: {
+      name: 'API',
+      Component: Api,
+      sources: { DOM, metadata: metadata$ }
     }
+  }
 
   const page$ = nav$.map(id => pages[id].Component(pages[id].sources))
 

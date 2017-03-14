@@ -16,7 +16,7 @@ export default (sources: { DOM: DOMSource} ) => {
   const vnode$ = xs.combine(
     textField.DOM,
     valueTextField.DOM
-  ).map(([textFieldVNode, valueTextFieldVNode]) =>(
+  ).map(([textFieldVNode, valueTextFieldVNode]) => (
     div(
       { class: { content: true } },
       [

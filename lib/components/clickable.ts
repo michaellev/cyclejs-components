@@ -36,4 +36,3 @@ export const Clickable = ({ DOM, vnode: vnode$ }: Sources ): Sinks => {
 }
 
 export default (sources: Sources): Sinks => isolate(Clickable)(sources)
-

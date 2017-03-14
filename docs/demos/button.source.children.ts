@@ -5,7 +5,7 @@ import { TextField, Button } from '../../lib'
 export default (sources: { DOM: DOMSource }) => {
   const childrenTextField = TextField({
     DOM: sources.DOM,
-    value: xs.of("some value")
+    value: xs.of('some value')
   })
   const button = Button({
     DOM: sources.DOM,
