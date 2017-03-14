@@ -1,7 +1,13 @@
-import { DOMSource, span, code, div, pre, header } from '@cycle/dom'
+import { DOMSource, p, span, code, div, pre, header, article } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { PropertyMetadata } from '../types'
 import isolate from '@cycle/isolate'
+
+const replaceComponentImportPath = (source: string) => source
+  .replace(
+    /(import \S* from ')(\.\.\/\.\.\/lib\/)(\S*)(')/g,
+    (match: string, p1: string, p2: string, name: string, p4: string) => `${p1}@cycles/${name}${p4}`
+  )
 
 interface Sources {
   DOM: DOMSource,
@@ -61,9 +67,26 @@ const Property = ({ DOM, property: property$ }: Sources) => {
             { class: { 'title': true, 'is-5': true } },
               'Demo source code'
           ),
+          article(
+            { class: { message: true, 'is-warning': true } },
+            [
+              div(
+                { class: { 'message-header': true } },
+                p('Warning')
+              ),
+              div(
+                { class: { 'message-body': true } },
+                [
+                  'No components are actually published, yet. So don’t try to',
+                  code('npm install'),
+                  ' them.'
+                ]
+              )
+            ]
+          ),
           pre(
             { class: { box: true } },
-            code(property.demo.source)
+            code(replaceComponentImportPath(property.demo.source))
           )
         ])
       ]
