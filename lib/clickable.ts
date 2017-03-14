@@ -20,11 +20,9 @@ export interface Sinks {
   click: Stream<null>
 }
 
-export const Clickable = ({ DOM, vnode: vnode$ }: Sources ): Sinks => {
-  const DOMSource = DOM
-    .select('*')
-
+export const Clickable = ({ DOM: DOMSource, vnode: vnode$ }: Sources ): Sinks => {
   const click$ = DOMSource
+    .select('*')
     .events('click')
     .mapTo(null)
 
