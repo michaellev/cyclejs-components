@@ -81,7 +81,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
           'Properties'
         ),
         div(
-          { class: { tabs: true, 'is-centered': true, 'is-medium': true } },
+          { class: { tabs: true, 'is-medium': true } },
           ul(
             Object.values(component.properties).map((property) => (
               li(
