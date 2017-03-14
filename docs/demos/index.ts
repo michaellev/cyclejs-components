@@ -11,6 +11,8 @@ import TextFieldSourceValue from './text-field.source.value'
 import textFieldSourceValueSource from '!!raw-loader!./text-field.source.value'
 import TextFieldSinkValue from './text-field.sink.value'
 import textFieldSinkValueSource from '!!raw-loader!./text-field.sink.value'
+import ClickableSinkClick from './clickable.sink.click'
+import clickableSinkClickSource from '!!raw-loader!./clickable.sink.click'
 
 const demos: Demo[] = [
   {
@@ -43,6 +45,11 @@ const demos: Demo[] = [
     Component: TextFieldSinkValue,
     source: textFieldSinkValueSource
   },
+  {
+    id: 'clickable.sink.click',
+    Component: ClickableSinkClick,
+    source: clickableSinkClickSource
+  }
 ]
 
 export default demos

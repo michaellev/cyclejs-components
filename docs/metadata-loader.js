@@ -41,7 +41,7 @@ const getProps = (component) => {
       }
       prop.id = [prop.direction, prop.name].join('.')
       prop.parentId = component.id
-      if (['DOM'].includes(propNode.name.text) === false) {
+      if (['DOM', 'DOMSource'].includes(propNode.name.text) === false) {
         if (propNode.jsDoc === undefined) {
           throw new Error(`${prop.direction} property \`${prop.id}\` of \`${component.id}\` is undocumented`)
         }
