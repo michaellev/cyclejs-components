@@ -3,7 +3,7 @@ const { readdirSync, readFileSync } = require('fs')
 const { resolve, parse: parsePath } = require('path')
 const upperCamelCase = require('uppercamelcase')
 
-const componentsDirpath = resolve(__dirname, '..', 'lib', 'components')
+const componentsDirpath = resolve(__dirname, '..', 'lib')
 
 const getProps = (component) => {
   const source = readFileSync(

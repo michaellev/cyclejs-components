@@ -1,4 +1,4 @@
-import Clickable from '../../lib/components/clickable'
+import Clickable from '../../lib/clickable'
 import xs, { Stream } from 'xstream'
 import { p, article, DOMSource } from '@cycle/dom'
 import { VNode } from 'snabbdom/vnode'

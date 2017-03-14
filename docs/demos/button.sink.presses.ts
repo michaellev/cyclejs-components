@@ -1,6 +1,6 @@
 import xs from 'xstream'
 import { DOMSource, div, code } from '@cycle/dom'
-import { Button } from '../../lib'
+import Button from '../../lib/button'
 
 export default (sources: { DOM: DOMSource }) => {
   const button = Button({

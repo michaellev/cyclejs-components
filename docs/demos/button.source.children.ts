@@ -1,6 +1,7 @@
 import xs from 'xstream'
 import { DOMSource, div } from '@cycle/dom'
-import { TextField, Button } from '../../lib'
+import TextField from '../../lib/text-field'
+import Button from '../../lib/button'
 
 export default (sources: { DOM: DOMSource }) => {
   const childrenTextField = TextField({

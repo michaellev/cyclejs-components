@@ -1,6 +1,6 @@
 import xs from 'xstream'
 import { DOMSource, div } from '@cycle/dom'
-import { TextField } from '../../lib'
+import TextField from '../../lib/text-field'
 
 export default (sources: { DOM: DOMSource} ) => {
   const valueTextField = TextField({

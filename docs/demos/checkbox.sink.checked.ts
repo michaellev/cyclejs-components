@@ -1,6 +1,6 @@
 import xs from 'xstream'
 import { DOMSource, div, code } from '@cycle/dom'
-import { Checkbox } from '../../lib'
+import Checkbox from '../../lib/checkbox'
 
 export default (sources: { DOM: DOMSource }) => {
   const checkbox = Checkbox({
