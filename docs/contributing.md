@@ -14,6 +14,15 @@ https://github.com/mightyiam/cyclejs-web-components/issues/36
 
 ## Contributing a component
 
+### What is a valuable component?
+
+This is an attempt to define what counts as a component that has actual value to users and therefore should be eligible for this project in this regard.
+
+- The component in mind is a kind of component that the modern browser does not easily provide.
+  Because if it does, then such a component would be merely a different, perhaps *slightly* better API for that.
+
+### Technical guidelines
+
 1. See existing components for tangible examples.
 1. Add your component to a directory under `lib`. For example, `lib/thingamading`
 1. The component may consist of multiple modules, yet, the main export must be `index.ts`.
