@@ -7,7 +7,7 @@ const componentsDirpath = resolve(__dirname, '..', 'lib')
 
 const getProps = (component) => {
   const source = readFileSync(
-    resolve(componentsDirpath, component.path),
+    resolve(componentsDirpath, component.path, 'index.ts'),
     { encoding: 'utf-8' }
   )
   delete component.path
