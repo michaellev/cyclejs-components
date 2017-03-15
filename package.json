@@ -10,7 +10,8 @@
     "docs": "webpack",
     "dev": "webpack-dev-server",
     "test": "run-s lint docs",
-    "transpile": "tsc --project components.tsconfig.json"
+    "transpile": "tsc --project components.tsconfig.json",
+    "mk-component-pkg-jsons": "node scripts/mk-component-pkg-jsons.js"
   },
   "pre-commit": [
     "test"
@@ -53,6 +54,7 @@
     "markdown-loader": "^2.0.0",
     "node-sass": "^4.5.0",
     "npm-run-all": "^4.0.2",
+    "pify": "^2.3.0",
     "pre-commit": "^1.2.2",
     "raw-loader": "github:webpack-contrib/raw-loader#20854cab0e7307931d21ef54f744ac5a2df4c3ef",
     "sass-loader": "^6.0.2",
