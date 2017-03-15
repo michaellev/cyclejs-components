@@ -6,7 +6,7 @@ const { componentsDir, componentsPkgFilename } = require('./constants')
 const { resolve } = require('path')
 const git = require('simple-git')()
 
-const [,, componentName, magnitude] = process.argv
+const [,, componentName, magnitude, skipCleanCheck] = process.argv
 
 if (componentName === undefined || magnitude === undefined) {
   throw new Error('must provide both component name and magnitude. For example, `$ <command> clickable minor`')
@@ -28,7 +28,7 @@ const pkgP = readPkg(pkgPath, { normalize: false })
 Promise
   .all([isGitCleanP, pkgP])
   .then(([ isGitClean, pkg ]) => {
-    if (!isGitClean) {
+    if (!skipCleanCheck && !isGitClean) {
       return Promise.reject(Error('repository is not clean'))
     }
 
