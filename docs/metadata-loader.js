@@ -2,12 +2,11 @@ const ts = require('typescript')
 const { readdirSync, readFileSync } = require('fs')
 const { resolve, parse: parsePath } = require('path')
 const upperCamelCase = require('uppercamelcase')
-
-const componentsDirpath = resolve(__dirname, '..', 'lib')
+const { componentsDir } = require('../scripts/constants')
 
 const getProps = (component) => {
   const source = readFileSync(
-    resolve(componentsDirpath, component.path, 'index.ts'),
+    resolve(componentsDir, component.path, 'index.ts'),
     { encoding: 'utf-8' }
   )
   delete component.path
@@ -54,7 +53,7 @@ const getProps = (component) => {
 }
 
 module.exports = function () {
-  const components = readdirSync(componentsDirpath)
+  const components = readdirSync(componentsDir)
     .map((path) => {
       const id = parsePath(path).name
       return {

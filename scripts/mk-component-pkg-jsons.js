@@ -4,9 +4,12 @@ const readdirP = pify(readdir)
 const { resolve } = require('path')
 const readPkg = require('read-pkg')
 const writePkg = require('write-pkg')
+const {
+    componentsDir,
+    componentsPkgFilename
+} = require('../scripts/constants')
 
 const projectRoot = resolve(__dirname, '..')
-const componentsDir = resolve(projectRoot, 'lib')
 const repoPkgP = readPkg(projectRoot, { normalize: false })
 
 const relevantRepoPkgKeys = [
@@ -40,7 +43,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
 
 const updateComponentPkg = (componentName) => {
   const componentPath = resolve(componentsDir, componentName)
-  const componentPkgP = readPkg(resolve(componentPath, 'component.package.json'), { normalize: false })
+  const componentPkgP = readPkg(resolve(componentPath, componentsPkgFilename), { normalize: false })
   const resultPkgP = Promise
     .all([ repoPkgP, componentPkgP ])
     .then(([ repoPkg, componentPkg ]) => (
