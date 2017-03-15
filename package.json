@@ -11,6 +11,7 @@
     "dev": "webpack-dev-server",
     "test": "run-s lint docs",
     "transpile": "tsc --project components.tsconfig.json",
+    "before-publish-component": "run-s test transpile mk-component-pkg-jsons",
     "increment-component-version": "node scripts/increment-component-version.js",
     "mk-component-pkg-jsons": "node scripts/mk-component-pkg-jsons.js"
   },
