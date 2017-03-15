@@ -6,7 +6,7 @@ import { VNode } from 'snabbdom/vnode'
 export interface Sources {
   DOM: DOMSource
   /**
-   * The VNode this component will produce.
+   * The VNode stream this component will produce.
    */
   vnode: Stream<VNode>
 }
@@ -20,7 +20,7 @@ export interface Sinks {
   click: Stream<null>
 }
 
-export const Clickable = ({ DOM: DOMSource, vnode: vnode$ }: Sources ): Sinks => {
+export const Clickable = ({ DOM: DOMSource, vnode: vnode$ }: Sources): Sinks => {
   const click$ = DOMSource
     .select('*')
     .events('click')
