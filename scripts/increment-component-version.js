@@ -45,6 +45,8 @@ Promise
       .add(pkgPath)
       .commit(commitMsg)
       .addTag(commitMsg)
+      .push()
+      .pushTags()
   })
   .catch((err) => {
     process.exitCode = 1
