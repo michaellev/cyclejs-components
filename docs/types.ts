@@ -1,3 +1,6 @@
+import { DOMSource } from '@cycle/dom'
+import { Stream } from 'xstream'
+import { VNode } from 'snabbdom/vnode'
 import { DOMComponent } from '../lib/types'
 
 export interface Metadata {
