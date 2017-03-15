@@ -29,10 +29,24 @@ Promise
   .all([isGitCleanP, pkgP])
   .then(([ isGitClean, pkg ]) => {
     if (!isGitClean) {
-      console.error('ERROR: repository is not clean')
-      process.exitCode = 1
-      return
+      return Promise.reject(Error('repository is not clean'))
     }
-    const newPkg = Object.assign({}, pkg, { version: semver.inc(pkg.version, magnitude) })
-    writeJsonFile(pkgPath, newPkg, { indent: 2, sortKeys: true })
+
+    const version = semver.inc(pkg.version, magnitude)
+    const newPkg = Object.assign({}, pkg, { version })
+    const writtenP = writeJsonFile(pkgPath, newPkg, { indent: 2, sortKeys: true })
+
+    return Promise
+      .all([version, writtenP])
+  })
+  .then(([version]) => {
+    const commitMsg = `${componentName}-v${version}`
+    git
+      .add(pkgPath)
+      .commit(commitMsg)
+      .addTag(commitMsg)
+  })
+  .catch((err) => {
+    process.exitCode = 1
+    console.error('Error: ' + err.message)
   })
