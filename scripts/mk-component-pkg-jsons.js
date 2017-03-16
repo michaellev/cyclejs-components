@@ -33,7 +33,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
 
   const specifics = {
     name: '@cycles/' + name,
-    description: `Cycle.js web component \`${name}\``,
+    description: `Cycle.js component \`${name}\``,
     keywords: repoPkg.keywords.concat(name)
   }
 

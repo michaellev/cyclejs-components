@@ -1,7 +1,7 @@
 {
-  "name": "cyclejs-web-components",
+  "name": "cyclejs-components",
   "version": "0.0.0",
-  "description": "Cycle.js web components",
+  "description": "Cycle.js components",
   "main": "lib/index.js",
   "scripts": {
     "lint-ts": "tslint --project tsconfig.json",
@@ -20,8 +20,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mightyiam/cyclejs-web-components.git",
-    "homepage": "https://github.com/mightyiam/cyclejs-web-components"
+    "url": "git+https://github.com/mightyiam/cyclejs-components.git",
+    "homepage": "https://github.com/mightyiam/cyclejs-components"
   },
   "keywords": [
     "cycle",
@@ -40,9 +40,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mightyiam/cyclejs-web-components/issues"
+    "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-web-components/",
+  "homepage": "https://mightyiam.github.io/cyclejs-components/",
   "devDependencies": {
     "@cycle/run": "^3.0.0",
     "@types/clone": "^0.1.30",

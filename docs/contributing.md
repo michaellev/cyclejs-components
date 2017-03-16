@@ -10,7 +10,7 @@
 
 ## We don’t have tests, yet
 
-https://github.com/mightyiam/cyclejs-web-components/issues/36
+https://github.com/mightyiam/cyclejs-components/issues/36
 
 ## Contributing a component
 
