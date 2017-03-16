@@ -27,5 +27,8 @@
     "ui",
     "elements",
     "clickable"
-  ]
+  ],
+  "dependencies": {
+    "@cycle/isolate": "^2.1.0"
+  }
 }

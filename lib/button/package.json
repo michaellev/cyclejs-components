@@ -27,5 +27,9 @@
     "ui",
     "elements",
     "button"
-  ]
+  ],
+  "dependencies": {
+    "@cycle/dom": "^16.0.0",
+    "@cycle/isolate": "^2.1.0"
+  }
 }

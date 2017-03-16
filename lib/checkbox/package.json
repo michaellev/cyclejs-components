@@ -27,5 +27,10 @@
     "ui",
     "elements",
     "checkbox"
-  ]
+  ],
+  "dependencies": {
+    "@cycle/dom": "^16.0.0",
+    "@cycle/isolate": "^2.1.0",
+    "xstream": "^10.3.0"
+  }
 }
