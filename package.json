@@ -8,9 +8,9 @@
     "dev": "webpack-dev-server",
     "test": "run-s lint docs",
     "transpile": "tsc --project components.tsconfig.json",
-    "before-publish-component": "run-s test transpile mk-component-pkg-jsons",
+    "before-publish-component": "run-s test transpile update-component-package-jsons",
     "increment-component-version": "node scripts/increment-component-version.js",
-    "mk-component-pkg-jsons": "node scripts/mk-component-pkg-jsons.js"
+    "update-component-package-jsons": "node scripts/update-component-package-jsons.js"
   },
   "pre-commit": [
     "test"
