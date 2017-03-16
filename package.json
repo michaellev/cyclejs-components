@@ -71,7 +71,8 @@
     "typescript": "^2.2.1",
     "uppercamelcase": "^1.1.0",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.4.1",
+    "write-pkg": "^2.1.0"
   },
   "dependencies": {
     "@cycle/dom": "^16.0.0",
