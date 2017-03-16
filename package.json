@@ -1,8 +1,4 @@
 {
-  "name": "cyclejs-components",
-  "version": "0.0.0",
-  "description": "Cycle.js components",
-  "main": "lib/index.js",
   "scripts": {
     "lint-ts": "tslint --project tsconfig.json",
     "lint-js": "standard",
@@ -44,6 +40,9 @@
   },
   "homepage": "https://mightyiam.github.io/cyclejs-components/",
   "devDependencies": {
+    "@cycle/dom": "^16.0.0",
+    "@cycle/isolate": "^2.0.0",
+    "xstream": "^10.2.0",
     "@cycle/run": "^3.0.0",
     "@types/clone": "^0.1.30",
     "@types/node": "^7.0.5",
@@ -73,10 +72,5 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "write-pkg": "^2.1.0"
-  },
-  "dependencies": {
-    "@cycle/dom": "^16.0.0",
-    "@cycle/isolate": "^2.0.0",
-    "xstream": "^10.2.0"
   }
 }
