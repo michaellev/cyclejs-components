@@ -1,4 +1,5 @@
 {
+  "title": "Cycle.js components",
   "scripts": {
     "lint-ts": "tslint --project tsconfig.json",
     "lint-js": "standard",

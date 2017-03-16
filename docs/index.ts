@@ -24,8 +24,8 @@ const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
 ]
 )
 
-const { description } = require('../package.json')
-document.title = description
+const { title } = require('../package.json')
+document.title = title
 
 run(SPA, {
   DOM: makeDOMDriver(document.body),

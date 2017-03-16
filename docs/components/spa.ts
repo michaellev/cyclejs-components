@@ -9,7 +9,7 @@ import isolate from '@cycle/isolate'
 
 import './index.scss'
 
-const { description: title } = require('../../package.json')
+const { title } = require('../../package.json')
 
 interface Sources {
   rawHtmlPages: Stream<RawHTMLPage[]>
