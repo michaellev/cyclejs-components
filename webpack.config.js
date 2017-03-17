@@ -25,7 +25,7 @@ const config = {
       },
       {
         test: /\.ts$/,
-        loader: 'ts-loader'
+        loader: 'awesome-typescript-loader'
       },
       {
         test: /\.scss$/,
