@@ -12,7 +12,12 @@
       "ES2017",
       "DOM"
     ],
-    "target": "ES2017"
+    "target": "ES2017",
+    "baseUrl": ".",
+    "paths": {
+      "@cycle/*": [ "node_modules/@cycle/*" ],
+      "xstream": [ "node_modules/xstream" ]
+    }
   },
   "formatCodeOptions": {
     "indexSize": 2,
