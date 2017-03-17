@@ -7,6 +7,7 @@
     "docs": "webpack",
     "dev": "webpack-dev-server",
     "test": "run-s lint check-dependencies docs",
+    "npm-install-for-components": "find lib -mindepth 1 -maxdepth 1 -exec sh -c \"cd {}; npm i\" \\;",
     "transpile": "tsc --project components.tsconfig.json",
     "before-publish-component": "run-s test transpile update-component-package-jsons",
     "check-dependencies": "node scripts/check-dependencies.js",
