@@ -1,6 +1,5 @@
 /node_modules
 /lib/**/*.js
 /lib/**/*.js.map
-/lib/**/node_modules
 /public
 !/public/index.html
