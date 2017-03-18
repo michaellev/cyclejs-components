@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server",
     "test": "run-s lint check-dependencies docs",
     "npm-install-for-components": "find lib -mindepth 1 -maxdepth 1 -exec sh -c \"cd {}; npm i\" \\;",
+    "purge-components-node_modules": "find lib -mindepth 2 -maxdepth 2 -name node_modules -exec rm -rf {} \\;",
     "transpile": "tsc --project components.tsconfig.json",
     "before-publish-component": "run-s test transpile update-component-package-jsons",
     "check-dependencies": "node scripts/check-dependencies.js",
