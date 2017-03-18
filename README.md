@@ -1,29 +1,28 @@
-<div class="is-hidden-in-website">
+<div class="is-hidden-in-docs">
   <a href="https://travis-ci.org/mightyiam/cyclejs-components">
     <img alt="build status" src="https://travis-ci.org/mightyiam/cyclejs-components.svg?branch=master"/>
   </a>
+
+  <h1>Cycle.js components</h1>
+
+  <p>Don’t be cynical. be cyclical.</p>
 </div>
 
-# Cycle.js components
-
-<blockquote class="is-hidden-in-website">
-  Don’t be cynical—be cyclical.
-</blockquote>
+## Description
 
 A set of components for [Cycle.js](https://cycle.js.org).
-
-
-<blockquote class="is-hidden-in-website">
-  For full documentation,
-  <a href="https://mightyiam.github.io/cyclejs-components">
-    read this readme in the website
-  </a>
-  or see the <code>docs</code> directory.
-</blockquote>
 
 ## Features
 
 * Zero CSS
 * Written in TypeScript
-* Accurate, from-source-code-generated, documentation
-* Demo for every property
+* Accurate, auto-generated, documentation
+* Lots of examples
+
+<div class="is-hidden-in-docs">
+  <h2>Documentation</h2>
+  <p>
+    <a href="https://mightyiam.github.io/cyclejs-components">
+      Full documentation here</a>.
+  </p>
+</div>
