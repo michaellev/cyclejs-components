@@ -12,5 +12,6 @@ const componentDirsP = componentNamesP
 
 module.exports = {
   componentsDir: resolve(__dirname, '..', 'lib'),
+  componentNamesP,
   componentDirsP
 }

@@ -1,73 +1,87 @@
 const ts = require('typescript')
-const { readdirSync, readFileSync } = require('fs')
+const pify = require('pify')
+const readFileP = pify(require('fs').readFile)
 const { resolve, parse: parsePath } = require('path')
 const upperCamelCase = require('uppercamelcase')
-const { componentsDir } = require('../scripts/constants')
+const { componentsDir, componentNamesP } = require('../scripts/constants')
+const pMap = require('p-map')
 
 const getProps = (component) => {
-  const source = readFileSync(
+  const sourceP = readFileP(
     resolve(componentsDir, component.path, 'index.ts'),
     { encoding: 'utf-8' }
   )
-  delete component.path
-  const sourceFile = ts.createSourceFile(
-    '',
-    source,
-    ts.ScriptTarget.ES2017,
-    true
-  )
+  return sourceP
+    .then((source) => {
+      delete component.path
+      const sourceFile = ts.createSourceFile(
+        '',
+        source,
+        ts.ScriptTarget.ES2017,
+        true
+      )
 
-  ts.forEachChild(sourceFile, node => {
-    if (ts.SyntaxKind[node.kind] !== 'InterfaceDeclaration') {
-      return
-    }
-    if (node.modifiers === undefined) {
-      return
-    }
-    if (node.modifiers.filter((modifier) => ts.SyntaxKind[modifier.kind] === 'ExportKeyword').length === 0) {
-      return
-    }
-    if (['Sources', 'Sinks'].includes(node.name.text) === false) {
-      return
-    }
-    const propNodes = node.members
-    propNodes.forEach((propNode) => {
-      const prop = {
-        name: propNode.name.text,
-        direction: propNode.parent.name.text.toLowerCase().slice(0, -1),
-        type: source.slice(propNode.type.pos, propNode.type.end).trim(),
-        mandatory: !propNode.questionToken
-      }
-      prop.id = [prop.direction, prop.name].join('.')
-      prop.parentId = component.id
-      if (['DOM', 'DOMSource'].includes(propNode.name.text) === false) {
-        if (propNode.jsDoc === undefined) {
-          throw new Error(`${prop.direction} property \`${prop.id}\` of \`${component.id}\` is undocumented`)
+      ts.forEachChild(sourceFile, node => {
+        if (ts.SyntaxKind[node.kind] !== 'InterfaceDeclaration') {
+          return
         }
-        prop.description = propNode.jsDoc.map(jsDoc => jsDoc.comment).join('\n')
-      }
-      component.properties[prop.id] = prop
+        if (node.modifiers === undefined) {
+          return
+        }
+        if (node.modifiers.filter((modifier) => ts.SyntaxKind[modifier.kind] === 'ExportKeyword').length === 0) {
+          return
+        }
+        if (['Sources', 'Sinks'].includes(node.name.text) === false) {
+          return
+        }
+        const propNodes = node.members
+        propNodes.forEach((propNode) => {
+          const prop = {
+            name: propNode.name.text,
+            direction: propNode.parent.name.text.toLowerCase().slice(0, -1),
+            type: source.slice(propNode.type.pos, propNode.type.end).trim(),
+            mandatory: !propNode.questionToken
+          }
+          prop.id = [prop.direction, prop.name].join('.')
+          prop.parentId = component.id
+          if (['DOM', 'DOMSource'].includes(propNode.name.text) === false) {
+            if (propNode.jsDoc === undefined) {
+              throw new Error(`${prop.direction} property \`${prop.id}\` of \`${component.id}\` is undocumented`)
+            }
+            prop.description = propNode.jsDoc.map(jsDoc => jsDoc.comment).join('\n')
+          }
+          component.properties[prop.id] = prop
+        })
+      })
+      return component
     })
-  })
-  return component
 }
 
 module.exports = function () {
-  const components = readdirSync(componentsDir)
-    .map((path) => {
-      const id = parsePath(path).name
-      return {
-        id,
-        path,
-        varName: upperCamelCase(id),
-        properties: {}
-      }
-    })
-    .map(getProps)
-    .reduce((components, component) => {
-      components[component.id] = component
-      return components
-    }, {})
+  const callback = this.async()
+  const componentsP = componentNamesP
+    .then(names => (
+      names.map((path) => {
+        const id = parsePath(path).name
+        return {
+          id,
+          path,
+          varName: upperCamelCase(id),
+          properties: {}
+        }
+      })
+    ))
+    .then(components => pMap(components, getProps))
+    .then(components => (
+      components.reduce((components, component) => {
+        components[component.id] = component
+        return components
+      }, {})
+    ))
 
-  return 'export default ' + JSON.stringify(components)
+  componentsP
+    .then(components => callback(
+      null,
+      'export default ' + JSON.stringify(components)
+    ))
 }
