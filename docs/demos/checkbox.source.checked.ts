@@ -1,29 +1,34 @@
 import xs from 'xstream'
-import { DOMSource, div } from '@cycle/dom'
-import Button from '../../lib/button'
+import { DOMSource, div, button } from '@cycle/dom'
+import Clickable from '../../lib/clickable'
 import Checkbox from '../../lib/checkbox'
 
 export default (sources: { DOM: DOMSource }) => {
-  const checkedButton = Button({
+  const {
+    click: buttonClick$,
+    DOM: buttonVnode$
+  } = Clickable({
     DOM: sources.DOM,
-    children: xs.of('toggle the checkbox')
+    vnode: xs.of(button('toggle the checkbox'))
   })
 
-  const checked$ = checkedButton.presses.fold((curr: boolean) => !curr, false)
+  const checked$ = buttonClick$.fold((curr: boolean) => !curr, false)
 
-  const checkbox = Checkbox({
+  const {
+    DOM: checkboxVnode$
+  } = Checkbox({
     DOM: sources.DOM,
     checked: checked$
   })
 
   const vnode$ = xs.combine(
-    checkedButton.DOM,
-    checkbox.DOM
-  ).map(([checkedButtonVnode, checkboxVnode]) => (
+    buttonVnode$,
+    checkboxVnode$
+  ).map(([buttonVnode, checkboxVnode]) => (
     div(
       { class: { content: true } },
       [
-        checkedButtonVnode,
+        buttonVnode,
         ' result: ',
         checkboxVnode
       ]
