@@ -47,7 +47,7 @@ const Property = ({ DOM, property: property$ }: Sources) => {
                 ),
                 property.direction === 'source' ? span(
                   { class: { tag: true, 'is-medium': true } },
-                  property.optional ? 'optional' : 'mandatory'
+                  property.optional ? 'optional' : 'required'
                 ) : undefined
               ]
             )
