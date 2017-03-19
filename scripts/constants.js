@@ -9,14 +9,8 @@ const componentNamesP = pify(readdir)(resolve(componentsDir))
   .then(paths => (
     pFilter(paths, path => isDir(resolve(componentsDir, path)))
   ))
-const componentDirsP = componentNamesP
-  .then((names) => (
-    names
-      .map(name => resolve(componentsDir, name))
-  ))
 
 module.exports = {
   componentsDir: resolve(__dirname, '..', 'lib'),
-  componentNamesP,
-  componentDirsP
+  componentNamesP
 }
