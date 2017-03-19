@@ -23,7 +23,7 @@ export interface Sinks {
 export const Clickable = ({ DOM: DOMSource, vnode: vnode$ }: Sources): Sinks => {
   const click$ = DOMSource
     .select('*')
-    .events('click')
+    .events('click', { useCapture: true })
     .mapTo(null)
 
   return {
