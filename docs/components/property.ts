@@ -45,10 +45,10 @@ const Property = ({ DOM, property: property$ }: Sources) => {
                   { class: { tag: true, 'is-medium': true } },
                   code(property.type)
                 ),
-                span(
+                property.direction === 'source' ? span(
                   { class: { tag: true, 'is-medium': true } },
-                  property.mandatory ? 'mandatory' : 'optional'
-                )
+                  property.optional ? 'optional' : 'mandatory'
+                ) : undefined
               ]
             )
           ]

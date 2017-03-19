@@ -46,7 +46,7 @@ const getProperties = async (componentId) => {
         name: propertyNode.name.text,
         direction: propertyNode.parent.name.text.toLowerCase().slice(0, -1),
         type: source.slice(propertyNode.type.pos, propertyNode.type.end).trim(),
-        mandatory: !propertyNode.questionToken
+        optional: !!propertyNode.questionToken
       }
       property.id = [property.direction, property.name].join('.')
       property.parentId = componentId
