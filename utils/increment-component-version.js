@@ -2,7 +2,7 @@ const pify = require('pify')
 const readPkg = require('read-pkg')
 const writePkg = require('write-pkg')
 const semver = require('semver')
-const { componentsDir } = require('./constants')
+const { componentsDirectory } = require('./constants')
 const { resolve } = require('path')
 const git = require('simple-git')()
 
@@ -21,7 +21,7 @@ if (magnitudes.includes(magnitude) === false) {
 const isGitCleanP = pify(git.status.bind(git))()
   .then(status => status.files.length === 0)
 
-const componentDirectory = resolve(componentsDir, componentId)
+const componentDirectory = resolve(componentsDirectory, componentId)
 
 const pkgP = readPkg(componentDirectory, { normalize: false })
 

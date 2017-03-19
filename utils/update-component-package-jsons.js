@@ -1,12 +1,7 @@
-const pify = require('pify')
-const { readdir } = require('fs')
-const readdirP = pify(readdir)
 const { resolve } = require('path')
 const readPkg = require('read-pkg')
 const writePkg = require('write-pkg')
-const {
-    componentsDir
-} = require('../scripts/constants')
+const { componentsDirectory, componentIdsP } = require('./constants')
 
 const projectRoot = resolve(__dirname, '..')
 const repoPkgP = readPkg(projectRoot, { normalize: false })
@@ -48,8 +43,8 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
   return result
 }
 
-const updateComponentPkg = (componentName) => {
-  const componentPath = resolve(componentsDir, componentName)
+const updateComponentPkg = (componentId) => {
+  const componentPath = resolve(componentsDirectory, componentId)
 
   const componentPkgP = readPkg(resolve(componentPath), { normalize: false })
     .catch(() => componentPkgTemplate)
@@ -57,17 +52,15 @@ const updateComponentPkg = (componentName) => {
   const resultPkgP = Promise
     .all([ repoPkgP, componentPkgP ])
     .then(([ repoPkg, componentPkg ]) => (
-      mkComponentPkg(componentName, repoPkg, componentPkg)
+      mkComponentPkg(componentId, repoPkg, componentPkg)
     ))
 
   resultPkgP
     .then(resultPkg => writePkg(componentPath, resultPkg))
 }
 
-const componentNamesP = readdirP(componentsDir)
-
-componentNamesP
-  .then((componentNames) => (
-    componentNames
+componentIdsP
+  .then((componentIds) => (
+    componentIds
       .forEach(updateComponentPkg)
   ))

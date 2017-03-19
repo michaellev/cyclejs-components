@@ -12,8 +12,8 @@
     "purge-components-node_modules": "find lib -mindepth 2 -maxdepth 2 -name node_modules -exec rm -rf {} \\;",
     "transpile": "tsc --project components.tsconfig.json",
     "before-publish-component": "run-s test transpile update-component-package-jsons",
-    "increment-component-version": "node scripts/increment-component-version.js",
-    "update-component-package-jsons": "node scripts/update-component-package-jsons.js"
+    "increment-component-version": "node utils/increment-component-version.js",
+    "update-component-package-jsons": "node utils/update-component-package-jsons.js"
   },
   "pre-commit": [
     "test"
