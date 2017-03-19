@@ -1,5 +1,5 @@
 import { DOMSource, div, p, code, ul, li, a, span, header } from '@cycle/dom'
-import { ComponentMetadata } from '../types'
+import { ComponentMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
 import Property from './property'
 import isolate from '@cycle/isolate'

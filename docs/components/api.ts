@@ -1,7 +1,7 @@
 import { DOMSource, section, label, aside, ul, li, a } from '@cycle/dom'
 import Component from './component'
 import { Stream, default as xs } from 'xstream'
-import { Metadata } from '../types'
+import { Metadata } from '../interfaces'
 import isolate from '@cycle/isolate'
 
 interface Sources {

@@ -6,7 +6,7 @@ import readmeHtml from '../README.md'
 import contributingHtml from './contributing.md'
 import designDecisionsHtml from './design-decisions.md'
 import SPA from './components/spa'
-import { RawHTMLPage } from './types'
+import { RawHTMLPage } from './interfaces'
 
 const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
   {

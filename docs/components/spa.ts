@@ -1,7 +1,7 @@
 import { DOMSource, body, nav, div, header, a } from '@cycle/dom'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
-import { Metadata, RawHTMLPage } from '../types'
+import { Metadata, RawHTMLPage } from '../interfaces'
 import Api from './api'
 import VirtualizeHtml from './virtualize-html'
 import { VNode } from 'snabbdom/vnode'

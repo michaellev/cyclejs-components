@@ -1,7 +1,7 @@
 import * as clone from 'clone'
 import parsedMetadata from '!!./metadata-loader!'
 import demos from './demos-loader!'
-import { Metadata, Demo } from './types'
+import { Metadata, Demo } from './interfaces'
 
 const metadata: Metadata = clone(parsedMetadata)
 

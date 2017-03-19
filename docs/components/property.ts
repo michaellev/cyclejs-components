@@ -1,6 +1,6 @@
 import { DOMSource, p, span, code, div, pre, header, article } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
-import { PropertyMetadata } from '../types'
+import { PropertyMetadata } from '../interfaces'
 import isolate from '@cycle/isolate'
 
 const replaceComponentImportPath = (source: string) => source
