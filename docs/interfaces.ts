@@ -41,7 +41,7 @@ interface DOMComponent {
 export interface Demo {
   id: string
   Component: DOMComponent
-  source: string
+  sourceHtml: string
 }
 
 interface SourceMetadata extends PropertyMetadata {
