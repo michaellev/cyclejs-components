@@ -13,26 +13,26 @@ module.exports = function () {
       {
         path,
         component: upperCamelCase(path.slice(0, -3)),
-        source: camelCase(path.slice(0, -3)) + 'Source'
+        sourceHtml: camelCase(path.slice(0, -3)) + 'SourceHtml'
       }
     ))
 
   const imports = names
-    .map(({ path, component, source }) => {
+    .map(({ path, component, sourceHtml }) => {
       const modulePath = resolve(demosDirPath, path)
       return [
         `import ${component} from '${modulePath.slice(0, -3)}'`,
-        `import ${source} from '!!raw-loader!${modulePath}'`
+        `import ${sourceHtml} from '!!./docs/typescript-source-highlight-loader!${modulePath}'`
       ].join('\n')
     })
     .join('\n')
 
   const eksport = 'export default [\n' + names
-    .map(({ path, component, source }) => (
+    .map(({ path, component, sourceHtml }) => (
       []
         .concat([['id', `'${path.slice(0, -3)}'`]])
         .concat([['Component', component]])
-        .concat([['source', source]])
+        .concat([['sourceHtml', sourceHtml]])
         .map(([ key, val ]) => `    ${key}: ${val}`)
         .join(',\n')
     ))

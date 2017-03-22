@@ -1,4 +1,5 @@
 @import '~bulma';
+@import '~highlight.js/styles/tomorrow';
 
 .name:first-letter { text-transform: uppercase }
 .tag.sink::after { content: '↧' }
