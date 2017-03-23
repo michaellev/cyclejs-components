@@ -1,7 +1,7 @@
 import { DOMSource, section, label, aside, ul, li, a } from '@cycle/dom'
 import Component from './component'
 import { Stream, default as xs } from 'xstream'
-import { Metadata } from '../interfaces'
+import { Metadata, ComponentMetadata } from '../interfaces'
 import isolate from '@cycle/isolate'
 
 interface Sources {
@@ -31,8 +31,9 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
     componentId,
     metadata,
     componentVnode
-  ]) => (
-    section(
+  ]) => {
+    const components: ComponentMetadata[] = Object.values(metadata.components)
+    return section(
       { class: { section: true, columns: true, 'is-centered': true } },
       [
         componentVnode,
@@ -49,7 +50,7 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
             ul(
               { class: { 'menu-list': true } },
               [
-                ...(Object.values(metadata).map(component => li(a(
+                ...(components.map((component) => li(a(
                   {
                     class: { name: true, 'is-active': component.id === componentId },
                     dataset: { id: component.id }
@@ -62,7 +63,7 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
         )
       ]
     )
-  ))
+  })
   return {
     DOM: vnode$
   }
