@@ -9,8 +9,6 @@ import isolate from '@cycle/isolate'
 
 import './index.scss'
 
-const { title } = require('../../package.json')
-
 interface Sources {
   rawHtmlPages: Stream<RawHTMLPage[]>
   DOM: DOMSource
@@ -58,17 +56,17 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
     .map(([i, pages]) => pages[i].Component(pages[i].sources))
 
   const pageVdom$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
-  const vdom$ = xs.combine(nav$, pageVdom$, pages$).map(([pageI, pageVnode, pages]) => (
+  const vdom$ = xs.combine(metadata$, nav$, pageVdom$, pages$).map(([metadata, pageI, pageVnode, pages]) => (
     body(
       { props: { id: '' } },
       [
         header(
           { class: { 'has-text-centered': true, title: true, 'is-1': true } },
-          title
+          metadata.pkg.title
         ),
         header(
           { class: { 'has-text-centered': true, subtitle: true } },
-         'Don’t be cynical. Be Cyclical.'
+          metadata.pkg.tagLine
         ),
         nav(
           { class: { nav: true } },

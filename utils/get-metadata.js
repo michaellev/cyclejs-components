@@ -13,6 +13,8 @@ const componentIdsP = readdirP(resolve(componentsDir))
     pFilter(paths, path => isDir(resolve(componentsDir, path)))
   ))
 
+const pkgP = readPkg()
+
 const isSourceOrSink = ({ kind, modifiers, name }) => {
   if (SyntaxKind[kind] !== 'InterfaceDeclaration') {
     return false
@@ -82,6 +84,7 @@ const getMetadata = async () => {
       return components
     }, {})
   const metadata = {
+    pkg: await pkgP,
     components
   }
   return metadata

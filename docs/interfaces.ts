@@ -3,7 +3,13 @@ import { Stream } from 'xstream'
 import { VNode } from 'snabbdom/vnode'
 
 export interface Metadata {
-  [id: string]: ComponentMetadata
+  pkg: {
+    title: string
+    tagLine: string
+  }
+  components: {
+    [id: string]: ComponentMetadata
+  }
 }
 
 export interface ComponentMetadata {

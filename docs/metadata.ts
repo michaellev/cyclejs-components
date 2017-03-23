@@ -7,7 +7,7 @@ const metadata: Metadata = clone(parsedMetadata)
 
 demos.forEach((demo: Demo) => {
   const [componentId, propDirection, propName] = demo.id.split('.')
-  metadata[componentId].properties[[propDirection, propName].join('.')].demo = demo
+  metadata.components[componentId].properties[[propDirection, propName].join('.')].demo = demo
 })
 
 export default metadata

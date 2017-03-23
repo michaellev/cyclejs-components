@@ -1,5 +1,6 @@
 {
   "title": "Cycle.js components",
+  "tagLine": "Don’t be cynical. Be Cyclical.",
   "scripts": {
     "lint-ts": "tslint --project tsconfig.json",
     "lint-js": "standard",

@@ -20,7 +20,7 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   ).map(([
     componentId,
     metadata
-  ]) => componentId ? metadata[componentId] : null)
+  ]) => componentId ? metadata.components[componentId] : null)
 
   const { DOM: componentVnode$ } = Component({ DOM, component: component$ })
   const vnode$ = xs.combine(
