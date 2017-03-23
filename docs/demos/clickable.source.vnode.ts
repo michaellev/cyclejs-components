@@ -12,7 +12,6 @@ export default ({ DOM }: Sources) => {
   const inputVnode$: Stream<VNode> = xs.periodic(1000)
     .startWith(0)
     .map(n => n % possibleElements.length)
-    .debug('n')
     .map(n => p(possibleElements[n]('Click me before I transform!')))
 
   const {
