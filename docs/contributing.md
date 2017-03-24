@@ -1,4 +1,4 @@
-<h1 class="is-hidden-in-website">
+<h1 class="is-hidden-in-docs">
   Contributing
 </h1>
 
