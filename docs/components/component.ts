@@ -44,41 +44,46 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     div(
       {
         style: { order: '1' },
-        class: { content: true, column: true, 'is-10': true }
+        class: { column: true, 'is-10': true }
       },
       !component ? div(
         { class: { notification: true } },
         'Select a component.'
       ) : [
-        header(
-          {
-            class: { title: true, 'is-2': true, name: true}
-          },
-          component.id
-        ),
-        header(
-          { class: { title: true, 'is-3': true } },
-          'Importing'
-        ),
-        header(
-          { class: { title: true, 'is-4': true } },
-          'ECMAScript'
-        ),
-        p(code(
-          { class: { importExample: true } },
-          `import { ${component.varName} } from '${packageName}'`
-        )),
-        header(
-          { class: { title: true, 'is-4': true } },
-          'CommonJS'
-          ),
-        p(code(
-        { class: { importExample: true } },
-        `const { ${component.varName} } = require('${packageName}')`
-        )),
-        header(
-          { class: { title: true, 'is-3': true } },
-          'Properties'
+        div(
+          { class: { content: true } },
+          [
+            header(
+              {
+                class: { title: true, 'is-2': true, name: true}
+              },
+              component.id
+            ),
+            header(
+              { class: { title: true, 'is-3': true } },
+              'Importing'
+            ),
+            header(
+              { class: { title: true, 'is-4': true } },
+              'ECMAScript'
+            ),
+            p(code(
+              { class: { importExample: true } },
+              `import { ${component.varName} } from '${packageName}'`
+            )),
+            header(
+              { class: { title: true, 'is-4': true } },
+              'CommonJS'
+              ),
+            p(code(
+            { class: { importExample: true } },
+            `const { ${component.varName} } = require('${packageName}')`
+            )),
+            header(
+              { class: { title: true, 'is-3': true } },
+              'Properties'
+            )
+          ]
         ),
         div(
           { class: { tabs: true, 'is-medium': true } },
