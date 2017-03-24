@@ -74,7 +74,6 @@
     "rfpify": "^1.0.0",
     "sass-loader": "^6.0.2",
     "simple-git": "^1.67.0",
-    "snabbdom-virtualize": "^0.6.0",
     "source-map-loader": "^0.1.6",
     "standard": "^9.0.0",
     "style-loader": "^0.13.2",

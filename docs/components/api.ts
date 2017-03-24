@@ -1,4 +1,4 @@
-import { DOMSource, section, label, aside, ul, li, a } from '@cycle/dom'
+import { DOMSource, div, label, aside, ul, li, a } from '@cycle/dom'
 import Component from './component'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, ComponentMetadata } from '../interfaces'
@@ -33,8 +33,8 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
     componentVnode
   ]) => {
     const components: ComponentMetadata[] = Object.values(metadata.components)
-    return section(
-      { class: { section: true, columns: true, 'is-centered': true } },
+    return div(
+      { class: { columns: true } },
       [
         componentVnode,
         aside(

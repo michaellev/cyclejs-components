@@ -1,7 +1,6 @@
 import { DOMSource, p, span, code, div, pre, header, article } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { PropertyMetadata } from '../interfaces'
-import { virtualizeString } from 'snabbdom-virtualize'
 import isolate from '@cycle/isolate'
 
 const replaceComponentImportPath = (source: string) => source
@@ -87,7 +86,7 @@ const Property = ({ DOM, property: property$ }: Sources) => {
           ),
           pre(
             { class: { box: true } },
-            code(virtualizeString(replaceComponentImportPath(property.demo.sourceHtml)))
+            code({ props: { innerHTML: replaceComponentImportPath(property.demo.sourceHtml) } })
           )
         ])
       ]

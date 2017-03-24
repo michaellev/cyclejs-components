@@ -1,9 +1,9 @@
-import { DOMSource, body, nav, div, header, a } from '@cycle/dom'
+import { DOMSource, body, section, nav, div, header, a } from '@cycle/dom'
 import forkmeRibbon from './forkme-ribbon'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
 import Api from './api'
-import VirtualizeHtml from './virtualize-html'
+import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
 
@@ -30,7 +30,7 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
     .map((rawHtmlPages) => (
       rawHtmlPages.map(({ name, html }) => ({
         name,
-        Component: VirtualizeHtml,
+        Component: HTMLContent,
         sources:  { DOM, html: xs.of(html) }
       }))
     ))
@@ -85,7 +85,10 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
             )
           ]
         ),
-        pageVnode,
+        section(
+          { class: { section: true } },
+          pageVnode
+        ),
         forkmeRibbon
       ]
     )
