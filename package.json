@@ -74,7 +74,7 @@
     "rfpify": "^1.0.0",
     "sass-loader": "^6.0.2",
     "simple-git": "^1.67.0",
-    "source-map-loader": "^0.1.6",
+    "source-map-loader": "^0.2.0",
     "standard": "^9.0.0",
     "style-loader": "^0.13.2",
     "tslint": "^4.5.1",
