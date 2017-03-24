@@ -52,7 +52,7 @@
     "@types/node": "^7.0.5",
     "ava": "^0.18.2",
     "awesome-typescript-loader": "^3.1.2",
-    "bulma": "^0.3.2",
+    "bulma": "^0.4.0",
     "camelcase": "^4.0.0",
     "clone": "^2.1.0",
     "css-loader": "^0.26.2",
