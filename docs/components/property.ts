@@ -3,12 +3,6 @@ import { Stream, default as xs } from 'xstream'
 import { PropertyMetadata } from '../interfaces'
 import isolate from '@cycle/isolate'
 
-const replaceComponentImportPath = (source: string) => source
-  .replace(
-    /(import \S* from ')(\.\.\/\.\.\/lib\/)(\S*)(')/g,
-    (match: string, p1: string, p2: string, name: string, p4: string) => `${p1}@cycles/${name}${p4}`
-  )
-
 interface Sources {
   DOM: DOMSource,
   property: Stream<PropertyMetadata | null>
@@ -86,7 +80,7 @@ const Property = ({ DOM, property: property$ }: Sources) => {
           ),
           pre(
             { class: { box: true } },
-            code({ props: { innerHTML: replaceComponentImportPath(property.demo.sourceHtml) } })
+            code({ props: { innerHTML: property.demo.sourceHtml } })
           )
         ])
       ]
