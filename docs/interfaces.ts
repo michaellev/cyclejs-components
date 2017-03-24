@@ -6,6 +6,10 @@ export interface Metadata {
   pkg: {
     title: string
     tagLine: string
+    homepage: string
+    repository: {
+      homepage: string
+    }
   }
   components: {
     [id: string]: ComponentMetadata

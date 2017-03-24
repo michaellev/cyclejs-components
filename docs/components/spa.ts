@@ -1,5 +1,4 @@
-import { DOMSource, body, section, nav, div, header, a } from '@cycle/dom'
-import forkmeRibbon from './forkme-ribbon'
+import { DOMSource, body, header, section, footer, p, nav, div, a } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
 import Api from './api'
@@ -60,17 +59,18 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
     body(
       { props: { id: '' } },
       [
-        header(
-          { class: { 'has-text-centered': true, title: true, 'is-1': true } },
-          metadata.pkg.title
-        ),
-        header(
-          { class: { 'has-text-centered': true, subtitle: true } },
-          metadata.pkg.tagLine
-        ),
         nav(
           { class: { nav: true } },
           [
+            div(
+              { class: { 'nav-left': true } },
+              [
+                header(
+                  { class: { 'nav-item': true, title: true, 'is-4': true } },
+                  a({ attrs: { href: metadata.pkg.homepage } }, metadata.pkg.title)
+                )
+              ]
+            ),
             div(
               { class: { 'nav-center': true } },
               pages.map(({ name }, i) => (
@@ -82,6 +82,30 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
                   name
                 )
               ))
+            ),
+            div(
+              { class: { 'nav-right': true } },
+              [
+                div(
+                  { class: { 'nav-item': true } },
+                  a(
+                    {
+                      class: { 'nav-item': true, 'github-button': true },
+                      attrs: {
+                        href: metadata.pkg.repository.homepage,
+                        'aria-label': `Star ${metadata.pkg.repository.homepage.slice(17)} on GitHub`
+                      },
+                      dataset: {
+                        style: 'mega',
+                        countHref: `/${metadata.pkg.repository.homepage.slice(17)}/stargazers`,
+                        countApi: `/repos/${metadata.pkg.repository.homepage.slice(17)}#stargazers_count`,
+                        countAriaLabel: '# stargazers on GitHub'
+                      }
+                    },
+                    'Star'
+                 )
+               )
+              ]
             )
           ]
         ),
@@ -89,7 +113,13 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
           { class: { section: true } },
           pageVnode
         ),
-        forkmeRibbon
+        footer(
+          { class: { footer: true } },
+          div(
+            { class: { container: true } },
+            p(metadata.pkg.tagLine)
+          )
+        )
       ]
     )
   ))
