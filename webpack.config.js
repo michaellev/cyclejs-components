@@ -11,7 +11,7 @@ const config = {
   resolve: {
     extensions: [ '.ts', '.js' ]
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     publicPath: '/',
     contentBase: publicPath
