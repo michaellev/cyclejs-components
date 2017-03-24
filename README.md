@@ -10,6 +10,8 @@
 
 ## Description
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mightyiam/cyclejs-components.svg)](https://greenkeeper.io/)
+
 A set of components for [Cycle.js](https://cycle.js.org).
 
 ## Features
