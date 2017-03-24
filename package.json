@@ -55,7 +55,7 @@
     "bulma": "^0.4.0",
     "camelcase": "^4.0.0",
     "clone": "^2.1.0",
-    "css-loader": "^0.26.2",
+    "css-loader": "^0.27.3",
     "dekko": "^0.2.1",
     "depcheck": "^0.6.7",
     "ent": "^2.2.0",
