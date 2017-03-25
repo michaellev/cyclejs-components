@@ -1,8 +1,35 @@
-import { DOMSource, div, p, code, pre, ul, li, a, span, header } from '@cycle/dom'
-import { ComponentMetadata } from '../interfaces'
+import { DOMSource, div, p, code, pre, span, header } from '@cycle/dom'
+import { ComponentMetadata, PropertyMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
-import Property from './property'
 import isolate from '@cycle/isolate'
+
+const makePropertyVnode = ({ id, name, direction, type, optional, description }: PropertyMetadata) => {
+  return [
+    header(
+      {
+        attrs: { id: 'property-' + id },
+        key: id,
+        class: { title: true, 'is-4': true }
+      },
+      [
+        code({ class: { 'property-name': true } }, name),
+        span(
+          { class: { tag: true, 'is-info': true, [direction]: true } },
+          direction
+        ),
+        span(
+          { class: { tag: true } },
+          code(type)
+        ),
+        direction === 'source' ? span(
+          { class: { tag: true , 'is-warning': true } },
+          optional ? 'optional' : 'required'
+        ) : undefined
+      ]
+    ),
+    p(description)
+  ]
+}
 
 interface Sources {
   component: Stream<ComponentMetadata>
@@ -11,7 +38,6 @@ interface Sources {
 
 const Component = ({ DOM, component: component$ }: Sources) => {
   const rComponent$ = component$.remember()
-  const tabClick$ = DOM.select('.tabs a').events('click')
 
   const demoVnode$ = rComponent$
     .map((component) => {
@@ -20,33 +46,12 @@ const Component = ({ DOM, component: component$ }: Sources) => {
       }).DOM
     }).flatten()
 
-  const propertyId$ = tabClick$.map(tabClick => (
-    ((tabClick.currentTarget as HTMLAnchorElement).dataset.id) as string | null
-  )).startWith(null)
-
-  const property$ = xs.combine(
-    rComponent$,
-    propertyId$
-  ).map(([
-    component,
-    propertyId
-  ]) => propertyId && component ? component.properties[propertyId] : null)
-
-  const { DOM: propertyVnode$ } = Property({
-    DOM,
-    property: property$
-  })
-
   const vnode$ = xs.combine(
     rComponent$,
-    demoVnode$,
-    propertyId$,
-    propertyVnode$
+    demoVnode$
   ).map(([
     { id, varName, pkg, demo, properties },
-    demoVnode,
-    propertyId,
-    propertyVnode
+    demoVnode
   ]) => {
     return div([
       div(
@@ -85,36 +90,10 @@ const Component = ({ DOM, component: component$ }: Sources) => {
           header(
             { class: { title: true, 'is-3': true } },
             'Properties'
-          )
+          ),
+          ...[].concat.apply([], Object.values(properties).map(makePropertyVnode))
         ]
       ),
-      div(
-        { class: { tabs: true, 'is-medium': true } },
-        ul(
-          Object.values(properties).map((property) => (
-            li(
-              { class: { 'is-active': property.id === propertyId } },
-              a(
-                { dataset: { id: property.id } },
-                [
-                  property.name,
-                  span(
-                    {
-                      class: {
-                        tag: true,
-                        'is-medium': true,
-                        [property.direction]: true
-                      }
-                    },
-                    property.direction
-                  )
-                ]
-              )
-            )
-          ))
-        )
-      ),
-      propertyVnode,
       header(
         { class: { title: true, 'is-3': true } },
         'Demo'
