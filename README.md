@@ -28,3 +28,7 @@ A set of components for [Cycle.js](https://cycle.js.org).
 ## Installation
 
 Each component has its own npm package. See a component’s documentation for its package name.
+
+You may desire to make certain that all of the installed components depend on compatible versions of the ’core libraries’.
+
+The core libraries are the various `@cycle/*` and `xstream`.
