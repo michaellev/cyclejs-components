@@ -24,3 +24,7 @@ A set of components for [Cycle.js](https://cycle.js.org).
       Full documentation here</a>.
   </p>
 </div>
+
+## Installation
+
+Each component has its own npm package. See a component’s documentation for its package name.
