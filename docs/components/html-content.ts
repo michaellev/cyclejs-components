@@ -11,6 +11,7 @@ export default ({ DOM, html: html$ }: Sources) => (
   {
     DOM: html$.map(html => (
       div({
+        key: 'HtmlContent',
         props: { innerHTML: html },
         class: { content: true }
       })

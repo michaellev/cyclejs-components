@@ -19,9 +19,14 @@ export interface Metadata {
 export interface ComponentMetadata {
   id: string
   varName: string
+  directory: string
+  pkg: {
+    name: string
+  }
   properties: {
     [id: string]: SourceMetadata | SinkMetadata
   }
+  demo: Demo
 }
 
 export interface PropertyMetadata {
@@ -32,8 +37,7 @@ export interface PropertyMetadata {
   optional: boolean
   description: string
   type: string
-  direction: 'source' | 'sink',
-  demo?: Demo
+  direction: 'source' | 'sink'
 }
 
 interface DOMComponent {
@@ -49,6 +53,7 @@ interface DOMComponent {
 }
 
 export interface Demo {
+  path: string
   id: string
   Component: DOMComponent
   sourceHtml: string

@@ -1,7 +1,7 @@
 import { DOMSource, body, header, section, footer, p, nav, div, a } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
-import Api from './api'
+import API from './api'
 import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
@@ -37,7 +37,7 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
   const apiPage$: Stream<Page> = xs.of(
     {
       name: 'API',
-      Component: Api,
+      Component: API,
       sources: { DOM, metadata: metadata$ }
     }
   )

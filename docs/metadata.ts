@@ -6,8 +6,7 @@ import { Metadata, Demo } from './interfaces'
 const metadata: Metadata = clone(parsedMetadata)
 
 demos.forEach((demo: Demo) => {
-  const [componentId, propDirection, propName] = demo.id.split('.')
-  metadata.components[componentId].properties[[propDirection, propName].join('.')].demo = demo
+  metadata.components[demo.id].demo = demo
 })
 
 export default metadata

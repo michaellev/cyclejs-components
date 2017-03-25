@@ -9,7 +9,7 @@ interface Sources {
   metadata: Stream<Metadata>
 }
 
-const Api = ({ DOM, metadata: metadata$ }: Sources) => {
+const API = ({ DOM, metadata: metadata$ }: Sources) => {
   const menuClicks$ = DOM.select('.menu a').events('click')
   const componentId$ = menuClicks$.map(menuClick => (
     (menuClick.target as HTMLAnchorElement).dataset.id as string | null)
@@ -22,7 +22,20 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
     metadata
   ]) => componentId ? metadata.components[componentId] : null)
 
-  const { DOM: componentVnode$ } = Component({ DOM, component: component$ })
+  const componentVnode$ = component$
+    .map((component) => {
+      if (component === null) {
+        return xs.of(
+          div(
+            { class: { notification: true } },
+            'Select a component.'
+          )
+        )
+      }
+      return Component({ DOM, component: xs.of(component) }).DOM
+    })
+    .flatten()
+
   const vnode$ = xs.combine(
     componentId$,
     metadata$,
@@ -34,14 +47,10 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   ]) => {
     const components: ComponentMetadata[] = Object.values(metadata.components)
     return div(
-      { class: { columns: true } },
+      { key: 'API', class: { columns: true } },
       [
-        componentVnode,
         aside(
-          {
-            style: { order: '0' },
-            class: { column: true, 'is-2-desktop': true, menu: true }
-          },
+          { class: { column: true, 'is-2-desktop': true, menu: true } },
           [
             label(
               { class: { 'menu-label': true } },
@@ -60,6 +69,10 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
               ]
             )
           ]
+        ),
+        div(
+          { class: { column: true, 'is-10': true } },
+          componentVnode
         )
       ]
     )
@@ -69,4 +82,4 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   }
 }
 
-export default (sources: Sources) => isolate(Api)(sources)
+export default (sources: Sources) => isolate(API)(sources)

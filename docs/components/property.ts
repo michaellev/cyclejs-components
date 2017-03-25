@@ -1,4 +1,4 @@
-import { DOMSource, p, span, code, div, pre, header, article } from '@cycle/dom'
+import { DOMSource, span, code, div, header } from '@cycle/dom'
 import { Stream, default as xs } from 'xstream'
 import { PropertyMetadata } from '../interfaces'
 import isolate from '@cycle/isolate'
@@ -10,14 +10,11 @@ interface Sources {
 
 const Property = ({ DOM, property: property$ }: Sources) => {
   const rProperty$ = property$.remember()
-  const demoVnode$ = rProperty$.map((property) => property && property.demo ? property.demo.Component({ DOM }).DOM : xs.of(null)).flatten()
 
   const vnode$ = xs.combine(
-    rProperty$,
-    demoVnode$
+    rProperty$
   ).map(([
-    property,
-    demoVnode
+    property
   ]) => (
     !property ? div(
       { class: { notification: true } },
@@ -47,42 +44,7 @@ const Property = ({ DOM, property: property$ }: Sources) => {
             )
           ]
         ),
-        property.description,
-        ...(!property.demo ? [] : [
-          header(
-            { class: { 'title': true, 'is-5': true } },
-              'Demo'
-          ),
-          div(
-            { class: { box: true } },
-            demoVnode
-          ),
-          header(
-            { class: { 'title': true, 'is-5': true } },
-              'Demo source code'
-          ),
-          article(
-            { class: { message: true, 'is-warning': true } },
-            [
-              div(
-                { class: { 'message-header': true } },
-                p('Warning')
-              ),
-              div(
-                { class: { 'message-body': true } },
-                [
-                  'No components are actually published, yet. So don’t try to',
-                  code('npm install'),
-                  ' them.'
-                ]
-              )
-            ]
-          ),
-          pre(
-            { class: { box: true } },
-            code({ props: { innerHTML: property.demo.sourceHtml } })
-          )
-        ])
+        property.description
       ]
     )
   ))

@@ -7,6 +7,7 @@ const readPkg = require('read-pkg')
 const readdirP = pify(require('fs').readdir)
 const pFilter = require('p-filter')
 const { dir: isDir } = require('path-type')
+const upperCamelCase = require('uppercamelcase')
 
 const componentIdsP = readdirP(resolve(componentsDir))
   .then(paths => (
@@ -68,6 +69,7 @@ const getComponentMetadata = async (id) => {
   const propertiesP = getProperties(id)
   return {
     id,
+    varName: upperCamelCase(id),
     directory,
     pkg: await pkgP,
     properties: await propertiesP
