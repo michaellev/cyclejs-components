@@ -17,8 +17,6 @@ No worries―code style is enforced via the `npm test` script. For your informat
 
 ## npm scripts you should know about
 
-### Purging and installing components `node_modules`
-
 - `purge-components-node_modules` removes all `node_modules` in component directories.
 - `npm-install-for-components` runs `npm install` inside each component directory.
 - `dev` runs a development server that serves the documentation.
