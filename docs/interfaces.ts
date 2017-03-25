@@ -22,6 +22,7 @@ export interface ComponentMetadata {
   directory: string
   pkg: {
     name: string
+    title: string
   }
   properties: {
     [id: string]: SourceMetadata | SinkMetadata

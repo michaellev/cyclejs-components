@@ -69,6 +69,7 @@ Test files are located and named after the files they test, with a `.test` suffi
 
 Each component has a `package.json` file in its directory. Most fields are managed automatically by the npm script `update-component-package-jsons`. The following fields are managed manually:
 
+- `title`: the English title of the component.
 - `dependencies` is normally managed (e.g. `npm install --save [dependency]`).
 - `version` should be incremented during publishing. See section on publishing.
 - `keywords`: manually added keywords will be preserved.

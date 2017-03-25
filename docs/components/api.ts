@@ -64,7 +64,7 @@ const API = ({ DOM, metadata: metadata$ }: Sources) => {
                     class: { name: true, 'is-active': component.id === componentId },
                     dataset: { id: component.id }
                   },
-                  component.id
+                  component.pkg.title
                 ))))
               ]
             )
