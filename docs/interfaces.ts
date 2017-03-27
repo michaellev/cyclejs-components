@@ -41,22 +41,22 @@ export interface PropertyMetadata {
   direction: 'source' | 'sink'
 }
 
-interface DOMComponent {
-  (
-    sources: {
-      DOM: DOMSource,
-      [x: string]: any
-    }
-  ): {
-    DOM: Stream<VNode | VNode[]>,
-    [x: string]: any
-  }
+interface DemoComponentSources {
+  DOM: DOMSource
+}
+
+export interface DemoComponentSinks {
+  DOM: Stream<VNode>
+}
+
+export interface DemoComponent {
+  (sources: DemoComponentSources): DemoComponentSinks
 }
 
 export interface Demo {
   path: string
   id: string
-  Component: DOMComponent
+  Component: DemoComponent
   sourceHtml: string
 }
 
