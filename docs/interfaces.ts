@@ -1,4 +1,5 @@
 import { DOMSource } from '@cycle/dom'
+import { HTTPSource, RequestOptions } from '@cycle/http'
 import { Stream } from 'xstream'
 import { VNode } from 'snabbdom/vnode'
 
@@ -43,10 +44,12 @@ export interface PropertyMetadata {
 
 interface DemoComponentSources {
   DOM: DOMSource
+  HTTP?: HTTPSource
 }
 
 export interface DemoComponentSinks {
   DOM: Stream<VNode>
+  HTTP?: Stream<RequestOptions>
 }
 
 export interface DemoComponent {
