@@ -4,6 +4,11 @@ import isolate from '@cycle/isolate'
 import xs, { Stream } from 'xstream'
 
 export interface Sources {
+  /**
+   * Here is a description of this source.
+   *
+   * As you can see, this is a `DOMSource`.
+   */
   DOM: DOMSource
 }
 

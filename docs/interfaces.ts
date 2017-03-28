@@ -37,7 +37,7 @@ export interface PropertyMetadata {
   parentId: string
   path: string
   optional: boolean
-  description: string
+  descriptionHtml: string
   type: string
   direction: 'source' | 'sink'
 }
