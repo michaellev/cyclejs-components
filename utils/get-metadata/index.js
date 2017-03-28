@@ -2,13 +2,14 @@ const { SyntaxKind, createSourceFile, ScriptTarget, forEachChild } = require('ty
 const pify = require('pify')
 const readFileP = pify(require('fs').readFile)
 const { resolve } = require('path')
-const componentsDir = resolve(__dirname, '..', 'lib')
+const componentsDir = resolve(__dirname, '..', '..', 'lib')
 const readPkg = require('read-pkg')
 const readdirP = pify(require('fs').readdir)
 const pFilter = require('p-filter')
 const { dir: isDir } = require('path-type')
 const upperCamelCase = require('uppercamelcase')
 const MarkdownIt = require('markdown-it')
+const constantPropertyDescriptions = require('./constant-property-descriptions')
 
 const markdownIt = MarkdownIt({
   linkify: true,
@@ -60,7 +61,12 @@ const getProperties = async (componentId) => {
       }
       property.id = [property.direction, property.name].join('.')
       property.parentId = componentId
-      property.descriptionHtml = propertyNode.jsDoc ? markdownIt.render(propertyNode.jsDoc[0].comment) : undefined
+
+      const descriptionMarkdown = [
+        constantPropertyDescriptions[property.direction][property.name],
+        propertyNode.jsDoc ? propertyNode.jsDoc[0].comment : undefined
+      ].join('\n\n')
+      property.descriptionHtml = markdownIt.render(descriptionMarkdown)
 
       properties[property.id] = property
       return properties

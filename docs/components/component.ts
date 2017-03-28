@@ -27,7 +27,10 @@ const makePropertyVnode = ({ id, name, direction, type, optional, descriptionHtm
         ) : undefined
       ]
     ),
-    div({ props: { innerHTML: descriptionHtml } })
+    div({
+      class: { content: true },
+      props: { innerHTML: descriptionHtml }
+    })
   ]
 }
 
