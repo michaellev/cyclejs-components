@@ -8,6 +8,13 @@ const readdirP = pify(require('fs').readdir)
 const pFilter = require('p-filter')
 const { dir: isDir } = require('path-type')
 const upperCamelCase = require('uppercamelcase')
+const MarkdownIt = require('markdown-it')
+
+const markdownIt = MarkdownIt({
+  linkify: true,
+  typographer: true
+})
+  .use(require('markdown-it-highlightjs'))
 
 const componentIdsP = readdirP(resolve(componentsDir))
   .then(paths => (
@@ -53,8 +60,7 @@ const getProperties = async (componentId) => {
       }
       property.id = [property.direction, property.name].join('.')
       property.parentId = componentId
-      property.description = propertyNode.jsDoc ? propertyNode.jsDoc
-        .map(jsDoc => jsDoc.comment).join('\n') : undefined
+      property.descriptionHtml = propertyNode.jsDoc ? markdownIt.render(propertyNode.jsDoc[0].comment) : undefined
 
       properties[property.id] = property
       return properties

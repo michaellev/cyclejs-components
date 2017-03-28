@@ -3,7 +3,7 @@ import { ComponentMetadata, PropertyMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
 import isolate from '@cycle/isolate'
 
-const makePropertyVnode = ({ id, name, direction, type, optional, description }: PropertyMetadata) => {
+const makePropertyVnode = ({ id, name, direction, type, optional, descriptionHtml }: PropertyMetadata) => {
   return [
     header(
       {
@@ -27,7 +27,7 @@ const makePropertyVnode = ({ id, name, direction, type, optional, description }:
         ) : undefined
       ]
     ),
-    p(description)
+    div({ props: { innerHTML: descriptionHtml } })
   ]
 }
 
