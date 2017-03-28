@@ -1,4 +1,5 @@
 import { DOMSource, body, header, section, footer, p, nav, div, a } from '@cycle/dom'
+import { Location } from 'history'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
 import API from './api'
@@ -11,24 +12,33 @@ import './index.scss'
 interface Sources {
   rawHtmlPages: Stream<RawHTMLPage[]>
   DOM: DOMSource
+  history: Stream<Location>
   metadata: Stream<Metadata>
 }
 
 interface Page {
-  name: string,
-  Component: (sources: { DOM: DOMSource }) => ({ DOM: Stream<VNode> }),
+  name: string
+  path: string
+  Component: (sources: { DOM: DOMSource }) => ({ DOM: Stream<VNode> })
   sources: { DOM: DOMSource, [x: string]: any }
 }
 
-const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources) => {
-  const nav$: Stream<number> = DOM.select('.nav .nav-item').events('click')
-    .map(navClick => (Number((navClick.currentTarget as HTMLAnchorElement).dataset.i)))
-    .startWith(0)
+const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources) => {
+  const path$ = history$
+    .map(location => location.pathname)
+    .startWith('/')
+
+  const navigation$: Stream<string> = DOM
+    .select('.nav .nav-item')
+    .events('click')
+    .map(navClick =>
+      (navClick.currentTarget as HTMLAnchorElement).dataset.path as string)
 
   const htmlPages$: Stream<Page[]> = rawHtmlPages$
     .map((rawHtmlPages) => (
-      rawHtmlPages.map(({ name, html }) => ({
+      rawHtmlPages.map(({ name, path, html }) => ({
         name,
+        path,
         Component: HTMLContent,
         sources:  { DOM, html: xs.of(html) }
       }))
@@ -37,6 +47,7 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
   const apiPage$: Stream<Page> = xs.of(
     {
       name: 'API',
+      path: '/api.html',
       Component: API,
       sources: { DOM, metadata: metadata$ }
     }
@@ -51,11 +62,15 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
     ))
 
   const page$ = xs
-    .combine(nav$, pages$)
-    .map(([i, pages]) => pages[i].Component(pages[i].sources))
+    .combine(path$, pages$)
+    .map(([path, pages]) => {
+      const { Component, sources } = pages
+        .filter((page) => page.path === path)[0]
+      return Component(sources)
+    })
 
   const pageVdom$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
-  const vdom$ = xs.combine(metadata$, nav$, pageVdom$, pages$).map(([metadata, pageI, pageVnode, pages]) => (
+  const vdom$ = xs.combine(metadata$, path$, pageVdom$, pages$).map(([metadata, path, pageVnode, pages]) => (
     body(
       { props: { id: '' } },
       [
@@ -73,11 +88,11 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
             ),
             div(
               { class: { 'nav-center': true } },
-              pages.map(({ name }, i) => (
+              pages.map(({ name, path: pagePath }) => (
                 a(
                   {
-                    class: { 'nav-item': true, 'is-tab': true, 'is-active': i === pageI },
-                    dataset: { i: String(i) }
+                    class: { 'nav-item': true, 'is-tab': true, 'is-active': pagePath === path },
+                    dataset: { path: pagePath }
                   },
                   name
                 )
@@ -125,7 +140,8 @@ const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources)
   ))
 
   return {
-    DOM: vdom$
+    DOM: vdom$,
+    history: navigation$
   }
 }
 export default (sources: Sources) => isolate(Spa)(sources)

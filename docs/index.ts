@@ -1,4 +1,6 @@
 import { makeDOMDriver } from '@cycle/dom'
+import { makeHistoryDriver } from '@cycle/history'
+import createHistory from 'history/createBrowserHistory'
 import xs, { Stream } from 'xstream'
 import { run } from '@cycle/run'
 import metadata from './metadata'
@@ -11,14 +13,17 @@ import { RawHTMLPage } from './interfaces'
 const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
   {
     name: 'Readme',
+    path: '/',
     html: readmeHtml
   },
   {
     name: 'Design decisions',
+    path: '/design-decisions.html',
     html: designDecisionsHtml
   },
   {
     name: 'Contributing',
+    path: '/contributing.html',
     html: contributingHtml
   }
 ]
@@ -27,8 +32,11 @@ const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
 const { title } = require('../package.json')
 document.title = title
 
+makeHistoryDriver(createHistory())
+
 run(SPA, {
   DOM: makeDOMDriver(document.body),
+  history: makeHistoryDriver(createHistory()),
   metadata: () => xs.of(metadata),
   rawHtmlPages: () => rawHtmlPages$
 })
