@@ -14,6 +14,9 @@ const config = {
   devtool: 'source-map',
   devServer: {
     publicPath: '/',
+    historyApiFallback: {
+      index: '200.html'
+    },
     contentBase: publicPath
   },
   module: {
