@@ -1,4 +1,18 @@
-@import '~bulma';
+@import '~bulma/sass/utilities/mixins';
+@import '~bulma/sass/utilities/variables';
+@import '~bulma/sass/base/_all';
+@import '~bulma/sass/layout/section';
+@import '~bulma/sass/layout/footer';
+@import '~bulma/sass/grid/columns';
+@import '~bulma/sass/elements/content';
+@import '~bulma/sass/elements/title';
+@import '~bulma/sass/elements/notification';
+@import '~bulma/sass/elements/tag';
+@import '~bulma/sass/elements/box';
+@import '~bulma/sass/components/nav';
+@import '~bulma/sass/components/tabs';
+@import '~bulma/sass/components/menu';
+
 @import '~highlight.js/styles/tomorrow';
 
 .tag.sink::after { content: '↧' }
