@@ -29,7 +29,7 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
     .startWith('/')
 
   const navigation$: Stream<string> = DOM
-    .select('.nav .nav-item')
+    .select('.is-page-link')
     .events('click')
     .map(navClick =>
       (navClick.currentTarget as HTMLAnchorElement).dataset.path as string)
@@ -91,7 +91,12 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
               pages.map(({ name, path: pagePath }) => (
                 a(
                   {
-                    class: { 'nav-item': true, 'is-tab': true, 'is-active': pagePath === path },
+                    class: {
+                      'nav-item': true,
+                      'is-tab': true,
+                      'is-active': pagePath === path,
+                      'is-page-link': true
+                    },
                     dataset: { path: pagePath }
                   },
                   name
