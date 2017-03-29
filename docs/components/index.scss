@@ -17,6 +17,6 @@
 
 .tag.sink::after { content: '↧' }
 .tag.source::after { content: '⤓' }
-.property-name::before { content: '.' }
+.source-sink-name::before { content: '.' }
 
 .is-hidden-in-docs { display: none }

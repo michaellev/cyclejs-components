@@ -25,13 +25,16 @@ export interface ComponentMetadata {
     name: string
     title: string
   }
-  properties: {
-    [id: string]: SourceMetadata | SinkMetadata
+  sources: {
+    [id: string]: SourceMetadata
+  }
+  sinks: {
+    [id: string]: SinkMetadata
   }
   demo: Demo
 }
 
-export interface PropertyMetadata {
+export interface SourceSinkMetadata {
   id: string
   name: string
   parentId: string
@@ -63,11 +66,11 @@ export interface Demo {
   sourceHtml: string
 }
 
-interface SourceMetadata extends PropertyMetadata {
+interface SourceMetadata extends SourceSinkMetadata {
   direction: 'source'
 }
 
-interface SinkMetadata extends PropertyMetadata {
+interface SinkMetadata extends SourceSinkMetadata {
   direction: 'sink'
 }
 

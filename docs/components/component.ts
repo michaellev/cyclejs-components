@@ -1,18 +1,18 @@
 import { DOMSource, div, p, code, pre, span, header } from '@cycle/dom'
-import { ComponentMetadata, PropertyMetadata } from '../interfaces'
+import { ComponentMetadata, SourceSinkMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
 import isolate from '@cycle/isolate'
 
-const makePropertyVnode = ({ id, name, direction, type, optional, descriptionHtml }: PropertyMetadata) => {
+const makeSourceSinkVnode = ({ name, direction, type, optional, descriptionHtml }: SourceSinkMetadata) => {
   return [
     header(
       {
-        attrs: { id: 'property-' + id },
-        key: id,
+        attrs: { id: `${name}-${direction}`},
+        key: name,
         class: { title: true, 'is-4': true }
       },
       [
-        code({ class: { 'property-name': true } }, name),
+        code({ class: { 'source-sink-name': true } }, name),
         span(
           { class: { tag: true, 'is-info': true, [direction]: true } },
           direction
@@ -53,7 +53,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     rComponent$,
     demoVnode$
   ).map(([
-    { id, varName, pkg, demo, properties },
+    { id, varName, pkg, demo, sources, sinks },
     demoVnode
   ]) => {
     return div([
@@ -92,9 +92,14 @@ const Component = ({ DOM, component: component$ }: Sources) => {
           )),
           header(
             { class: { title: true, 'is-3': true } },
-            'Properties'
+            'Sources'
           ),
-          ...[].concat.apply([], Object.values(properties).map(makePropertyVnode))
+          ...[].concat.apply([], Object.values(sources).map(makeSourceSinkVnode)),
+          header(
+            { class: { title: true, 'is-3': true } },
+            'Sinks'
+          ),
+          ...[].concat.apply([], Object.values(sinks).map(makeSourceSinkVnode))
         ]
       ),
       header(

@@ -9,7 +9,7 @@ const pFilter = require('p-filter')
 const { dir: isDir } = require('path-type')
 const upperCamelCase = require('uppercamelcase')
 const MarkdownIt = require('markdown-it')
-const constantPropertyDescriptions = require('./constant-property-descriptions')
+const constantSourceSinkDescriptions = require('./constant-source-sink-descriptions')
 
 const markdownIt = MarkdownIt({
   linkify: true,
@@ -24,7 +24,7 @@ const componentIdsP = readdirP(resolve(componentsDir))
 
 const pkgP = readPkg()
 
-const isSourceOrSink = ({ kind, modifiers, name }) => {
+const isSourcesOrSinks = ({ kind, modifiers, name }) => {
   if (SyntaxKind[kind] !== 'InterfaceDeclaration') {
     return false
   }
@@ -40,51 +40,71 @@ const isSourceOrSink = ({ kind, modifiers, name }) => {
   return true
 }
 
-const getProperties = async (componentId) => {
+const getSourceSinkMetadata = (node, source) => {
+  const metadata = {
+    name: node.name.text,
+    direction: node.parent.name.text.toLowerCase().slice(0, -1),
+    optional: !!node.questionToken
+  }
+
+  metadata.type = source
+    .slice(node.type.pos, node.type.end)
+    .trim()
+
+  const descriptionMarkdown = [
+    constantSourceSinkDescriptions[metadata.direction][metadata.name],
+    node.jsDoc ? node.jsDoc[0].comment : undefined
+  ].join('\n\n')
+  metadata.descriptionHtml = markdownIt.render(descriptionMarkdown)
+  return metadata
+}
+
+const toObjByName = a => a.reduce((o, m) => {
+  o[m.name] = m
+  return o
+}, {})
+
+const getSourcesAndSinks = async (componentId) => {
   const source = await readFileP(resolve(componentsDir, componentId, 'index.ts'), 'utf-8')
   const ast = createSourceFile('', source, ScriptTarget.ES2017, true)
 
-  const propertyNodes = []
+  const sourceAndSinkNodes = []
   forEachChild(ast, (node) => {
-    if (isSourceOrSink(node)) {
-      propertyNodes.push(...node.members)
+    if (isSourcesOrSinks(node)) {
+      sourceAndSinkNodes.push(...node.members)
     }
   })
 
-  const properties = propertyNodes
-    .reduce((properties, propertyNode) => {
-      const property = {
-        name: propertyNode.name.text,
-        direction: propertyNode.parent.name.text.toLowerCase().slice(0, -1),
-        type: source.slice(propertyNode.type.pos, propertyNode.type.end).trim(),
-        optional: !!propertyNode.questionToken
-      }
-      property.id = [property.direction, property.name].join('.')
-      property.parentId = componentId
+  const sourcesAndSinks = sourceAndSinkNodes
+    .map(node => getSourceSinkMetadata(node, source))
 
-      const descriptionMarkdown = [
-        constantPropertyDescriptions[property.direction][property.name],
-        propertyNode.jsDoc ? propertyNode.jsDoc[0].comment : undefined
-      ].join('\n\n')
-      property.descriptionHtml = markdownIt.render(descriptionMarkdown)
+  sourcesAndSinks
+    .forEach((node) => {
+      node.parentId = componentId
+    })
 
-      properties[property.id] = property
-      return properties
-    }, {})
-
-  return properties
+  const sources = toObjByName(
+    sourcesAndSinks
+      .filter(sourceOrSink => sourceOrSink.direction === 'source')
+  )
+  const sinks = toObjByName(
+    sourcesAndSinks
+      .filter(sourceOrSink => sourceOrSink.direction === 'sink')
+  )
+  return { sources, sinks }
 }
 
 const getComponentMetadata = async (id) => {
   const directory = resolve(componentsDir, id)
   const pkgP = readPkg(directory, { normalize: false })
-  const propertiesP = getProperties(id)
+  const { sources, sinks } = await getSourcesAndSinks(id)
   return {
     id,
     varName: upperCamelCase(id),
     directory,
     pkg: await pkgP,
-    properties: await propertiesP
+    sources,
+    sinks
   }
 }
 

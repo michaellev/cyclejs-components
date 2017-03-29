@@ -49,7 +49,7 @@ This is an attempt to define what counts as a component that has actual value to
 #### The component’s `index.ts`
 
 1. It must export the component’s `Sources` and `Sinks` interfaces as these names.
-1. Each source and sink of the component must be documented. This is done using a single JSDoc Markdown comment above each source/sink type definition. *Common properties* have constant documentation. If provided, documentation for *common properties* will be *appended* to the constant documentation. The common properties are `DOM` source, `DOM` sink, `HTTP` source and `HTTP` sink.
+1. Each source and sink of the component must be documented. This is done using a single JSDoc Markdown comment above each source/sink type definition. *Common sources and sinks* have constant documentation. If provided, documentation for *common sources and sinks* will be *appended* to the constant documentation. The common sources and sinks are `DOM` source, `DOM` sink, `HTTP` source and `HTTP` sink.
 1. Each component must be isolated [using `isolate`](https://cycle.js.org/api/isolate.html).
 
 #### Tests
