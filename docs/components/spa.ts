@@ -69,8 +69,8 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
       return Component(sources)
     })
 
-  const pageVdom$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
-  const vdom$ = xs.combine(metadata$, path$, pageVdom$, pages$).map(([metadata, path, pageVnode, pages]) => (
+  const pageVnode$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
+  const vnode$ = xs.combine(metadata$, path$, pageVnode$, pages$).map(([metadata, path, pageVnode, pages]) => (
     body(
       { props: { id: '' } },
       [
@@ -140,7 +140,7 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
   ))
 
   return {
-    DOM: vdom$,
+    DOM: vnode$,
     history: navigation$
   }
 }
