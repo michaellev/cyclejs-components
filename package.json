@@ -53,7 +53,6 @@
     "@types/clone": "^0.1.30",
     "@types/history": "^4.5.0",
     "@types/node": "^7.0.5",
-    "@types/query-string": "^4.3.0",
     "ava": "^0.18.2",
     "awesome-typescript-loader": "^3.1.2",
     "bulma": "^0.4.0",
