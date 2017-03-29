@@ -61,7 +61,7 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
       htmlPages.concat(apiPage)
     ))
 
-  const page$ = xs
+  const pageSinks$ = xs
     .combine(path$, pages$)
     .map(([path, pages]) => {
       const { Component, sources } = pages
@@ -69,7 +69,7 @@ const Spa = ({ DOM, history: history$, metadata: metadata$, rawHtmlPages: rawHtm
       return Component(sources)
     })
 
-  const pageVnode$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
+  const pageVnode$ = pageSinks$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
   const vnode$ = xs.combine(metadata$, path$, pageVnode$, pages$).map(([metadata, path, pageVnode, pages]) => (
     body(
       { props: { id: '' } },
