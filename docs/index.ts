@@ -32,8 +32,6 @@ const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
 const { title } = require('../package.json')
 document.title = title
 
-makeHistoryDriver(createHistory())
-
 run(SPA, {
   DOM: makeDOMDriver(document.body),
   history: makeHistoryDriver(createHistory()),
