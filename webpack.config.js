@@ -1,20 +1,25 @@
 const { resolve } = require('path')
+const pkg = require('./package.json')
 
-const publicPath = resolve(__dirname, 'public')
+const contentBase = resolve(__dirname, 'public')
+const repoName = pkg.repository.url
+  .split('/')
+  .slice(-1)[0]
+  .slice(0, -4)
 
 const config = {
   entry: './docs/index.ts',
   output: {
     filename: 'bundle.js',
-    path: publicPath
+    path: resolve(contentBase, repoName)
   },
   resolve: {
     extensions: [ '.ts', '.js' ]
   },
   devtool: 'source-map',
   devServer: {
-    publicPath: '/',
-    contentBase: publicPath
+    publicPath: `/${repoName}`,
+    contentBase
   },
   module: {
     rules: [

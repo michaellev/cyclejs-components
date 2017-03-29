@@ -9,6 +9,7 @@ export interface Metadata {
     tagLine: string
     homepage: string
     repository: {
+      url: string
       homepage: string
     }
   }

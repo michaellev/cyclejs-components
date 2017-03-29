@@ -10,6 +10,11 @@ import designDecisionsHtml from './design-decisions.md'
 import SPA from './components/spa'
 import { RawHTMLPage } from './interfaces'
 
+const basename = '/' + metadata.pkg.repository.url
+  .split('/')
+  .slice(-1)[0]
+  .slice(0, -4)
+
 const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
   {
     name: 'Readme',
@@ -34,7 +39,7 @@ document.title = title
 
 run(SPA, {
   DOM: makeDOMDriver(document.body),
-  history: makeHistoryDriver(createHistory()),
+  history: makeHistoryDriver(createHistory({ basename })),
   metadata: () => xs.of(metadata),
   rawHtmlPages: () => rawHtmlPages$
 })
