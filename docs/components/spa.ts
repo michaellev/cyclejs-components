@@ -52,7 +52,7 @@ const Spa = ({
   const apiPage$: Stream<Page> = xs.of(
     {
       name: 'API',
-      path: '/api.html',
+      path: '/api',
       Component: API,
       sources: { DOM, metadata: metadata$ }
     }

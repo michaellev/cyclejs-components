@@ -18,12 +18,12 @@ const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
   },
   {
     name: 'Design decisions',
-    path: '/design-decisions.html',
+    path: '/design-decisions',
     html: designDecisionsHtml
   },
   {
     name: 'Contributing',
-    path: '/contributing.html',
+    path: '/contributing',
     html: contributingHtml
   }
 ]
