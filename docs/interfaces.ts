@@ -9,7 +9,6 @@ export interface Metadata {
     tagLine: string
     homepage: string
     repository: {
-      url: string
       homepage: string
     }
   }
@@ -74,6 +73,6 @@ interface SinkMetadata extends PropertyMetadata {
 
 export interface RawHTMLPage {
   name: string
-  id: string
+  path: string
   html: string
 }

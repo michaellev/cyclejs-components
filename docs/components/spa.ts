@@ -6,7 +6,6 @@ import API from './api'
 import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
-import { parse as queryString } from 'query-string'
 
 import './index.scss'
 
@@ -19,7 +18,7 @@ interface Sources {
 
 interface Page {
   name: string
-  id: string
+  path: string
   Component: (sources: { DOM: DOMSource }) => ({ DOM: Stream<VNode> })
   sources: { DOM: DOMSource, [x: string]: any }
 }
@@ -30,26 +29,21 @@ const Spa = ({
   metadata: metadata$,
   rawHtmlPages: rawHtmlPages$
 }: Sources) => {
-  const pageId$ = history$
-    .map(location => queryString(location.search).page || 'index')
+  const path$ = history$
+    .map(location => location.pathname)
+    .startWith('/')
 
   const navigation$: Stream<string> = DOM
     .select('.is-page-link')
     .events('click')
-    .map(navClick => {
-      const pageId = (navClick.currentTarget as HTMLAnchorElement)
-        .dataset.pageId as string
-      if (pageId === 'index') {
-        return '/'
-      }
-      return '?page=' + pageId
-    })
+    .map(navClick =>
+      (navClick.currentTarget as HTMLAnchorElement).dataset.path as string)
 
   const htmlPages$: Stream<Page[]> = rawHtmlPages$
     .map((rawHtmlPages) => (
-      rawHtmlPages.map(({ name, id, html }) => ({
+      rawHtmlPages.map(({ name, path, html }) => ({
         name,
-        id,
+        path,
         Component: HTMLContent,
         sources:  { DOM, html: xs.of(html) }
       }))
@@ -58,7 +52,7 @@ const Spa = ({
   const apiPage$: Stream<Page> = xs.of(
     {
       name: 'API',
-      id: 'api',
+      path: '/api',
       Component: API,
       sources: { DOM, metadata: metadata$ }
     }
@@ -69,10 +63,10 @@ const Spa = ({
     .map(([htmlPages, apiPage]) => htmlPages.concat(apiPage))
 
   const pageSinks$ = xs
-    .combine(pageId$, pages$)
-    .map(([pageId, pages]) => {
+    .combine(path$, pages$)
+    .map(([path, pages]) => {
       const { Component, sources } = pages
-        .filter(page => page.id === pageId)[0]
+        .filter((page) => page.path === path)[0]
       return Component(sources)
     })
 
@@ -81,8 +75,8 @@ const Spa = ({
     .flatten()
 
   const vnode$ = xs
-    .combine(metadata$, pageId$, pageVnode$, pages$)
-    .map(([metadata, pageId, pageVnode, pages]) => {
+    .combine(metadata$, path$, pageVnode$, pages$)
+    .map(([metadata, path, pageVnode, pages]) => {
       return body(
         { props: { id: '' } },
         [
@@ -100,18 +94,18 @@ const Spa = ({
               ),
               div(
                 { class: { 'nav-center': true } },
-                pages.map((page) => (
+                pages.map(({ name, path: pagePath }) => (
                   a(
                     {
                       class: {
                         'nav-item': true,
                         'is-tab': true,
-                        'is-active': page.id === pageId,
+                        'is-active': pagePath === path,
                         'is-page-link': true
                       },
-                      dataset: { pageId: page.id }
+                      dataset: { path: pagePath }
                     },
-                    page.name
+                    name
                   )
                 ))
               ),

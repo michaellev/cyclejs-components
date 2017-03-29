@@ -2,10 +2,9 @@ language: node_js
 node_js:
   - node
 deploy:
-  provider: pages
+  provider: surge
+  project: ./public
+  domain: cyclejs-components.mightyi.am
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: public/cyclejs-components
   on:
-    branch: master
     node: node
