@@ -75,6 +75,7 @@
     "path-type": "^2.0.0",
     "pify": "^2.3.0",
     "pre-commit": "^1.2.2",
+    "query-string": "^4.3.2",
     "raw-loader": "github:webpack-contrib/raw-loader#20854cab0e7307931d21ef54f744ac5a2df4c3ef",
     "read-pkg": "^2.0.0",
     "rfpify": "^1.0.0",

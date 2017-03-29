@@ -74,6 +74,6 @@ interface SinkMetadata extends PropertyMetadata {
 
 export interface RawHTMLPage {
   name: string
-  path: string
+  id: string
   html: string
 }
