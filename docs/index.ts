@@ -18,17 +18,17 @@ const basename = '/' + metadata.pkg.repository.url
 const rawHtmlPages$: Stream<RawHTMLPage[]> = xs.of([
   {
     name: 'Readme',
-    id: 'index',
+    path: '/',
     html: readmeHtml
   },
   {
     name: 'Design decisions',
-    id: 'design-decisions',
+    path: '/design-decisions.html',
     html: designDecisionsHtml
   },
   {
     name: 'Contributing',
-    id: 'contributing',
+    path: '/contributing.html',
     html: contributingHtml
   }
 ]
