@@ -40,9 +40,7 @@ interface Sources {
 }
 
 const Component = ({ DOM, component: component$ }: Sources) => {
-  const rComponent$ = component$.remember()
-
-  const demoVnode$ = rComponent$
+  const demoVnode$ = component$
     .map((component) => {
       return component.demo.Component({
         DOM
@@ -50,7 +48,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     }).flatten()
 
   const vnode$ = xs.combine(
-    rComponent$,
+    component$,
     demoVnode$
   ).map(([
     { id, varName, pkg, demo, sources, sinks },
