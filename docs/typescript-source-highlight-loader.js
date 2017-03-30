@@ -1,16 +1,22 @@
+const { dirname, basename } = require('path')
+
 const hljs = require('highlight.js/lib/highlight')
 hljs.registerLanguage('typescript', require('highlight.js/lib/languages/typescript'))
 
-const replaceComponentImportPath = (source) => source
+const replaceComponentImportPath = (source, name) => source
   .replace(
-    /(import \S* from ')(\.\.\/\.\.\/lib\/)(\S*)(')/g,
-    (match, p1, p2, name, p4) => `${p1}@cycles/${name}${p4}`
+    /^( *import +\S+ +from +')(.)(\S*' *)$/gm,
+    (match, before, dot, after) => `${before}@cycles/${name}${after}`
   )
 
-module.exports = (content) => {
+module.exports = function (content) {
+  const processed = replaceComponentImportPath(
+    content,
+    basename(dirname(this.resourcePath))
+  )
   const { value: html } = hljs.highlight(
     'typescript',
-    replaceComponentImportPath(content)
+    processed
   )
   return 'export default ' + JSON.stringify(html)
 }
