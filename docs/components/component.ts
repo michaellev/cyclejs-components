@@ -3,6 +3,8 @@ import { ComponentMetadata, SourceSinkMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
 import isolate from '@cycle/isolate'
 
+let undef: undefined
+
 const makeSourceSinkVnode = ({ name, direction, type, optional, descriptionHtml }: SourceSinkMetadata) => {
   return [
     header(
@@ -24,7 +26,7 @@ const makeSourceSinkVnode = ({ name, direction, type, optional, descriptionHtml 
         direction === 'source' ? span(
           { class: { tag: true , 'is-warning': true } },
           optional ? 'optional' : 'required'
-        ) : undefined
+        ) : undef
       ]
     ),
     div({

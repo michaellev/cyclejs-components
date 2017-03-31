@@ -1,1 +1,1 @@
-{ "extends": "tslint-config-standard", "rules": { "no-use-before-declare": false } }
+{ "extends": "tslint-config-standard" }
