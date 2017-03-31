@@ -2,7 +2,7 @@
   "title": "Cycle.js components",
   "tagLine": "Don’t be cynical. Be Cyclical.",
   "scripts": {
-    "lint-ts": "tslint --project tsconfig.json",
+    "lint-ts": "tslint --project tsconfig.json --type-check",
     "lint-js": "standard",
     "lint": "run-p lint-ts lint-js",
     "docs": "webpack",
