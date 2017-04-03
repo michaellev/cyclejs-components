@@ -1,0 +1,40 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mightyiam/cyclejs-components.git",
+    "homepage": "https://github.com/mightyiam/cyclejs-components"
+  },
+  "author": "Shahar Or <mightyiampresence@gmail.com> (mightyiam)",
+  "contributors": [
+    "Shahar Or <mightyiampresence@gmail.com> (mightyiam)",
+    "Yarom Shoval <yarom.adi@gmail.com> (yarom82)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mightyiam/cyclejs-components/issues"
+  },
+  "homepage": "https://mightyiam.github.io/cyclejs-components/",
+  "version": "0.0.0",
+  "name": "@cycles/switch-path-router",
+  "title": "switch-path router",
+  "description": "Cycle.js component `switch-path-router`",
+  "keywords": [
+    "cycle",
+    "cyclejs",
+    "cycle.js",
+    "web",
+    "components",
+    "widgets",
+    "ui",
+    "elements",
+    "router",
+    "switch-path",
+    "switch-path-router"
+  ],
+  "dependencies": {
+    "@cycle/isolate": "^2.1.0",
+    "switch-path": "^1.2.0",
+    "xstream": "^10.3.0"
+  },
+  "main": "./index.js"
+}

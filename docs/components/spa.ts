@@ -6,6 +6,7 @@ import API from './api'
 import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
+import SwitchPathRouter, { RouteDefinitions } from '../../lib/switch-path-router'
 
 import './index.scss'
 
@@ -62,13 +63,22 @@ const Spa = ({
     .combine(htmlPages$, apiPage$)
     .map(([htmlPages, apiPage]) => htmlPages.concat(apiPage))
 
-  const pageSinks$ = xs
-    .combine(path$, pages$)
-    .map(([path, pages]) => {
-      const { Component, sources } = pages
-        .filter((page) => page.path === path)[0]
-      return Component(sources)
-    })
+  const routes$: Stream<RouteDefinitions> = pages$
+    .map((pages) =>
+      pages.reduce((routes, page) => {
+        routes[page.path] = page
+        return routes
+      }, {} as RouteDefinitions))
+
+  const {
+    value: currentPage$
+  } = SwitchPathRouter({
+    path: path$,
+    routes: routes$
+  })
+
+  const pageSinks$ = currentPage$
+    .map(({ Component, sources}) => Component(sources))
 
   const pageVnode$ = pageSinks$
     .map((component: { DOM: Stream<VNode> }) => component.DOM)
