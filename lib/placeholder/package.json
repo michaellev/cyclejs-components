@@ -33,5 +33,6 @@
     "@cycle/dom": "^17.0.0",
     "@cycle/isolate": "^2.1.0",
     "xstream": "^10.3.0"
-  }
+  },
+  "main": "./index.js"
 }

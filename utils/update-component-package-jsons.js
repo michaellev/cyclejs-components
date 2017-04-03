@@ -30,6 +30,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
   const specifics = {
     name: '@cycles/' + name,
     description: `Cycle.js component \`${name}\``,
+    main: './index.js',
     keywords: Array.from(
       new Set([
         ...(componentPkg.keywords ? componentPkg.keywords : []),
