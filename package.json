@@ -1,5 +1,7 @@
 {
   "title": "Cycle.js components",
+  "name": "cyclejs-components",
+  "version": "1.0.0",
   "tagLine": "Don’t be cynical. Be Cyclical.",
   "scripts": {
     "lint-ts": "tslint --project tsconfig.json --type-check",
