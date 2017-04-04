@@ -2,7 +2,7 @@ import { DOMSource, body, header, section, footer, p, nav, div, a } from '@cycle
 import { Location } from 'history'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
-import API from './api'
+import Components from './components'
 import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
@@ -50,18 +50,18 @@ const Spa = ({
       }))
     ))
 
-  const apiPage$: Stream<Page> = xs.of(
+  const componentsPage$: Stream<Page> = xs.of(
     {
-      name: 'API',
-      path: '/api',
-      Component: API,
+      name: 'Components',
+      path: '/components',
+      Component: Components,
       sources: { DOM, metadata: metadata$ }
     }
   )
 
   const pages$: Stream<Page[]> = xs
-    .combine(htmlPages$, apiPage$)
-    .map(([htmlPages, apiPage]) => htmlPages.concat(apiPage))
+    .combine(htmlPages$, componentsPage$)
+    .map(([htmlPages, componentsPage]) => htmlPages.concat(componentsPage))
 
   const routes$: Stream<RouteDefinitions> = pages$
     .map((pages) =>
