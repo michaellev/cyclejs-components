@@ -9,7 +9,7 @@ interface Sources {
   metadata: Stream<Metadata>
 }
 
-const API = ({ DOM, metadata: metadata$ }: Sources) => {
+const Components = ({ DOM, metadata: metadata$ }: Sources) => {
   const menuClicks$ = DOM.select('.menu a').events('click')
   const componentId$ = menuClicks$.map(menuClick => (
     (menuClick.target as HTMLAnchorElement).dataset.id as string | null)
@@ -47,7 +47,7 @@ const API = ({ DOM, metadata: metadata$ }: Sources) => {
   ]) => {
     const components: ComponentMetadata[] = Object.values(metadata.components)
     return div(
-      { key: 'API', class: { columns: true } },
+      { key: 'components', class: { columns: true } },
       [
         aside(
           { class: { column: true, 'is-2-desktop': true, menu: true } },
@@ -82,4 +82,4 @@ const API = ({ DOM, metadata: metadata$ }: Sources) => {
   }
 }
 
-export default (sources: Sources) => isolate(API)(sources)
+export default (sources: Sources) => isolate(Components)(sources)
