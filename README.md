@@ -20,7 +20,7 @@ A set of components for [Cycle.js](https://cycle.js.org).
 <div class="is-hidden-in-docs">
   <h2>Documentation</h2>
   <p>
-    <a href="https://mightyiam.github.io/cyclejs-components">
+    <a href="http://cyclejs-components.mightyi.am/">
       Full documentation here</a>.
   </p>
 </div>
