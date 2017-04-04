@@ -40,7 +40,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
     )
   }
 
-  const result = Object.assign({}, relevantRepoPkg, componentPkg, specifics)
+  const result = Object.assign({}, componentPkg, relevantRepoPkg, specifics)
   return result
 }
 
