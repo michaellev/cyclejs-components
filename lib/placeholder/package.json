@@ -16,7 +16,6 @@
   "homepage": "https://mightyiam.github.io/cyclejs-components/",
   "version": "1.0.0",
   "name": "@cycles/placeholder",
-  "title": "Placeholder",
   "description": "Cycle.js component `placeholder`",
   "keywords": [
     "cycle",
