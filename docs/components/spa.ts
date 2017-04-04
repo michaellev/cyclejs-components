@@ -98,7 +98,7 @@ const Spa = ({
                 [
                   header(
                     { class: { 'nav-item': true, title: true, 'is-4': true } },
-                    a({ attrs: { href: metadata.pkg.homepage } }, metadata.pkg.title)
+                    metadata.pkg.title
                   )
                 ]
               ),
