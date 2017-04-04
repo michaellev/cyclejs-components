@@ -47,7 +47,7 @@
   "bugs": {
     "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-components/",
+  "homepage": "http://cyclejs-components.mightyi.am/",
   "devDependencies": {
     "@cycle/dom": "^17.0.0",
     "@cycle/history": "^6.1.0",

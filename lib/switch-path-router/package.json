@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-components/",
+  "homepage": "http://cyclejs-components.mightyi.am/",
   "version": "0.0.0",
   "name": "@cycles/switch-path-router",
   "description": "Cycle.js component `switch-path-router`",

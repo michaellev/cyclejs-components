@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-components/",
+  "homepage": "http://cyclejs-components.mightyi.am/",
   "version": "1.0.0",
   "name": "@cycles/placeholder",
   "description": "Cycle.js component `placeholder`",
