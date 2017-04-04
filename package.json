@@ -9,6 +9,7 @@
     "dev": "webpack-dev-server",
     "test": "run-s lint && run-p docs tests",
     "tests": "npm run transpile && ava",
+    "prepare": "npm run npm-install-for-components",
     "npm-install-for-components": "./utils/in-each-component-dir \"npm i\"",
     "purge-components-node_modules": "./utils/in-each-component-dir \"rm -r node_modules\"",
     "check-dependencies-of-components": "./utils/in-each-component-dir \"dependency-check . --missing --unused\"",
