@@ -64,7 +64,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
             {
               class: { title: true, 'is-2': true, name: true}
             },
-            pkg.title
+            id
           ),
           header(
             { class: { title: true, 'is-3': true } },

@@ -23,7 +23,6 @@ export interface ComponentMetadata {
   directory: string
   pkg: {
     name: string
-    title: string
   }
   sources: {
     [id: string]: SourceMetadata
