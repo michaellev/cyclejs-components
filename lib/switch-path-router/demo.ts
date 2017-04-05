@@ -78,15 +78,13 @@ const RouterDemo = ({
       [
         div('.columns',
           [
-            button('.column.is-narrow.button', {dataset: { action:    'back' }}, '<'),
+            button('.column.is-narrow.button', {dataset: { action: 'back' }}, '<'),
             button('.column.is-narrow.button', {dataset: { action: 'forward' }}, '>'),
             button('.column.is-narrow.button', '⟳'),
             div('.column.input', [ 'https://example.com', b(path) ])
           ]
         ),
-        div(
-          '.columns',
-          { style: { height: '28rem' } },
+        div('.columns', { style: { height: '28rem' } },
           [
             div('.column.is-narrow.menu',
               [

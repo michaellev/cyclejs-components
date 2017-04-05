@@ -92,7 +92,7 @@ const Spa = ({
         [
           nav('.nav',
             [
-              div('.nav-left', [header('.nav-item.title.is-4', metadata.pkg.title)]),
+              div('.nav-left', header('.nav-item.title.is-4', metadata.pkg.title)),
               div('.nav-center',
                 pages.map(({ name, path: pagePath }) => (
                   a('.nav-item.is-tab.is-page-link',
