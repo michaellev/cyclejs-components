@@ -14,10 +14,7 @@ export default ({ DOM }: Sources) => {
 
   const vnode$ = placeholderVnode$
     .map((placeholderVnode) => {
-      return article(
-        { class: { content: true } },
-        placeholderVnode
-      )
+      return article('.content', placeholderVnode)
     })
 
   return {

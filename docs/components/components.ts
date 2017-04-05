@@ -25,12 +25,7 @@ const Components = ({ DOM, metadata: metadata$ }: Sources) => {
   const componentVnode$ = component$
     .map((component) => {
       if (component === null) {
-        return xs.of(
-          div(
-            { class: { notification: true } },
-            'Select a component.'
-          )
-        )
+        return xs.of( div('.notification', 'Select a component.') )
       }
       return Component({ DOM, component: xs.of(component) }).DOM
     })
@@ -46,22 +41,16 @@ const Components = ({ DOM, metadata: metadata$ }: Sources) => {
     componentVnode
   ]) => {
     const components: ComponentMetadata[] = Object.values(metadata.components)
-    return div(
-      { key: 'components', class: { columns: true } },
+    return div('.columns', { key: 'components' },
       [
-        aside(
-          { class: { column: true, 'is-2-desktop': true, menu: true } },
+        aside('.column.is-2-desktop.menu',
           [
-            label(
-              { class: { 'menu-label': true } },
-              'Components'
-            ),
-            ul(
-              { class: { 'menu-list': true } },
+            label('.menu-label', 'Components'),
+            ul('.menu-list',
               [
-                ...(components.map((component) => li(a(
+                ...(components.map((component) => li(a('.name',
                   {
-                    class: { name: true, 'is-active': component.id === componentId },
+                    class: { 'is-active': component.id === componentId },
                     dataset: { id: component.id }
                   },
                   component.id
@@ -70,10 +59,7 @@ const Components = ({ DOM, metadata: metadata$ }: Sources) => {
             )
           ]
         ),
-        div(
-          { class: { column: true, 'is-10': true } },
-          componentVnode
-        )
+        div('.column.is-10', componentVnode)
       ]
     )
   })
