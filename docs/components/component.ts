@@ -1,4 +1,4 @@
-import { DOMSource, div, p, code, pre, span, header } from '@cycle/dom'
+import { DOMSource, div, p, code, span, header } from '@cycle/dom'
 import { ComponentMetadata, SourceSinkMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
 import isolate from '@cycle/isolate'
@@ -44,7 +44,7 @@ interface Sources {
 const Component = ({ DOM, component: component$ }: Sources) => {
   const demoVnode$ = component$
     .map((component) => {
-      return component.demo.Component({
+      return component.DemoComponent({
         DOM
       }).DOM
     }).flatten()
@@ -53,7 +53,7 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     component$,
     demoVnode$
   ).map(([
-    { id, varName, pkg, demo, sources, sinks },
+    { id, varName, pkg, sources, sinks },
     demoVnode
   ]) => {
     return div([
@@ -109,14 +109,6 @@ const Component = ({ DOM, component: component$ }: Sources) => {
       div(
         { class: { box: true } },
         demoVnode
-      ),
-      header(
-        { class: { title: true, 'is-3': true } },
-        'Demo source code'
-      ),
-      pre(
-        { class: { box: true } },
-        code({ props: { innerHTML: demo.sourceHtml } })
       )
     ])
   })
