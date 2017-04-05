@@ -86,7 +86,7 @@
     "sass-loader": "^6.0.2",
     "simple-git": "^1.67.0",
     "source-map-loader": "^0.2.0",
-    "standard": "^9.0.0",
+    "standard": "^10.0.0",
     "style-loader": "^0.16.0",
     "tslint": "^5.0.0",
     "tslint-config-standard": "^4.0.0",
