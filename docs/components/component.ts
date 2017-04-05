@@ -43,25 +43,23 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     { id, varName, pkg, sources, sinks },
     demoVnode
   ]) => {
-    return div([
-      div('.content',
-        [
-          header('.title.is-2.name', id),
-          header('.title.is-3', 'Importing'),
-          div('.notification.is-warning', 'The components are not yet published.'),
-          header('.title.is-4', 'ECMAScript'),
-          p( code('.import-example', `import ${varName} from '${pkg.name}'`)),
-          header('.title.is-4', 'CommonJS'),
-          p( code('.import-example', `const ${varName} = require('${pkg.name}')`)),
-          header('.title.is-3', 'Sources'),
-          ...[].concat.apply([], Object.values(sources).map(makeSourceSinkVnode)),
-          header('.title.is-3', 'Sinks'),
-          ...[].concat.apply([], Object.values(sinks).map(makeSourceSinkVnode))
-        ]
-      ),
-      header('.title.is-3', 'Demo'),
-      div('.box', demoVnode)
-    ])
+    return div('.content',
+      [
+        header('.title.is-2.name', id),
+        header('.title.is-3', 'Demo'),
+        div('.box', demoVnode),
+        header('.title.is-3', 'Importing'),
+        div('.notification.is-warning', 'The components are not yet published.'),
+        header('.title.is-4', 'ECMAScript'),
+        p( code('.import-example', `import ${varName} from '${pkg.name}'`)),
+        header('.title.is-4', 'CommonJS'),
+        p( code('.import-example', `const ${varName} = require('${pkg.name}')`)),
+        header('.title.is-3', 'Sources'),
+        ...[].concat.apply([], Object.values(sources).map(makeSourceSinkVnode)),
+        header('.title.is-3', 'Sinks'),
+        ...[].concat.apply([], Object.values(sinks).map(makeSourceSinkVnode))
+      ]
+    )
   })
 
   return {
