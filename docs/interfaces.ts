@@ -30,7 +30,7 @@ export interface ComponentMetadata {
   sinks: {
     [id: string]: SinkMetadata
   }
-  demo: Demo
+  DemoComponent: DemoComponent
 }
 
 export interface SourceSinkMetadata {
@@ -56,13 +56,6 @@ export interface DemoComponentSinks {
 
 export interface DemoComponent {
   (sources: DemoComponentSources): DemoComponentSinks
-}
-
-export interface Demo {
-  path: string
-  id: string
-  Component: DemoComponent
-  sourceHtml: string
 }
 
 interface SourceMetadata extends SourceSinkMetadata {

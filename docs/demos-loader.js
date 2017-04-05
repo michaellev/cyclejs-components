@@ -10,31 +10,17 @@ module.exports = async function () {
       return {
         id,
         path,
-        varName,
-        sourceHtmlVarName: 'sourceHtml' + varName
+        varName
       }
     })
 
   const imports = demos
-    .map(({ path, varName, sourceHtmlVarName }) => {
-      return [
-        `import ${varName} from '${path}'`,
-        `import ${sourceHtmlVarName} from '!!./docs/typescript-source-highlight-loader!${path}'`
-      ].join('\n')
-    })
+    .map(({ path, varName }) => `import ${varName} from '${path}'`)
     .join('\n')
 
-  const eksport = 'export default [\n' + demos
-    .map(({ id, varName, sourceHtmlVarName }) => (
-      []
-        .concat([['id', `'${id}'`]])
-        .concat([['Component', varName]])
-        .concat([['sourceHtml', sourceHtmlVarName]])
-        .map(([ key, val ]) => `    ${key}: ${val}`)
-        .join(',\n')
-    ))
-    .map(inner => `  {\n${inner}\n  }`)
-    .join() + '\n]'
+  const eksport = 'export default {\n' + demos
+    .map(({ id, varName }) => `  '${id}': ${varName}`)
+    .join(',\n') + '\n}'
 
   callback(null, imports + '\n\n' + eksport)
 }
