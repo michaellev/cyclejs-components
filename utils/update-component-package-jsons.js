@@ -30,6 +30,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
   const specifics = {
     name: '@cycles/' + name,
     description: `Cycle.js component \`${name}\``,
+    main: './index.js',
     keywords: Array.from(
       new Set([
         ...(componentPkg.keywords ? componentPkg.keywords : []),
@@ -39,7 +40,7 @@ const mkComponentPkg = (name, repoPkg, componentPkg) => {
     )
   }
 
-  const result = Object.assign({}, relevantRepoPkg, componentPkg, specifics)
+  const result = Object.assign({}, componentPkg, relevantRepoPkg, specifics)
   return result
 }
 

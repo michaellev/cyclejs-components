@@ -1,0 +1,8 @@
+set -e
+
+for componentDir in $(find lib -mindepth 1 -maxdepth 1 -type d); do
+  cd $componentDir
+  echo $componentDir:
+  $1
+  cd ../..
+done

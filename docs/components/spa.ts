@@ -1,100 +1,168 @@
-import { DOMSource, body, nav, div, header, a } from '@cycle/dom'
-import forkmeRibbon from './forkme-ribbon'
+import { DOMSource, body, header, section, footer, p, nav, div, a } from '@cycle/dom'
+import { Location } from 'history'
 import { Stream, default as xs } from 'xstream'
 import { Metadata, RawHTMLPage } from '../interfaces'
-import Api from './api'
-import VirtualizeHtml from './virtualize-html'
+import Components from './components'
+import HTMLContent from './html-content'
 import { VNode } from 'snabbdom/vnode'
 import isolate from '@cycle/isolate'
+import SwitchPathRouter, { RouteDefinitions } from '../../lib/switch-path-router'
 
 import './index.scss'
-
-const { title } = require('../../package.json')
 
 interface Sources {
   rawHtmlPages: Stream<RawHTMLPage[]>
   DOM: DOMSource
+  history: Stream<Location>
   metadata: Stream<Metadata>
 }
 
 interface Page {
-  name: string,
-  Component: (sources: { DOM: DOMSource }) => ({ DOM: Stream<VNode> }),
+  name: string
+  path: string
+  Component: (sources: { DOM: DOMSource }) => ({ DOM: Stream<VNode> })
   sources: { DOM: DOMSource, [x: string]: any }
 }
 
-const Spa = ({ DOM, metadata: metadata$, rawHtmlPages: rawHtmlPages$ }: Sources) => {
-  const nav$: Stream<number> = DOM.select('.nav .nav-item').events('click')
-    .map(navClick => (Number((navClick.currentTarget as HTMLAnchorElement).dataset.i)))
-    .startWith(0)
+const Spa = ({
+  DOM,
+  history: history$,
+  metadata: metadata$,
+  rawHtmlPages: rawHtmlPages$
+}: Sources) => {
+  const path$ = history$
+    .map(location => location.pathname)
+    .startWith('/')
+
+  const navigation$: Stream<string> = DOM
+    .select('.is-page-link')
+    .events('click')
+    .map(navClick =>
+      (navClick.currentTarget as HTMLAnchorElement).dataset.path as string)
 
   const htmlPages$: Stream<Page[]> = rawHtmlPages$
     .map((rawHtmlPages) => (
-      rawHtmlPages.map(({ name, html }) => ({
+      rawHtmlPages.map(({ name, path, html }) => ({
         name,
-        Component: VirtualizeHtml,
+        path,
+        Component: HTMLContent,
         sources:  { DOM, html: xs.of(html) }
       }))
     ))
 
-  const apiPage$: Stream<Page> = xs.of(
+  const componentsPage$: Stream<Page> = xs.of(
     {
-      name: 'API',
-      Component: Api,
+      name: 'Components',
+      path: '/components',
+      Component: Components,
       sources: { DOM, metadata: metadata$ }
     }
   )
 
   const pages$: Stream<Page[]> = xs
-    .combine(
-      htmlPages$,
-      apiPage$
-    ).map(([htmlPages, apiPage]) => (
-      htmlPages.concat(apiPage)
-    ))
+    .combine(htmlPages$, componentsPage$)
+    .map(([htmlPages, componentsPage]) => htmlPages.concat(componentsPage))
 
-  const page$ = xs
-    .combine(nav$, pages$)
-    .map(([i, pages]) => pages[i].Component(pages[i].sources))
+  const routes$: Stream<RouteDefinitions> = pages$
+    .map((pages) =>
+      pages.reduce((routes, page) => {
+        routes[page.path] = page
+        return routes
+      }, {} as RouteDefinitions))
 
-  const pageVdom$ = page$.map((component: { DOM: Stream<VNode> }) => component.DOM).flatten()
-  const vdom$ = xs.combine(nav$, pageVdom$, pages$).map(([pageI, pageVnode, pages]) => (
-    body(
-      { props: { id: '' } },
-      [
-        header(
-          { class: { 'has-text-centered': true, title: true, 'is-1': true } },
-          title
-        ),
-        header(
-          { class: { 'has-text-centered': true, subtitle: true } },
-         'Don’t be cynical. Be Cyclical.'
-        ),
-        nav(
-          { class: { nav: true } },
-          [
+  const {
+    value: currentPage$
+  } = SwitchPathRouter({
+    path: path$,
+    routes: routes$
+  })
+
+  const pageSinks$ = currentPage$
+    .map(({ Component, sources}) => Component(sources))
+
+  const pageVnode$ = pageSinks$
+    .map((component: { DOM: Stream<VNode> }) => component.DOM)
+    .flatten()
+
+  const vnode$ = xs
+    .combine(metadata$, path$, pageVnode$, pages$)
+    .map(([metadata, path, pageVnode, pages]) => {
+      return body(
+        { props: { id: '' } },
+        [
+          nav(
+            { class: { nav: true } },
+            [
+              div(
+                { class: { 'nav-left': true } },
+                [
+                  header(
+                    { class: { 'nav-item': true, title: true, 'is-4': true } },
+                    metadata.pkg.title
+                  )
+                ]
+              ),
+              div(
+                { class: { 'nav-center': true } },
+                pages.map(({ name, path: pagePath }) => (
+                  a(
+                    {
+                      class: {
+                        'nav-item': true,
+                        'is-tab': true,
+                        'is-active': pagePath === path,
+                        'is-page-link': true
+                      },
+                      dataset: { path: pagePath }
+                    },
+                    name
+                  )
+                ))
+              ),
+              div(
+                { class: { 'nav-right': true } },
+                [
+                  div(
+                    { class: { 'nav-item': true } },
+                    a(
+                      {
+                        class: { 'nav-item': true, 'github-button': true },
+                        attrs: {
+                          href: metadata.pkg.repository.homepage,
+                          'aria-label': `Star ${metadata.pkg.repository.homepage.slice(17)} on GitHub`
+                        },
+                        dataset: {
+                          style: 'mega',
+                          countHref: `/${metadata.pkg.repository.homepage.slice(17)}/stargazers`,
+                          countApi: `/repos/${metadata.pkg.repository.homepage.slice(17)}#stargazers_count`,
+                          countAriaLabel: '# stargazers on GitHub'
+                        }
+                      },
+                      'Star'
+                   )
+                 )
+                ]
+              )
+            ]
+          ),
+          section(
+            { class: { section: true } },
+            pageVnode
+          ),
+          footer(
+            { class: { footer: true } },
             div(
-              { class: { 'nav-center': true } },
-              pages.map(({ name }, i) => (
-                a(
-                  {
-                    class: { 'nav-item': true, 'is-tab': true, 'is-active': i === pageI },
-                    dataset: { i: String(i) }
-                  },
-                  name
-                )
-              ))
+              { class: { container: true } },
+              p(metadata.pkg.tagLine)
             )
-          ]
-        ),
-        pageVnode,
-        forkmeRibbon
-      ]
-    )
-  ))
+          )
+        ]
+      )
+    })
 
   return {
-    DOM: vdom$
+    DOM: vnode$,
+    history: navigation$
   }
 }
 export default (sources: Sources) => isolate(Spa)(sources)

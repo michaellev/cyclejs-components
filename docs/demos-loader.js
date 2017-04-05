@@ -1,43 +1,40 @@
-const { readdirSync } = require('fs')
 const { resolve } = require('path')
-const camelCase = require('camelcase')
-const upperCamelCase = require('uppercamelcase')
+const getMetadata = require('../utils/get-metadata')
 
-const demosDirPath = resolve(__dirname, 'demos')
-
-module.exports = function () {
-  const paths = readdirSync(demosDirPath)
-
-  const names = paths
-    .map(path => (
-      {
+module.exports = async function () {
+  const callback = this.async()
+  const { components } = await getMetadata()
+  const demos = Object.values(components)
+    .map(({ id, directory, varName }) => {
+      const path = resolve(directory, 'demo.ts')
+      return {
+        id,
         path,
-        component: upperCamelCase(path.slice(0, -3)),
-        source: camelCase(path.slice(0, -3)) + 'Source'
+        varName,
+        sourceHtmlVarName: 'sourceHtml' + varName
       }
-    ))
+    })
 
-  const imports = names
-    .map(({ path, component, source }) => {
-      const modulePath = resolve(demosDirPath, path)
+  const imports = demos
+    .map(({ path, varName, sourceHtmlVarName }) => {
       return [
-        `import ${component} from '${modulePath.slice(0, -3)}'`,
-        `import ${source} from '!!raw-loader!${modulePath}'`
+        `import ${varName} from '${path}'`,
+        `import ${sourceHtmlVarName} from '!!./docs/typescript-source-highlight-loader!${path}'`
       ].join('\n')
     })
     .join('\n')
 
-  const eksport = 'export default [\n' + names
-    .map(({ path, component, source }) => (
+  const eksport = 'export default [\n' + demos
+    .map(({ id, varName, sourceHtmlVarName }) => (
       []
-        .concat([['id', `'${path.slice(0, -3)}'`]])
-        .concat([['Component', component]])
-        .concat([['source', source]])
+        .concat([['id', `'${id}'`]])
+        .concat([['Component', varName]])
+        .concat([['sourceHtml', sourceHtmlVarName]])
         .map(([ key, val ]) => `    ${key}: ${val}`)
         .join(',\n')
     ))
-    .map(inner => `  {\n${inner}\n}`)
+    .map(inner => `  {\n${inner}\n  }`)
     .join() + '\n]'
 
-  return imports + '\n\n' + eksport
+  callback(null, imports + '\n\n' + eksport)
 }

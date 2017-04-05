@@ -11,9 +11,12 @@ const config = {
   resolve: {
     extensions: [ '.ts', '.js' ]
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     publicPath: '/',
+    historyApiFallback: {
+      index: '200.html'
+    },
     contentBase: publicPath
   },
   module: {

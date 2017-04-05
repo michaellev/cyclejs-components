@@ -1,115 +1,125 @@
-import { DOMSource, div, p, code, ul, li, a, span, header } from '@cycle/dom'
-import { ComponentMetadata } from '../interfaces'
+import { DOMSource, div, p, code, pre, span, header } from '@cycle/dom'
+import { ComponentMetadata, SourceSinkMetadata } from '../interfaces'
 import { default as xs, Stream } from 'xstream'
-import Property from './property'
 import isolate from '@cycle/isolate'
 
-const packageName: string = require('../../package.json').name
+let undef: undefined
+
+const makeSourceSinkVnode = ({ name, direction, type, optional, descriptionHtml }: SourceSinkMetadata) => {
+  return [
+    header(
+      {
+        attrs: { id: `${name}-${direction}`},
+        key: name,
+        class: { title: true, 'is-4': true }
+      },
+      [
+        code({ class: { 'source-sink-name': true } }, name),
+        span(
+          { class: { tag: true, 'is-info': true, [direction]: true } },
+          direction
+        ),
+        span(
+          { class: { tag: true } },
+          code(type)
+        ),
+        direction === 'source' ? span(
+          { class: { tag: true , 'is-warning': true } },
+          optional ? 'optional' : 'required'
+        ) : undef
+      ]
+    ),
+    div({
+      class: { content: true },
+      props: { innerHTML: descriptionHtml }
+    })
+  ]
+}
 
 interface Sources {
-  component: Stream<ComponentMetadata | null>
+  component: Stream<ComponentMetadata>
   DOM: DOMSource
 }
 
 const Component = ({ DOM, component: component$ }: Sources) => {
-  const rComponent$ = component$.remember()
-  const tabClick$ = DOM.select('.tabs a').events('click')
-
-  const propertyId$ = tabClick$.map(tabClick => (
-    ((tabClick.currentTarget as HTMLAnchorElement).dataset.id) as string | null
-  )).startWith(null)
-
-  const property$ = xs.combine(
-    rComponent$,
-    propertyId$
-  ).map(([
-    component,
-    propertyId
-  ]) => propertyId && component ? component.properties[propertyId] : null)
-
-  const { DOM: propertyVnode$ } = Property({
-    DOM,
-    property: property$
-  })
+  const demoVnode$ = component$
+    .map((component) => {
+      return component.demo.Component({
+        DOM
+      }).DOM
+    }).flatten()
 
   const vnode$ = xs.combine(
-    rComponent$,
-    propertyId$,
-    propertyVnode$
+    component$,
+    demoVnode$
   ).map(([
-    component,
-    propertyId,
-    propertyVnode
-  ]) => (
-    div(
-      {
-        style: { order: '1' },
-        class: { content: true, column: true, 'is-10': true }
-      },
-      !component ? div(
-        { class: { notification: true } },
-        'Select a component.'
-      ) : [
-        header(
-          {
-            class: { title: true, 'is-2': true, name: true}
-          },
-          component.id
-        ),
-        header(
-          { class: { title: true, 'is-3': true } },
-          'Importing'
-        ),
-        header(
-          { class: { title: true, 'is-4': true } },
-          'ECMAScript'
-        ),
-        p(code(
-          { class: { importExample: true } },
-          `import { ${component.varName} } from '${packageName}'`
-        )),
-        header(
-          { class: { title: true, 'is-4': true } },
-          'CommonJS'
+    { id, varName, pkg, demo, sources, sinks },
+    demoVnode
+  ]) => {
+    return div([
+      div(
+        { class: { content: true } },
+        [
+          header(
+            {
+              class: { title: true, 'is-2': true, name: true}
+            },
+            id
           ),
-        p(code(
-        { class: { importExample: true } },
-        `const { ${component.varName} } = require('${packageName}')`
-        )),
-        header(
-          { class: { title: true, 'is-3': true } },
-          'Properties'
-        ),
-        div(
-          { class: { tabs: true, 'is-medium': true } },
-          ul(
-            Object.values(component.properties).map((property) => (
-              li(
-                { class: { 'is-active': property.id === propertyId } },
-                a(
-                  { dataset: { id: property.id } },
-                  [
-                    property.name,
-                    span(
-                      {
-                        class: {
-                          tag: true,
-                          'is-medium': true,
-                          [property.direction]: true
-                        }
-                      },
-                      property.direction
-                    )
-                  ]
-                )
-              )
-            ))
-          )
-        ),
-        propertyVnode
-      ]
-    )
-  ))
+          header(
+            { class: { title: true, 'is-3': true } },
+            'Importing'
+          ),
+          div(
+            { class: { notification: true, 'is-warning': true } },
+            'The components are not yet published.'
+          ),
+          header(
+            { class: { title: true, 'is-4': true } },
+            'ECMAScript'
+          ),
+          p(code(
+            { class: { importExample: true } },
+            `import { ${varName} } from '${pkg.name}'`
+          )),
+          header(
+            { class: { title: true, 'is-4': true } },
+            'CommonJS'
+            ),
+          p(code(
+          { class: { importExample: true } },
+          `const { ${varName} } = require('${pkg.name}')`
+          )),
+          header(
+            { class: { title: true, 'is-3': true } },
+            'Sources'
+          ),
+          ...[].concat.apply([], Object.values(sources).map(makeSourceSinkVnode)),
+          header(
+            { class: { title: true, 'is-3': true } },
+            'Sinks'
+          ),
+          ...[].concat.apply([], Object.values(sinks).map(makeSourceSinkVnode))
+        ]
+      ),
+      header(
+        { class: { title: true, 'is-3': true } },
+        'Demo'
+      ),
+      div(
+        { class: { box: true } },
+        demoVnode
+      ),
+      header(
+        { class: { title: true, 'is-3': true } },
+        'Demo source code'
+      ),
+      pre(
+        { class: { box: true } },
+        code({ props: { innerHTML: demo.sourceHtml } })
+      )
+    ])
+  })
 
   return {
     DOM: vnode$

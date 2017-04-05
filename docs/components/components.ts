@@ -1,7 +1,7 @@
-import { DOMSource, section, label, aside, ul, li, a } from '@cycle/dom'
+import { DOMSource, div, label, aside, ul, li, a } from '@cycle/dom'
 import Component from './component'
 import { Stream, default as xs } from 'xstream'
-import { Metadata } from '../interfaces'
+import { Metadata, ComponentMetadata } from '../interfaces'
 import isolate from '@cycle/isolate'
 
 interface Sources {
@@ -9,7 +9,7 @@ interface Sources {
   metadata: Stream<Metadata>
 }
 
-const Api = ({ DOM, metadata: metadata$ }: Sources) => {
+const Components = ({ DOM, metadata: metadata$ }: Sources) => {
   const menuClicks$ = DOM.select('.menu a').events('click')
   const componentId$ = menuClicks$.map(menuClick => (
     (menuClick.target as HTMLAnchorElement).dataset.id as string | null)
@@ -20,9 +20,22 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
   ).map(([
     componentId,
     metadata
-  ]) => componentId ? metadata[componentId] : null)
+  ]) => componentId ? metadata.components[componentId] : null)
 
-  const { DOM: componentVnode$ } = Component({ DOM, component: component$ })
+  const componentVnode$ = component$
+    .map((component) => {
+      if (component === null) {
+        return xs.of(
+          div(
+            { class: { notification: true } },
+            'Select a component.'
+          )
+        )
+      }
+      return Component({ DOM, component: xs.of(component) }).DOM
+    })
+    .flatten()
+
   const vnode$ = xs.combine(
     componentId$,
     metadata$,
@@ -31,16 +44,13 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
     componentId,
     metadata,
     componentVnode
-  ]) => (
-    section(
-      { class: { section: true, columns: true, 'is-centered': true } },
+  ]) => {
+    const components: ComponentMetadata[] = Object.values(metadata.components)
+    return div(
+      { key: 'components', class: { columns: true } },
       [
-        componentVnode,
         aside(
-          {
-            style: { order: '0' },
-            class: { column: true, 'is-2-desktop': true, menu: true }
-          },
+          { class: { column: true, 'is-2-desktop': true, menu: true } },
           [
             label(
               { class: { 'menu-label': true } },
@@ -49,7 +59,7 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
             ul(
               { class: { 'menu-list': true } },
               [
-                ...(Object.values(metadata).map(component => li(a(
+                ...(components.map((component) => li(a(
                   {
                     class: { name: true, 'is-active': component.id === componentId },
                     dataset: { id: component.id }
@@ -59,13 +69,17 @@ const Api = ({ DOM, metadata: metadata$ }: Sources) => {
               ]
             )
           ]
+        ),
+        div(
+          { class: { column: true, 'is-10': true } },
+          componentVnode
         )
       ]
     )
-  ))
+  })
   return {
     DOM: vnode$
   }
 }
 
-export default (sources: Sources) => isolate(Api)(sources)
+export default (sources: Sources) => isolate(Components)(sources)

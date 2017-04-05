@@ -1,58 +1,80 @@
 import { DOMSource } from '@cycle/dom'
+import { HTTPSource, RequestOptions } from '@cycle/http'
 import { Stream } from 'xstream'
 import { VNode } from 'snabbdom/vnode'
 
 export interface Metadata {
-  [id: string]: ComponentMetadata
+  pkg: {
+    title: string
+    tagLine: string
+    homepage: string
+    repository: {
+      homepage: string
+    }
+  }
+  components: {
+    [id: string]: ComponentMetadata
+  }
 }
 
 export interface ComponentMetadata {
   id: string
   varName: string
-  properties: {
-    [id: string]: SourceMetadata | SinkMetadata
+  directory: string
+  pkg: {
+    name: string
   }
+  sources: {
+    [id: string]: SourceMetadata
+  }
+  sinks: {
+    [id: string]: SinkMetadata
+  }
+  demo: Demo
 }
 
-export interface PropertyMetadata {
+export interface SourceSinkMetadata {
   id: string
   name: string
   parentId: string
   path: string
   optional: boolean
-  description: string
+  descriptionHtml: string
   type: string
-  direction: 'source' | 'sink',
-  demo?: Demo
+  direction: 'source' | 'sink'
 }
 
-interface DOMComponent {
-  (
-    sources: {
-      DOM: DOMSource,
-      [x: string]: any
-    }
-  ): {
-    DOM: Stream<VNode | VNode[]>,
-    [x: string]: any
-  }
+interface DemoComponentSources {
+  DOM: DOMSource
+  HTTP?: HTTPSource
+}
+
+export interface DemoComponentSinks {
+  DOM: Stream<VNode>
+  HTTP?: Stream<RequestOptions>
+}
+
+export interface DemoComponent {
+  (sources: DemoComponentSources): DemoComponentSinks
 }
 
 export interface Demo {
+  path: string
   id: string
-  Component: DOMComponent
-  source: string
+  Component: DemoComponent
+  sourceHtml: string
 }
 
-interface SourceMetadata extends PropertyMetadata {
+interface SourceMetadata extends SourceSinkMetadata {
   direction: 'source'
 }
 
-interface SinkMetadata extends PropertyMetadata {
+interface SinkMetadata extends SourceSinkMetadata {
   direction: 'sink'
 }
 
 export interface RawHTMLPage {
   name: string
+  path: string
   html: string
 }

@@ -13,10 +13,10 @@
   "bugs": {
     "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-components/",
+  "homepage": "http://cyclejs-components.mightyi.am/",
   "version": "1.0.0",
-  "name": "@cycles/checkbox",
-  "description": "Cycle.js component `checkbox`",
+  "name": "@cycles/placeholder",
+  "description": "Cycle.js component `placeholder`",
   "keywords": [
     "cycle",
     "cyclejs",
@@ -26,11 +26,12 @@
     "widgets",
     "ui",
     "elements",
-    "checkbox"
+    "placeholder"
   ],
   "dependencies": {
-    "@cycle/dom": "^16.0.0",
+    "@cycle/dom": "^17.0.0",
     "@cycle/isolate": "^2.1.0",
     "xstream": "^10.3.0"
-  }
+  },
+  "main": "./index.js"
 }

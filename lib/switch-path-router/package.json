@@ -13,10 +13,10 @@
   "bugs": {
     "url": "https://github.com/mightyiam/cyclejs-components/issues"
   },
-  "homepage": "https://mightyiam.github.io/cyclejs-components/",
-  "version": "1.0.0",
-  "name": "@cycles/list",
-  "description": "Cycle.js component `list`",
+  "homepage": "http://cyclejs-components.mightyi.am/",
+  "version": "0.0.0",
+  "name": "@cycles/switch-path-router",
+  "description": "Cycle.js component `switch-path-router`",
   "keywords": [
     "cycle",
     "cyclejs",
@@ -26,10 +26,14 @@
     "widgets",
     "ui",
     "elements",
-    "list"
+    "router",
+    "switch-path",
+    "switch-path-router"
   ],
   "dependencies": {
     "@cycle/isolate": "^2.1.0",
+    "switch-path": "^1.2.0",
     "xstream": "^10.3.0"
-  }
+  },
+  "main": "./index.js"
 }
