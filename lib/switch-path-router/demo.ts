@@ -76,41 +76,20 @@ const RouterDemo = ({
   .map(([path, page]) => {
     return article(
       [
-        div(
-          { class: { columns: true } },
+        div('.columns',
           [
-            button({
-              class: { column: true, 'is-narrow': true, button: true },
-              dataset: { action: 'back' }
-            }, '<'),
-            button({
-              class: { column: true, 'is-narrow': true, button: true },
-              dataset: { action: 'forward' }
-            }, '>'),
-            button({
-              class: { column: true, 'is-narrow': true, button: true }
-            }, '⟳'),
-            div(
-              { class: { column: true, input: true } },
-              [
-                'https://example.com',
-                b(path)
-              ]
-            )
+            button('.column.is-narrow.button', {dataset: { action: 'back' }}, '<'),
+            button('.column.is-narrow.button', {dataset: { action: 'forward' }}, '>'),
+            button('.column.is-narrow.button', '⟳'),
+            div('.column.input', [ 'https://example.com', b(path) ])
           ]
         ),
-        div(
-          {
-            class: { columns: true },
-            style: { height: '28rem' }
-          },
+        div('.columns', { style: { height: '28rem' } },
           [
-            div(
-              { class: { column: true, 'is-narrow': true, menu: true } },
+            div('.column.is-narrow.menu',
               [
-                label({ class: { 'menu-label': true } }, 'Pages'),
-                ul(
-                  { class: { 'menu-list': true } },
+                label('.menu-label', 'Pages'),
+                ul('.menu-list',
                   [
                     li(a({ dataset: { path: '/' } }, 'Home')),
                     li(a({ dataset: { path: '/features' } }, 'Features')),
@@ -119,13 +98,12 @@ const RouterDemo = ({
                 )
               ]
             ),
-            div(
+            div('.column.content',
               {
                 style: {
                   fontSize: '600%', fontWeight: 'lighter', fontFamily: 'serif',
                   textAlign: 'justify', overflow: 'scroll', wordBreak: 'break-all'
-                },
-                class: { column: true, content: true }
+                }
               },
               page
             )

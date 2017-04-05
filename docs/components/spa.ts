@@ -90,43 +90,25 @@ const Spa = ({
       return body(
         { props: { id: '' } },
         [
-          nav(
-            { class: { nav: true } },
+          nav('.nav',
             [
-              div(
-                { class: { 'nav-left': true } },
-                [
-                  header(
-                    { class: { 'nav-item': true, title: true, 'is-4': true } },
-                    metadata.pkg.title
-                  )
-                ]
-              ),
-              div(
-                { class: { 'nav-center': true } },
+              div('.nav-left', header('.nav-item.title.is-4', metadata.pkg.title)),
+              div('.nav-center',
                 pages.map(({ name, path: pagePath }) => (
-                  a(
+                  a('.nav-item.is-tab.is-page-link',
                     {
-                      class: {
-                        'nav-item': true,
-                        'is-tab': true,
-                        'is-active': pagePath === path,
-                        'is-page-link': true
-                      },
+                      class: {'is-active': pagePath === path},
                       dataset: { path: pagePath }
                     },
                     name
                   )
                 ))
               ),
-              div(
-                { class: { 'nav-right': true } },
+              div('.nav-right',
                 [
-                  div(
-                    { class: { 'nav-item': true } },
-                    a(
+                  div('.nav-item',
+                    a('.nav-item.github-button',
                       {
-                        class: { 'nav-item': true, 'github-button': true },
                         attrs: {
                           href: metadata.pkg.repository.homepage,
                           'aria-label': `Star ${metadata.pkg.repository.homepage.slice(17)} on GitHub`
@@ -145,17 +127,8 @@ const Spa = ({
               )
             ]
           ),
-          section(
-            { class: { section: true } },
-            pageVnode
-          ),
-          footer(
-            { class: { footer: true } },
-            div(
-              { class: { container: true } },
-              p(metadata.pkg.tagLine)
-            )
-          )
+          section('.section', pageVnode),
+          footer('.footer', div('.container', p(metadata.pkg.tagLine)))
         ]
       )
     })
