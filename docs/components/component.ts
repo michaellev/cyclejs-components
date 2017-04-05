@@ -8,31 +8,18 @@ let undef: undefined
 const makeSourceSinkVnode = ({ name, direction, type, optional, descriptionHtml }: SourceSinkMetadata) => {
   return [
     header(
-      {
-        attrs: { id: `${name}-${direction}`},
-        key: name,
-        class: { title: true, 'is-4': true }
-      },
+      '.title.is-4',
+      {attrs: { id: `${name}-${direction}`}, key: name},
       [
-        code({ class: { 'source-sink-name': true } }, name),
-        span(
-          { class: { tag: true, 'is-info': true, [direction]: true } },
-          direction
-        ),
-        span(
-          { class: { tag: true } },
-          code(type)
-        ),
-        direction === 'source' ? span(
-          { class: { tag: true , 'is-warning': true } },
-          optional ? 'optional' : 'required'
-        ) : undef
+        code('.source-sink-name', name),
+        span('.tag.is-info.' + direction, direction),
+        span('.tag', code(type)),
+        direction === 'source' ?
+          span('.tag.is-warning', optional ? 'optional' : 'required')
+          : undef
       ]
     ),
-    div({
-      class: { content: true },
-      props: { innerHTML: descriptionHtml }
-    })
+    div('.content', {props: { innerHTML: descriptionHtml }})
   ]
 }
 
@@ -57,59 +44,23 @@ const Component = ({ DOM, component: component$ }: Sources) => {
     demoVnode
   ]) => {
     return div([
-      div(
-        { class: { content: true } },
+      div('.content',
         [
-          header(
-            {
-              class: { title: true, 'is-2': true, name: true}
-            },
-            id
-          ),
-          header(
-            { class: { title: true, 'is-3': true } },
-            'Importing'
-          ),
-          div(
-            { class: { notification: true, 'is-warning': true } },
-            'The components are not yet published.'
-          ),
-          header(
-            { class: { title: true, 'is-4': true } },
-            'ECMAScript'
-          ),
-          p(code(
-            { class: { importExample: true } },
-            `import { ${varName} } from '${pkg.name}'`
-          )),
-          header(
-            { class: { title: true, 'is-4': true } },
-            'CommonJS'
-            ),
-          p(code(
-          { class: { importExample: true } },
-          `const { ${varName} } = require('${pkg.name}')`
-          )),
-          header(
-            { class: { title: true, 'is-3': true } },
-            'Sources'
-          ),
+          header('.title.is-2.name', id),
+          header('.title.is-3', 'Importing'),
+          div('.notification.is-warning', 'The components are not yet published.'),
+          header('.title.is-4', 'ECMAScript'),
+          p( code('.import-example', `import { ${varName} } from '${pkg.name}'`)),
+          header('.title.is-4', 'CommonJS'),
+          p( code('.import-example', `const { ${varName} } = require('${pkg.name}')`)),
+          header('.title.is-3', 'Sources'),
           ...[].concat.apply([], Object.values(sources).map(makeSourceSinkVnode)),
-          header(
-            { class: { title: true, 'is-3': true } },
-            'Sinks'
-          ),
+          header('.title.is-3', 'Sinks'),
           ...[].concat.apply([], Object.values(sinks).map(makeSourceSinkVnode))
         ]
       ),
-      header(
-        { class: { title: true, 'is-3': true } },
-        'Demo'
-      ),
-      div(
-        { class: { box: true } },
-        demoVnode
-      )
+      header('.title.is-3', 'Demo'),
+      div('.box', demoVnode)
     ])
   })
 
