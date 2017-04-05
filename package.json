@@ -67,7 +67,6 @@
     "dekko": "^0.2.1",
     "dependency-check": "^2.8.0",
     "ent": "^2.2.0",
-    "highlight.js": "^9.10.0",
     "history": "^4.6.1",
     "html-loader": "^0.4.5",
     "markdown-it": "^8.3.1",
